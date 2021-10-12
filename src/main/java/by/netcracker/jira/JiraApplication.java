@@ -1,4 +1,4 @@
-package com.jira;
+package by.netcracker.jira;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
