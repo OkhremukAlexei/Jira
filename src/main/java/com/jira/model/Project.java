@@ -1,4 +1,4 @@
-package by.netcracker.jira.model;
+package com.jira.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,7 +22,7 @@ public class Project implements Serializable {
     private int progress;
 
     @ElementCollection(targetClass = Status.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "status", joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "status", joinColumns = @JoinColumn(name = "status_id"))
     @Enumerated(EnumType.STRING)
     private Set<Status> status;
 
@@ -33,6 +33,9 @@ public class Project implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "task_id")
     )
     private Set<Task> tasks;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Team team;
 
     public Project(String projectName, String linkToGit, int progress, Set<Status> status, Set<Task> tasks) {
         this.projectName = projectName;

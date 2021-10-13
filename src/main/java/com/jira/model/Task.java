@@ -1,4 +1,4 @@
-package by.netcracker.jira.model;
+package com.jira.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -25,8 +25,8 @@ public class Task implements Serializable {
     @Column(name = "spent_time", nullable = false)
     private int spentTime;
 
-    @ElementCollection(targetClass = Comment.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "comment", joinColumns = @JoinColumn(name = "id"))
+   @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+   @JoinColumn(name = "task_id")
     private List<Comment> comments;
 
     public Task(String title, String description, Timestamp startTime, int spentTime, List<Comment> comments) {

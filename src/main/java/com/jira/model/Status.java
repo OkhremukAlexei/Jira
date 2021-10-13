@@ -1,4 +1,4 @@
-package by.netcracker.jira.model;
+package com.jira.model;
 
 public enum Status {
     TODO

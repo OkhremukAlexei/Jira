@@ -1,4 +1,4 @@
-package by.netcracker.jira.model;
+package com.jira.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
