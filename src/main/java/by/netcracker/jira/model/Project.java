@@ -22,7 +22,7 @@ public class Project implements Serializable {
     private int progress;
 
     @ElementCollection(targetClass = Status.class, fetch = FetchType.EAGER)
-    @CollectionTable(name = "status", joinColumns = @JoinColumn(name = "status_id"))
+    @CollectionTable(name = "status", joinColumns = @JoinColumn(name = "id"))
     @Enumerated(EnumType.STRING)
     private Set<Status> status;
 
