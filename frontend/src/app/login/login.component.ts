@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../services/auth-service.service";
+import {AuthLoginInfo} from "../auth/login-info";
+import {AuthService} from "../auth/auth.service";
+import {TokenStorageService} from "../auth/token-storage.service";
 
 @Component({
   selector: 'app-login',
@@ -8,28 +10,47 @@ import {AuthService} from "../services/auth-service.service";
 })
 export class LoginComponent implements OnInit {
 
-  username!: string;
-  password!: string;
-  errorMessage = 'Invalid Credentials';
-  successMessage!: string;
-  invalidLogin = false;
-  loginSuccess = false;
+  form : any = {};
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+  private loginInfo!: AuthLoginInfo;
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
 
   ngOnInit(): void {
+    if(this.tokenStorage.getToken()) {
+      this.isLoggedIn = true;
+      this.roles = this.tokenStorage.getAuthorities();
+    }
   }
 
-  handleLogin() {
-    this.authService.login(this.username, this.password).subscribe((result) => {
-      this.invalidLogin = false;
-      this.loginSuccess = true;
-      this.successMessage = 'Login Successful';
+  onSubmit() {
+    this.loginInfo = new AuthLoginInfo(
+      this.form.login,
+      this.form.password
+    );
 
-    }, () => {
-      this.invalidLogin = true;
-      this.loginSuccess = false;
-    });
+    this.authService.attemptAuth(this.loginInfo).subscribe(
+      data => {
+        this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveLogin(data.login);
+        this.tokenStorage.saveAuthorities(data.roles);
+
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getAuthorities();
+        this.reloadPage();
+      },
+      error => {
+        this.errorMessage = error.error.message;
+        this.isLoginFailed = true;
+      }
+    )
   }
 
+  reloadPage() {
+    window.location.reload();
+  }
 }
