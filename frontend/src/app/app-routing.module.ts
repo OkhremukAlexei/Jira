@@ -7,6 +7,7 @@ import {ManagerComponent} from "./manager/manager.component";
 import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {AccountComponent} from "./account/account.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,10 @@ const routes: Routes = [
   {
     path: 'admin',
     component:AdminComponent
+  },
+  {
+    path: 'account',
+    component:AccountComponent
   },
   {
     path: 'auth/login',

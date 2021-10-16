@@ -12,6 +12,7 @@ import { AdminComponent } from './admin/admin.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
+import { AccountComponent } from './account/account.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {httpInterceptorProviders} from "./auth/auth-interceptor";
     HomeComponent,
     UserComponent,
     ManagerComponent,
-    AdminComponent
+    AdminComponent,
+    AccountComponent
   ],
   imports: [
     BrowserModule,

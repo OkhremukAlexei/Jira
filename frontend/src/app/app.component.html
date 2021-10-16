@@ -14,6 +14,9 @@
       <li *ngIf="authority === 'manager'" class="nav-item">
         <a class="nav-link" routerLink="manager">Manager Board</a>
       </li>
+      <li *ngIf="isAuthorized" class="nav-item">
+        <a class="nav-link" routerLink="account">Account</a>
+      </li>
       <li *ngIf="!authority" class="nav-item">
         <a class="nav-link" routerLink="auth/login">Login</a>
       </li>
