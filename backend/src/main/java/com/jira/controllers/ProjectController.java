@@ -2,6 +2,7 @@ package com.jira.controllers;
 
 import com.jira.models.Project;
 import com.jira.repos.ProjectRepo;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,21 +16,25 @@ public class ProjectController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public Iterable<Project> getAll() {
         return projectRepo.findAll();
     }
 
     @GetMapping("{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public Project getOne(@PathVariable("id") Project project) {
         return project;
     }
 
     @PutMapping
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     public Project put(@RequestBody Project project) {
         return projectRepo.save(project);
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     public void delete(@PathVariable("id") Project project) {
         projectRepo.delete(project);
     }
