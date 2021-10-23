@@ -1,1 +1,20 @@
-<p>admin works!</p>
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Login</th>
+    <th scope="col">Password</th>
+    <th scope="col">Role</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tempAccount of listAccount; let i = index">
+    <td>{{i+1}}</td>
+    <td>{{tempAccount.login}}</td>
+    <td>{{tempAccount.password}}</td>
+    <td>
+      {{tempAccount.roles}}</td>
+  </tr>
+  </tbody>
+</table>
+

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {AdminService} from "../services/admin.service";
+import {AuthLoginInfo} from "../auth/login-info";
+import {PartialAccountInfo} from "./partial-account-info";
 
 @Component({
   selector: 'app-admin',
@@ -7,9 +10,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  listAccount!: PartialAccountInfo[];
+
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
+    this.getListAccount();
   }
 
+  getListAccount(): void {
+    this.adminService.getAllUsers().subscribe(data => {
+      this.listAccount = data;
+    });
+}
 }

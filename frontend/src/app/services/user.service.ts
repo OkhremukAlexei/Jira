@@ -25,4 +25,8 @@ export class UserService {
   getAdminBoard(): Observable<string> {
     return this.http.get(this.adminUrl, {responseType: 'text'});
   }
+
+
+
 }
+

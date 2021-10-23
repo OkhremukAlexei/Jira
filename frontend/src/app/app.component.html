@@ -1,10 +1,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Jira</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent, #navbarAccount" aria-controls="navbarContent, navbarAccount" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse flex-grow-0" id="navbarContent">
+    <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav">
         <li *ngIf="authority === 'user'" class="nav-item">
           <a class="nav-link" href="user">User Board</a>
@@ -18,6 +18,10 @@
         <li *ngIf="!authority" class="nav-item">
           <a class="nav-link" href="signin">Login</a>
         </li>
+      </ul>
+    </div>
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarAccount">
+      <ul class="navbar-nav">
         <li *ngIf="authority" class="nav-item">
           <a class="nav-link" href="account">Account</a>
         </li>
