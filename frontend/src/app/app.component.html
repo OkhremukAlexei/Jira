@@ -4,24 +4,27 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarContent">
+    <div class="collapse navbar-collapse flex-grow-0" id="navbarContent">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+        <li *ngIf="authority === 'user'" class="nav-item">
+          <a class="nav-link" href="user">User Board</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
+        <li *ngIf="authority === 'manager'" class="nav-item">
+          <a class="nav-link" href="manager">Manager Board</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+        <li *ngIf="authority === 'admin'" class="nav-item">
+          <a class="nav-link" href="admin">Admin Board</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+        <li *ngIf="!authority" class="nav-item">
+          <a class="nav-link" href="auth/login">Login</a>
+        </li>
+        <li *ngIf="authority" class="nav-item">
+          <a class="nav-link" href="account">Account</a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
-<div class="container">
+<div class="container-fluid">
   <router-outlet></router-outlet>
 </div>
