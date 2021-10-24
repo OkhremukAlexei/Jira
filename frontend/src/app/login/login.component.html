@@ -9,13 +9,14 @@
     <article class="card-body">
       <a href="signup" class="float-right btn btn-outline-primary">Sign up</a>
       <h4 class="card-title mb-4 mt-1">Sign in</h4>
-      <form name="form" (ngSubmit)="f.form.valid && onSubmit()"  #f="ngForm" novalidate>
+      <form class="was-validated" name="form" (ngSubmit)="f.form.valid && onSubmit()"  #f="ngForm" novalidate>
         <div class="form-group">
           <label>Your login</label>
           <input type="text" class="form-control" placeholder="Login" name="login" [(ngModel)]="form.login" #login="ngModel"
-                 required />
+                 required minlength="4"/>
           <div *ngIf="f.submitted && login.invalid">
-            <div *ngIf="login.errors.required">Login is required</div>
+            <div *ngIf="login.errors.required"></div>
+            <div *ngIf="login.errors.minlength"></div>
           </div>
         </div><!-- form-group// -->
         <div class="form-group">
@@ -24,8 +25,8 @@
           <input type="password" class="form-control" placeholder="******" name="password" [(ngModel)]="form.password" #password="ngModel"
                  required minlength="6" />
           <div *ngIf="f.submitted && password.invalid">
-            <div *ngIf="password.errors.required">Password is required</div>
-            <div *ngIf="password.errors.minlength">Password must be at least 6 characters</div>
+            <div *ngIf="password.errors.required"></div>
+            <div *ngIf="password.errors.minlength"></div>
           </div>
         </div> <!-- form-group// -->
         <div class="form-group">

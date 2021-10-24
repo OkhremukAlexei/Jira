@@ -15,6 +15,7 @@ import {httpInterceptorProviders} from "./auth/auth-interceptor";
 import { AccountComponent } from './account/account.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     UserComponent,
     ManagerComponent,
     AdminComponent,
-    AccountComponent
+    AccountComponent,
   ],
   imports: [
     BrowserModule,
