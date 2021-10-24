@@ -15,12 +15,12 @@ export class AdminComponent implements OnInit {
   constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.getListAccount();
+ //   this.getListAccount();
   }
 
-  getListAccount(): void {
-    this.adminService.getAllUsers().subscribe(data => {
-      this.listAccount = data;
-    });
-}
+  // getListAccount(): void {
+  //  this.adminService.getAllUsers().subscribe(data => {
+  //    this.listAccount = data;
+  //  });
+  //}
 }
