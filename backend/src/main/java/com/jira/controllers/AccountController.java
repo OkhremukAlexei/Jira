@@ -16,25 +16,25 @@ public class AccountController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Account> getAll() {
         return accountRepo.findAll();
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Account getOne(@PathVariable("id") Account account) {
         return account;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Account put(@RequestBody Account account) {
         return accountRepo.save(account);
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Account account) {
         accountRepo.delete(account);
     }

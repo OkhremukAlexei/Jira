@@ -16,25 +16,25 @@ public class ProjectController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Iterable<Project> getAll() {
         return projectRepo.findAll();
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Project getOne(@PathVariable("id") Project project) {
         return project;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Project put(@RequestBody Project project) {
         return projectRepo.save(project);
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Project project) {
         projectRepo.delete(project);
     }
