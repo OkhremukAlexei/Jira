@@ -10,12 +10,12 @@ import {TokenStorageService} from "../auth/token-storage.service";
 })
 export class AdminService {
 
-  private adminUrl = 'http://localhost:8080/api/admin/userlist';
+  private userListUrl = 'http://localhost:8080/api/admin/userlist';
 
   constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
 
 
- // getAllUsers(): Observable<PartialAccountInfo[]> {
- //   return this.http.get<PartialAccountInfo[]>(this.adminUrl);
- // }
+  getAllUsers(): Observable<PartialAccountInfo[]> {
+    return this.http.get<PartialAccountInfo[]>(this.userListUrl);
+  }
 }

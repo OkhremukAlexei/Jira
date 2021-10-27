@@ -8,20 +8,32 @@ public class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     private String name;
     private String surname;
     private String email;
 
-    /*@OneToOne  ?
-    private User user;*/
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public int getId() {
+    public Account() {
+    }
+
+    public Account(String name, String surname, String email, User user) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.user = user;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -12,8 +12,15 @@
         <li *ngIf="authority === 'manager'" class="nav-item">
           <a class="nav-link" href="manager">Manager Board</a>
         </li>
-        <li *ngIf="authority === 'admin'" class="nav-item">
-          <a class="nav-link" href="admin">Admin Board</a>
+        <li *ngIf="authority === 'admin'" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown link
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <li><a class="dropdown-item" href="admin/userlist">User List</a></li>
+            <li><a class="dropdown-item" href="#">Project page</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
         </li>
       </ul>
     </div>

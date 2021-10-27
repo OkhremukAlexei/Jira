@@ -1,5 +1,6 @@
 package com.jira.controllers;
 
+import com.jira.repos.AccountRepo;
 import com.jira.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +18,12 @@ public class AdminController {
     @Autowired
     UserRepo userRepo;
 
-    @GetMapping()
+    @Autowired
+    AccountRepo accountRepo;
+
+    @GetMapping("/userlist")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUsers() {
-        return ResponseEntity.ok(userRepo.findAll());
+        return ResponseEntity.ok(accountRepo.findAll());
     }
 }

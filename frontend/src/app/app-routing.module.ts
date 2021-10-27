@@ -4,10 +4,10 @@ import {RouterModule, Routes} from "@angular/router";
 import {HomeComponent} from "./home/home.component";
 import {UserComponent} from "./user/user.component";
 import {ManagerComponent} from "./manager/manager.component";
-import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {AccountComponent} from "./account/account.component";
+import {UserlistComponent} from "./admin/userlist/userlist.component";
 
 const routes: Routes = [
   {
@@ -23,8 +23,8 @@ const routes: Routes = [
     component:ManagerComponent
   },
   {
-    path: 'admin',
-    component:AdminComponent
+    path: 'admin/userlist',
+    component:UserlistComponent
   },
   {
     path: 'account',
