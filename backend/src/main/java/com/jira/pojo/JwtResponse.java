@@ -1,5 +1,6 @@
 package com.jira.pojo;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class JwtResponse {

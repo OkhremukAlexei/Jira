@@ -7,6 +7,7 @@ import {ManagerComponent} from "./manager/manager.component";
 import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
+import {ProjectsComponent} from "./projects/projects.component";
 
 const routes: Routes = [
   {
@@ -32,6 +33,10 @@ const routes: Routes = [
   {
     path: 'signup',
     component:RegisterComponent
+  },
+  {
+    path: 'projects',
+    component:ProjectsComponent
   },
   {
     path: '',
