@@ -23,4 +23,9 @@ export class UserlistComponent implements OnInit {
     });
   }
 
+  setUserManager(id: number): void {
+    console.log("button work" + id);
+
+  }
+
 }

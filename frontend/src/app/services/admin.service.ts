@@ -18,4 +18,6 @@ export class AdminService {
   getAllUsers(): Observable<PartialAccountInfo[]> {
     return this.http.get<PartialAccountInfo[]>(this.userListUrl);
   }
+
+  //getUserInfo(): Observable<>
 }
