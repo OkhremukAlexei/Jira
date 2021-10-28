@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer"})   //нужно разобраться зачем это
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 public class Team implements Serializable {
 
