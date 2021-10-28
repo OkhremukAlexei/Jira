@@ -17,7 +17,6 @@ public class ProjectService {
     TeamRepo teamRepo;
 
     public List<Project> getProjectsList(){
-        teamRepo.countTeamById();
         return projectRepo.findAll();
     }
 
