@@ -1,6 +1,9 @@
 package com.jira.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -49,5 +52,18 @@ public class Team implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return id == team.id && numberOfPersons == team.numberOfPersons;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numberOfPersons);
     }
 }

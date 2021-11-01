@@ -1,7 +1,10 @@
 package com.jira.pojo;
 
+import com.jira.Validator.ValidatorLoginAndPassword;
+
 import java.util.Set;
 
+@ValidatorLoginAndPassword
 public class SignupRequest {
     private String login;
     private String password;

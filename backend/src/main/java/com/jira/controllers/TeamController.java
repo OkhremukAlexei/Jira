@@ -16,25 +16,25 @@ public class TeamController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Iterable<Team> getAll() {
         return teamRepo.findAll();
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Team getOne(@PathVariable("id") Team team) {
         return team;
     }
 
     @PutMapping
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Team put(@RequestBody Team team) {
         return teamRepo.save(team);
     }
 
     @DeleteMapping("{id}")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Team team) {
         teamRepo.delete(team);
     }

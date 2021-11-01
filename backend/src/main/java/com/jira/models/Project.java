@@ -1,11 +1,12 @@
 package com.jira.models;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
-public class Project implements Serializable {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -75,5 +76,18 @@ public class Project implements Serializable {
 
     public void setTeam(Team team) {
         this.team = team;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return id == project.id && progress == project.progress && name.equals(project.name) && linkToGit.equals(project.linkToGit);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, linkToGit, progress);
     }
 }

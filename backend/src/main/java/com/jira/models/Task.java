@@ -1,32 +1,41 @@
 package com.jira.models;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
-public class Task implements Serializable {
+public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
+    @Column(name="id")
+    private int id;
+    @Column(name="title")
     private String title;
+    @Column(name="description")
     private String description;
+    @Column(name="dateTime")
     private LocalDateTime dateTime;
+    @Column(name="spentTime")
     private int spentTime;
-
-   /* @OneToMany   ?
-    private Comment comment;*/
 
     public Task() {
     }
 
-    public long getId() {
+    public Task(int id, String title, String description, LocalDateTime dateTime, int spentTime) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.dateTime = dateTime;
+        this.spentTime = spentTime;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -61,4 +70,20 @@ public class Task implements Serializable {
     public void setSpentTime(int spentTime) {
         this.spentTime = spentTime;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id && spentTime == task.spentTime && title.equals(task.title) && description.equals(task.description) && dateTime.equals(task.dateTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, dateTime, spentTime);
+    }
+
+    /* @OneToMany   ?
+    private Comment comment;*/
 }
