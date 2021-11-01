@@ -8,12 +8,17 @@ import {ProjectsInfo} from "../projects/projects-info";
 })
 export class ProjectsService {
 
-  private projectsUrl = 'http://localhost:8080/api/v1/projects';
+  private projectListUrl = 'http://localhost:8080/api/v1/projects/projectList';
+
+  private projectUrl = 'http://localhost:8080/api/v1/projects/usersProject/';
 
   constructor(private http: HttpClient) { }
 
   getAllProjects() : Observable<ProjectsInfo[]> {
+    return this.http.get<ProjectsInfo[]>(this.projectListUrl, {responseType: "json"});
+  }
 
-    return this.http.get<ProjectsInfo[]>(this.projectsUrl, {responseType: "json"})
+  getProjectFromUserId(id: number) : Observable<ProjectsInfo[]> {
+    return this.http.get<ProjectsInfo[]>(this.projectUrl + id);
   }
 }

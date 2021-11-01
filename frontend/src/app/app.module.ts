@@ -9,11 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { ManagerComponent } from './manager/manager.component';
 import { AdminComponent } from './admin/admin.component';
-import { ProjectsComponent } from './projects/projects.component';
+import { ProjectsComponent } from './projects/project-list/projects.component';
 import { FormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
+import { UserProjectComponent } from './projects/user-project/user-project.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {httpInterceptorProviders} from "./auth/auth-interceptor";
     UserComponent,
     ManagerComponent,
     AdminComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    UserProjectComponent
   ],
   imports: [
     BrowserModule,

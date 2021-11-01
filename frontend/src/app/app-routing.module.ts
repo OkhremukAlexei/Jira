@@ -7,7 +7,7 @@ import {ManagerComponent} from "./manager/manager.component";
 import {AdminComponent} from "./admin/admin.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
-import {ProjectsComponent} from "./projects/projects.component";
+import {ProjectsComponent} from "./projects/project-list/projects.component";
 
 const routes: Routes = [
   {

@@ -20,23 +20,30 @@ public class ProjectController {
     private ProjectRepo projectRepo;
 
     @Autowired
-    ProjectService projectService;
+    private ProjectService projectService;
 
     public ProjectController(ProjectRepo projectRepo) {
         this.projectRepo = projectRepo;
     }
 
-    @GetMapping
+    @GetMapping("/projectList")
     @CrossOrigin
-    @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
-    public List<Project> getAll() {
-        return projectService.getProjectsList();
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(projectService.getProjectsList());
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public Project getOne(@PathVariable("id") Project project) {
         return project;
+    }
+
+    @GetMapping("/usersProject/{id}")
+    @CrossOrigin
+    @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')") //TODO should admin see users project by his id?
+    public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(projectService.getProjectByUserId(id));
     }
 
     @PutMapping
