@@ -41,7 +41,7 @@ public class ProjectController {
 
     @GetMapping("/usersProject/{id}")
     @CrossOrigin
-    @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')") //TODO should admin see users project by his id?
+    @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id){
         return ResponseEntity.ok(projectService.getProjectByUserId(id));
     }
