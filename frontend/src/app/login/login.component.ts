@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
     this.authService.attemptAuth(this.loginInfo).subscribe(
       data => {
         this.tokenStorage.saveToken(data.token);
+        this.tokenStorage.saveId(data.id);
         this.tokenStorage.saveLogin(data.login);
         this.tokenStorage.saveAuthorities(data.roles);
 
