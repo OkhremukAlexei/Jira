@@ -25,7 +25,7 @@ public class AdminController {
         return ResponseEntity.ok(accountRepo.findAll());
     }
 
-    @PostMapping("/userinfo")
+    @PostMapping("/userinfo/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getUser(@RequestParam Long id) {
         if (userRepo.existsById(id)) {
