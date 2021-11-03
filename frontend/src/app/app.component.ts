@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {TokenStorageService} from "./auth/token-storage.service";
 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,14 +9,16 @@ import {TokenStorageService} from "./auth/token-storage.service";
 })
 export class AppComponent {
 
+  isAuthorized: boolean = false;
   roles!: string[];
   authority!: string;
-  title!: string;
+  title = 'frontend';
 
   constructor(private tokenStorage: TokenStorageService) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
+      this.isAuthorized = true;
       this.roles = this.tokenStorage.getAuthorities();
       this.roles.every(role => {
         if (role === 'ROLE_ADMIN') {

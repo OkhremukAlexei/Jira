@@ -1,6 +1,7 @@
 package com.jira.controllers;
 
 import com.jira.configs.jwt.JwtUtils;
+import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.Role;
 import com.jira.models.User;
@@ -8,6 +9,7 @@ import com.jira.pojo.JwtResponse;
 import com.jira.pojo.LoginRequest;
 import com.jira.pojo.MessageResponse;
 import com.jira.pojo.SignupRequest;
+import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.UserDetailsImpl;
@@ -31,16 +33,19 @@ import java.util.stream.Collectors;
 public class AuthController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    AuthenticationManager authenticationManager;
 
     @Autowired
-    private UserRepo userRepo;
+    UserRepo userRepo;
 
     @Autowired
-    private RoleRepo roleRepo;
+    AccountRepo accountRepo;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    RoleRepo roleRepo;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -114,7 +119,23 @@ public class AuthController {
             });
         }
         user.setRoles(roles);
+
+        if (accountRepo.existsByEmail(signupRequest.getEmail())) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: User with this email is exist"));
+        }
+
+        Account account = new Account(
+                signupRequest.getName(),
+                signupRequest.getSurname(),
+                signupRequest.getEmail(),
+                user
+                );
+
         userRepo.save(user);
+        accountRepo.save(account);
+
         return ResponseEntity.ok(new MessageResponse("User CREATED"));
     }
 }
