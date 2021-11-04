@@ -26,6 +26,14 @@ export class AdminService {
   }
 
   getUserInfo(id: number): Observable<UserInfo> {
-    return this.http.post<UserInfo>(this.userInfoUrl, id, httpOptions);
+    return this.http.post<UserInfo>(this.userInfoUrl+'/'+id, id, httpOptions);
+  }
+
+  setManager(id: number): Observable<string> {
+    return this.http.post<string>(this.userListUrl, id);
+  }
+
+  deleteUser(id: number): Observable<string> {
+    return this.http.delete<string>(this.userListUrl+'/'+id, httpOptions);
   }
 }

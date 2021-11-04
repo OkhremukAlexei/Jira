@@ -24,7 +24,7 @@
           <button ngbDropdownItem>More info</button>
           <button ngbDropdownItem (click)="setUserManager(tempAccount.id)">Set manager</button>
           <div class="dropdown-divider"></div>
-          <button ngbDropdownItem>Delete</button>
+          <button ngbDropdownItem (click)="deleteUser(tempAccount.id)">Delete</button>
         </div>
       </div>
     </td>
