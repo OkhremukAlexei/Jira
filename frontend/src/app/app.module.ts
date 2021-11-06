@@ -9,9 +9,12 @@ import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { ManagerComponent } from './manager/manager.component';
 import { AdminComponent } from './admin/admin.component';
-import {FormsModule} from "@angular/forms";
-import {HttpClientModule} from "@angular/common/http";
+import { TasksComponent } from './tasks/tasks.component';
+import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
+import { ProjectsComponent } from './projects/project-list/projects.component';
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
+import { UserProjectComponent } from './projects/user-project/user-project.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import {httpInterceptorProviders} from "./auth/auth-interceptor";
     HomeComponent,
     UserComponent,
     ManagerComponent,
-    AdminComponent
+    AdminComponent,
+    TasksComponent,
+    ProjectsComponent,
+    UserProjectComponent
   ],
   imports: [
     BrowserModule,
