@@ -1,7 +1,5 @@
 package com.jira.models;
 
-import com.jira.Validator.ModelValidator;
-
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,7 +9,6 @@ import java.util.Set;
         uniqueConstraints = {
                 @UniqueConstraint(columnNames = "login"),
         })
-@ModelValidator
 public class User {
 
     @Id
@@ -26,6 +23,10 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Account account;
 
     public User() {}
 

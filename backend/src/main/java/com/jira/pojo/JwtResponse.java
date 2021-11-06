@@ -1,6 +1,5 @@
 package com.jira.pojo;
 
-
 import java.util.List;
 
 public class JwtResponse {
