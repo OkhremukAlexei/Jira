@@ -1,7 +1,6 @@
 package com.jira.Validator;
 
-
-import com.jira.pojo.SignupRequest;
+import com.jira.models.User;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -10,20 +9,20 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class SignUpRequestValidator implements Validator {
+public class ModelUserValidator implements Validator {
     @Override
-    public boolean supports(Class clazz) {
-        return SignupRequest.class.equals(clazz);
+    public boolean supports(Class<?> clazz) {
+        return User.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        SignupRequest col= (SignupRequest) target;
+        User col= (User) target;
         Map<String, String> unmodifiableMap = Map.of("login","[0-9A-Za-z_]","password","[^0-9A-Za-z_]");
         for (Map.Entry<String,String> entry : unmodifiableMap.entrySet()) {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors,entry.getKey() , "empty or has whitespaces");
             try {
-                Field hand = SignupRequest.class.getDeclaredField(entry.getKey());
+                Field hand = User.class.getDeclaredField(entry.getKey());
                 hand.setAccessible(true);
                 String kValue=(String) hand.get(target);
                 hand.setAccessible(false);

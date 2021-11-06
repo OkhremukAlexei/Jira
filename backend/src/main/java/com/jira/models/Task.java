@@ -1,5 +1,7 @@
 package com.jira.models;
 
+
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

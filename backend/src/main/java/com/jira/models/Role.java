@@ -1,5 +1,6 @@
 package com.jira.models;
 
+
 import javax.persistence.*;
 
 @Entity

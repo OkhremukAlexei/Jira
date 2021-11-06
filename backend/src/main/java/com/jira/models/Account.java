@@ -1,9 +1,13 @@
 package com.jira.models;
 
 
+import com.jira.Validator.ModelValidator;
+
 import javax.persistence.*;
 
+
 @Entity
+@ModelValidator
 public class Account {
 
     @Id

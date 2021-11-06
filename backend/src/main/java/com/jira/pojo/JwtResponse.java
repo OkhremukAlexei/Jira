@@ -1,10 +1,8 @@
 package com.jira.pojo;
 
-import com.jira.Validator.ValidatorLoginAndPassword;
 
 import java.util.List;
 
-@ValidatorLoginAndPassword
 public class JwtResponse {
 
     private String token;
