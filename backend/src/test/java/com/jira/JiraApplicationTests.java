@@ -15,9 +15,6 @@ class JiraApplicationTests {
 
 	@Test
 	void contextLoads() {
-		int num = teamRepo.countByTeam_Id(1);
-		int actual = 2;
-		assertEquals(actual, num);
 	}
 
 }
