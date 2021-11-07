@@ -21,6 +21,13 @@
             <li><a class="dropdown-item" href="#">Project page</a></li>
           </ul>
         </li>
+        <li *ngIf="authority" class="nav-item">
+          <a class="nav-link" routerLink="tasks">Task</a>
+        </li>
+
+        <li *ngIf="authority" class="nav-item">
+          <a class="nav-link" routerLink="projects">Project</a>
+        </li>
       </ul>
     </div>
     <div class="collapse navbar-collapse flex-grow-0" id="navbarAccount">

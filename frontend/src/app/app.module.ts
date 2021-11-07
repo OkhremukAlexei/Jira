@@ -11,10 +11,11 @@ import { ManagerComponent } from './manager/manager.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
-import { AccountComponent } from './account/account.component';
+import { TasksComponent } from './tasks/tasks.component';
+import { ProjectsComponent } from './projects/project-list/projects.component';
+import { UserProjectComponent } from './projects/user-project/user-project.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserlistComponent } from './admin/userlist/userlist.component';
-
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { UserlistComponent } from './admin/userlist/userlist.component';
     HomeComponent,
     UserComponent,
     ManagerComponent,
-    AccountComponent,
+    TasksComponent,
+    ProjectsComponent,
+    UserProjectComponent,
     UserlistComponent
   ],
   imports: [

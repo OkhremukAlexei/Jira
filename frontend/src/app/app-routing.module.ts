@@ -8,6 +8,8 @@ import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
 import {AccountComponent} from "./account/account.component";
 import {UserlistComponent} from "./admin/userlist/userlist.component";
+import {TasksComponent} from "./tasks/tasks.component";
+import {ProjectsComponent} from "./projects/project-list/projects.component";
 
 const routes: Routes = [
   {
@@ -37,6 +39,14 @@ const routes: Routes = [
   {
     path: 'signup',
     component:RegisterComponent
+  },
+  {
+    path: 'tasks',
+    component:TasksComponent
+  },
+  {
+    path: 'projects',
+    component:ProjectsComponent
   },
   {
     path: '',
