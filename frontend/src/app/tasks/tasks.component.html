@@ -1,0 +1,31 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Title</th>
+    <th scope="col">Description</th>
+    <th scope="col">Date</th>
+    <th scope="col">Spent Time</th>
+<!--
+    <th scope="col">User</th>
+-->
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tempTasks of listTasks; let i = index">
+    <td>{{i+1}}</td>
+    <td>{{tempTasks.title}}</td>
+    <td>{{tempTasks.description}}</td>
+    <td>{{tempTasks.dateTime}}</td>
+    <td>{{tempTasks.spentTime}}</td>
+   <!-- <td>
+      <table class="table">
+        <tr *ngFor="let tempUsers of tempTasks.users">
+          <td>{{tempUsers.login}}</td>
+          <td *ngFor="let role of tempUsers.roles">{{role.name}}</td>
+        </tr>
+      </table>
+    </td>-->
+  </tr>
+  </tbody>
+</table>
