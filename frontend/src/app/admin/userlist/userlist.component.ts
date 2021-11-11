@@ -29,4 +29,8 @@ export class UserlistComponent implements OnInit {
 
   }
 
+  deleteUser(id: number): void {
+    this.adminService.deleteUser(id).subscribe();
+  }
+
 }

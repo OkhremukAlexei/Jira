@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProjectsInfo} from "../projects-info";
 import {ProjectsService} from "../../services/projects.service";
+import { Router } from '@angular/router';
 import {Subscription} from "rxjs";
 
 @Component({
@@ -12,7 +13,7 @@ export class ProjectsComponent implements OnInit {
 
   listProjects !: ProjectsInfo[];
 
-  constructor(private projectService : ProjectsService) {
+  constructor(private projectService : ProjectsService, private router : Router) {
   }
 
   ngOnInit(): void {
@@ -23,4 +24,11 @@ export class ProjectsComponent implements OnInit {
   }
 
 
+  updateProject(id: number) {
+    this.router.navigate(['projects/project-details', id]);
+  }
+
+  deleteProject(id: number) {
+
+  }
 }

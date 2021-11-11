@@ -6,9 +6,12 @@ import {UserComponent} from "./user/user.component";
 import {ManagerComponent} from "./manager/manager.component";
 import {LoginComponent} from "./login/login.component";
 import {RegisterComponent} from "./register/register.component";
-import {ProjectsComponent} from "./projects/project-list/projects.component";
 import {AccountComponent} from "./account/account.component";
 import {UserlistComponent} from "./admin/userlist/userlist.component";
+import {ProjectsComponent} from "./projects/project-list/projects.component";
+import {UserProjectComponent} from "./projects/user-project/user-project.component";
+import {ProjectDetailsComponent} from "./projects/project-details/project-details.component";
+import {AddProjectComponent} from "./projects/add/add.component";
 
 const routes: Routes = [
   {
@@ -32,16 +35,28 @@ const routes: Routes = [
     component:AccountComponent
   },
   {
+    path: 'projects/project-list',
+    component:ProjectsComponent
+  },
+  {
+    path: 'projects/user-project',
+    component:UserProjectComponent
+  },
+  {
+    path: 'projects/project-details/:id',
+    component:ProjectDetailsComponent
+  },
+  {
+    path: 'projects/add',
+    component:AddProjectComponent
+  },
+  {
     path: 'signin',
     component:LoginComponent
   },
   {
     path: 'signup',
     component:RegisterComponent
-  },
-  {
-    path: 'projects',
-    component:ProjectsComponent
   },
   {
     path: '',

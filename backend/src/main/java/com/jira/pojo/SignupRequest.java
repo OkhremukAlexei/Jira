@@ -1,6 +1,6 @@
 package com.jira.pojo;
 
-import com.jira.Validator.ValidatorLoginAndPassword;
+import com.jira.validator.ValidatorLoginAndPassword;
 
 import java.util.Set;
 

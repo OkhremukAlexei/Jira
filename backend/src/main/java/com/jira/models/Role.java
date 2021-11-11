@@ -18,6 +18,8 @@ public class Role {
 
     public Role() {}
 
+
+
     public Role(Long id, ERole name) {
         this.id = id;
         this.name = name;
@@ -46,13 +48,18 @@ public class Role {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Role)) return false;
+
         Role role = (Role) o;
-        return id.equals(role.id) && name == role.name;
+
+        if (!id.equals(role.id)) return false;
+        return name.equals(role.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name);
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
     }
 }

@@ -3,9 +3,10 @@ package com.jira.models;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Task {
+public class  Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,6 +20,10 @@ public class Task {
     private LocalDateTime dateTime;
     @Column(name="spentTime")
     private int spentTime;
+
+    @ManyToMany(mappedBy = "tasks")
+    private Set<Project> projects;
+
 
     public Task() {
     }

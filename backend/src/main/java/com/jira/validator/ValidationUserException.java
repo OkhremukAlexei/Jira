@@ -1,4 +1,4 @@
-package com.jira.Validator;
+package com.jira.validator;
 
 public class ValidationUserException extends Throwable {
     public ValidationUserException(String s) {

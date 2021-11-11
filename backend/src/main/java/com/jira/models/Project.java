@@ -23,7 +23,7 @@ public class Project {
     )
     private Set<Task> tasks;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)  //fixes
     private Team team;
 
     public Project() {

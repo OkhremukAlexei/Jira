@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ProjectRepo extends JpaRepository<Project,Long> {
     Optional<Project> findProjectByTeam_Users_IdIs(Long id);
+    Optional<Project> findProjectById(Long id);
     Optional<Project> findByTeam_Users_IdIs(Long id);
 }

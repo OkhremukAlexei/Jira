@@ -10,18 +10,14 @@ import { UserComponent } from './user/user.component';
 import { ManagerComponent } from './manager/manager.component';
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { AdminComponent } from './admin/admin.component';
-import { ProjectsComponent } from './projects/project-list/projects.component';
-import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
 import { AccountComponent } from './account/account.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { UserlistComponent } from './admin/userlist/userlist.component';
-
-import { UserProjectComponent } from './projects/user-project/user-project.component';
-
+import {ProjectsComponent} from "./projects/project-list/projects.component";
+import {UserProjectComponent} from "./projects/user-project/user-project.component";
+import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
+import { AddProjectComponent } from './projects/add/add.component';
 
 @NgModule({
   declarations: [
@@ -31,11 +27,12 @@ import { UserProjectComponent } from './projects/user-project/user-project.compo
     HomeComponent,
     UserComponent,
     ManagerComponent,
-    AdminComponent,
-    ProjectsComponent,
-    UserProjectComponent
     AccountComponent,
-    UserlistComponent
+    UserlistComponent,
+    ProjectsComponent,
+    UserProjectComponent,
+    ProjectDetailsComponent,
+    AddProjectComponent
   ],
   imports: [
     BrowserModule,

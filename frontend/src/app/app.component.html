@@ -7,10 +7,22 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav">
         <li *ngIf="authority === 'user'" class="nav-item">
+          <ul class="nav-item"></ul>
           <a class="nav-link" href="user">User Board</a>
+        </li>
+        <li *ngIf="authority === 'user' || authority === 'manager'" class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Project
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="projects/user-project">Project page</a></li>
+          </ul>
         </li>
         <li *ngIf="authority === 'manager'" class="nav-item">
           <a class="nav-link" href="manager">Manager Board</a>
+        </li>
+        <li *ngIf="authority === 'manager'" class="nav-item">
+          <a class="nav-link" href="projects/add">Add project</a>
         </li>
         <li *ngIf="authority === 'admin'" class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -18,7 +30,7 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="admin/userlist">User List</a></li>
-            <li><a class="dropdown-item" href="#">Project page</a></li>
+            <li><a class="dropdown-item" href="projects/project-list">Project page</a></li>
           </ul>
         </li>
       </ul>

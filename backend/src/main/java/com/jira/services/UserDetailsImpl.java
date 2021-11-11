@@ -1,7 +1,7 @@
 package com.jira.services;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jira.Validator.ValidatorLoginAndPassword;
+import com.jira.validator.ValidatorLoginAndPassword;
 import com.jira.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

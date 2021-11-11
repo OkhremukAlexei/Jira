@@ -22,7 +22,14 @@ public class Account {
     public Account() {
     }
 
-    public int getId() {
+    public Account(String name, String surname, String email, User user) {
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
+        this.user = user;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -54,16 +61,5 @@ public class Account {
         this.email = email;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Account account = (Account) o;
-        return id == account.id && name.equals(account.name) && surname.equals(account.surname) && email.equals(account.email);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, surname, email);
-    }
 }

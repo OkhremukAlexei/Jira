@@ -1,7 +1,6 @@
-package com.jira.Validator;
+package com.jira.validator;
 
 import com.jira.pojo.JwtResponse;
-import com.jira.pojo.LoginRequest;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
