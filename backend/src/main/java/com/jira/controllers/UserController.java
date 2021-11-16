@@ -3,6 +3,9 @@ package com.jira.controllers;
 
 import com.jira.models.User;
 import com.jira.repos.UserRepo;
+import com.jira.services.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserRepo userRepo;
+
+    @Autowired
+    private UserDetailsServiceImpl userService;
 
     public UserController(UserRepo userRepo) {
         this.userRepo = userRepo;
@@ -38,5 +44,11 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") User user) {
         userRepo.delete(user);
+    }
+
+    @GetMapping("/roleUser")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getUsers(){
+        return ResponseEntity.ok(userService.getUsers());
     }
 }

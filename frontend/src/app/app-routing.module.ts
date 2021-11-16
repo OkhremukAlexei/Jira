@@ -12,6 +12,7 @@ import {ProjectsComponent} from "./projects/project-list/projects.component";
 import {UserProjectComponent} from "./projects/user-project/user-project.component";
 import {ProjectDetailsComponent} from "./projects/project-details/project-details.component";
 import {AddProjectComponent} from "./projects/add/add.component";
+import {PeopleComponent} from "./projects/people/people.component";
 
 const routes: Routes = [
   {
@@ -49,6 +50,10 @@ const routes: Routes = [
   {
     path: 'projects/add',
     component:AddProjectComponent
+  },
+  {
+    path: 'projects/people',
+    component:PeopleComponent
   },
   {
     path: 'signin',

@@ -6,6 +6,7 @@ import com.jira.models.User;
 import com.jira.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,16 +17,31 @@ public class TeamDetailsServiceImpl {
     @Autowired
     private TeamRepo teamRepo;
 
-    public Team createNewTeam(User user){
+    public void createNewTeam(User user){
         Team team = new Team();
-
         List<User> users = new ArrayList<>();
+
         users.add(user);
 
         team.setNumberOfPersons(1);
         team.setUsers(users);
 
-        return team;
+        teamRepo.save(team);
+    }
+
+    @Transactional
+    public Team getNewTeam(User user){
+        Team team = new Team();
+        List<User> users = new ArrayList<>();
+
+        users.add(user);
+
+        team.setNumberOfPersons(1);
+        team.setUsers(users);
+
+        teamRepo.save(team);
+
+        return teamRepo.findFirstByOrderByIdDesc();
     }
 
     public void countNumOfUsers(){

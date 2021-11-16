@@ -17,8 +17,8 @@ export class ProjectsService {
     return this.http.get<ProjectsInfo[]>(`${this.projectUrl}/projectList`, {responseType: "json"});
   }
 
-  getProjectFromUserId(id: any) : Observable<ProjectsInfo> {
-      return this.http.get<ProjectsInfo>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
+  getProjectsFromUserId(id: any) : Observable<ProjectsInfo[]> {
+    return this.http.get<ProjectsInfo[]>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
   }
 
   getProjectById(id: any) {
@@ -26,10 +26,14 @@ export class ProjectsService {
   }
 
   updateProject(id: number, data: ProjectsInfo) {
-    return this.http.put(`${this.projectUrl}/${id}`, data).subscribe(data=>console.log(data));
+    return this.http.put(`${this.projectUrl}/${id}`, data).subscribe(data => console.log(data));
   }
 
   addProject(data: ProjectsInfo) {
-    return this.http.post(`${this.projectUrl}`, data)
+    return this.http.post(`${this.projectUrl}`, data).subscribe(data => console.log(data));
+  }
+
+  addPeopleToProject(id: number, data: ProjectsInfo){
+    return this.http.put(`${this.projectUrl}/people/${id}`, data).subscribe(data => console.log(data));
   }
 }

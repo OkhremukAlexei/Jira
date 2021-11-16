@@ -11,7 +11,7 @@
           <form class="was-validated" name="form" *ngIf="currentProject" (ngSubmit)="f.form.valid && addProject()"  #f="ngForm" novalidate>
             <div class="form-group">
               <label>Project name</label>
-              <input type="text" class="form-control" name="name" [(ngModel)]="currentProject.name" #name="ngModel" required/>
+              <input type="text" class="form-control" name="nameProject" [(ngModel)]="currentProject.name" #name="ngModel" required/>
               <div *ngIf="f.submitted && name.invalid">
                 <div *ngIf="name.errors.required"></div>
               </div>

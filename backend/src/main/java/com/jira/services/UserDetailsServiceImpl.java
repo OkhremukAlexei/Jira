@@ -1,13 +1,17 @@
 package com.jira.services;
 
+import com.jira.models.ERole;
 import com.jira.models.User;
 import com.jira.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -21,6 +25,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepo.findByLogin(login)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + login));
         return UserDetailsImpl.build(user);
+    }
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser(){
+        UserDetails principal = (UserDetails) SecurityContextHolder.
+                getContext().getAuthentication().getPrincipal();
+        return userRepo.findByLogin(principal.getUsername())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
+    }
+
+    public List<User> getUsers() {
+        List<User> users = userRepo.findBySpecificRoles(ERole.ROLE_USER);
+
+        return users;
     }
 
 }

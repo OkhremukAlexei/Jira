@@ -18,6 +18,8 @@ import {ProjectsComponent} from "./projects/project-list/projects.component";
 import {UserProjectComponent} from "./projects/user-project/user-project.component";
 import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
 import { AddProjectComponent } from './projects/add/add.component';
+import { PeopleComponent } from './projects/people/people.component';
+import {SearchPipe} from "./projects/people/search.pipe";
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { AddProjectComponent } from './projects/add/add.component';
     ProjectsComponent,
     UserProjectComponent,
     ProjectDetailsComponent,
-    AddProjectComponent
+    AddProjectComponent,
+    PeopleComponent,
+    SearchPipe
   ],
   imports: [
     BrowserModule,
@@ -41,7 +45,9 @@ import { AddProjectComponent } from './projects/add/add.component';
     HttpClientModule,
     NgbModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

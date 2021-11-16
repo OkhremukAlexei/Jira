@@ -12,4 +12,6 @@ public interface TeamRepo extends CrudRepository<Team,Integer> {
     int countByTeam_Id(@Param("id") long id);
 
     Team findById(long teamId);
+
+    Team findFirstByOrderByIdDesc();
 }

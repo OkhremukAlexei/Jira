@@ -14,6 +14,7 @@ export class AddProjectComponent implements OnInit {
   constructor(private projectService : ProjectsService) { }
 
   ngOnInit(): void {
+
   }
 
   addProject(): void{

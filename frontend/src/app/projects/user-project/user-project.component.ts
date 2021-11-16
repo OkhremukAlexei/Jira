@@ -11,17 +11,17 @@ import {Observable} from "rxjs";
 })
 export class UserProjectComponent implements OnInit {
 
-  project ?: ProjectsInfo;
+  listProjects !: ProjectsInfo[];
 
   constructor(private projectService : ProjectsService, private token: TokenStorageService) { }
 
   ngOnInit(): void {
-    this.getProject();
+    this.getProjects();
   }
 
-  getProject() : void {
-    this.projectService.getProjectFromUserId(this.token.getId()).
-      subscribe(project => this.project = project);
+  getProjects() : void {
+    this.projectService.getProjectsFromUserId(this.token.getId()).
+      subscribe(data => {this.listProjects = data});
   }
 
 }

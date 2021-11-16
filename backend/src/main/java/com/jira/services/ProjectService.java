@@ -7,6 +7,7 @@ import com.jira.pojo.util.RoleHelper;
 import com.jira.repos.ProjectRepo;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.cassandra.CassandraProperties;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,9 @@ public class ProjectService {
 
     @Autowired
     private TeamDetailsServiceImpl teamService;
+
+    @Autowired
+    private UserDetailsServiceImpl userService;
 
     @Transactional
     public List<ProjectDto> getProjectsList(){
@@ -45,6 +49,20 @@ public class ProjectService {
     }
 
     @Transactional
+    public List<ProjectDto> getProjectsByUserId(Long userId){
+        List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
+        teamService.countNumOfUsers(projects);
+
+        List<ProjectDto> projectDtoList = new ArrayList<>();
+
+        for(Project project: projects){
+            projectDtoList.add(ProjectDto.build(project));
+        }
+
+        return projectDtoList;
+    }
+
+    @Transactional
     public ProjectDto getOne(Long id){
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
@@ -58,8 +76,9 @@ public class ProjectService {
         Project project = new Project();
         project.setName(projectRequest.getName());
         project.setLinkToGit(projectRequest.getLinkToGit());
-//      project.setProgress(countProgress);
-        project.setTeam(teamService.createNewTeam(projectRequest.getManager()));
+        project.setProgress(0);  //TODO count progress
+
+        project.setTeam(teamService.getNewTeam(userService.getCurrentUser()));
 
         projectRepo.save(project);
 
@@ -77,5 +96,11 @@ public class ProjectService {
 
         return ProjectDto.build(project);
     }
+
+ /*   @Transactional
+    public ProjectDto addPeople(ProjectDto projectRequest){
+
+        return ProjectDto.build(project);
+    }*/
 
 }

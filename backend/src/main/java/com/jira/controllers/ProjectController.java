@@ -1,6 +1,7 @@
 package com.jira.controllers;
 
 import com.jira.models.Project;
+import com.jira.models.User;
 import com.jira.pojo.MessageResponse;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
@@ -8,6 +9,7 @@ import com.jira.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.ResponseEntity.ok;
@@ -42,7 +44,7 @@ public class ProjectController {
     @GetMapping("/usersProject/{id}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
     public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id){
-        return ResponseEntity.ok(projectService.getProjectByUserId(id));
+        return ResponseEntity.ok(projectService.getProjectsByUserId(id));
     }
 
     @PutMapping("{id}")
@@ -63,5 +65,9 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.addProject(project));
     }
 
-    
+  /*  @PutMapping("/people")
+    @PreAuthorize("hasRole('MANAGER')")
+    public ResponseEntity<?> addPeople(@RequestBody ProjectDto project){
+        return ResponseEntity.ok(projectService.addPeople(project));
+    }*/
 }

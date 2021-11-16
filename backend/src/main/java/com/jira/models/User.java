@@ -3,6 +3,7 @@ package com.jira.models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -29,6 +30,9 @@ public class User implements Serializable {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @PrimaryKeyJoinColumn
     private Account account;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Team> teams;
 
     public User() {}
 

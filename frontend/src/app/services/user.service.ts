@@ -2,20 +2,24 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 
+import {PartialAccountInfo} from "../admin/partial-account-info";
+import {UserInfo} from "../projects/people/users-info";
+
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  private userUrl = 'http://localhost:8080/api/test/user';
+  private userTestUrl = 'http://localhost:8080/api/test/user';
   private managerUrl = 'http://localhost:8080/api/test/manager';
   private adminUrl = 'http://localhost:8080/api/test/admin';
 
+  private userUrl = 'http://localhost:8080/api/v1/users';
 
   constructor(private http: HttpClient) { }
 
   getUserBoard(): Observable<string> {
-    return this.http.get(this.userUrl, {responseType: 'text'});
+    return this.http.get(this.userTestUrl, {responseType: 'text'});
   }
 
   getManagerBoard(): Observable<string> {
@@ -24,6 +28,10 @@ export class UserService {
 
   getAdminBoard(): Observable<string> {
     return this.http.get(this.adminUrl, {responseType: 'text'});
+  }
+
+  getUsers(): Observable<UserInfo[]>{
+    return this.http.get<UserInfo[]>(`${this.userUrl}/roleUser`, {responseType: "json"})
   }
 
 
