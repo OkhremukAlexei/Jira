@@ -12,12 +12,18 @@ import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
 import { AccountComponent } from './account/account.component';
+/*
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+*/
 import { UserlistComponent } from './admin/userlist/userlist.component';
 import {ProjectsComponent} from "./projects/project-list/projects.component";
 import {UserProjectComponent} from "./projects/user-project/user-project.component";
 import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
 import { AddProjectComponent } from './projects/add/add.component';
+
+import {TasksComponent} from "./tasks/task-list/tasks.component";
+import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
+import { AddTaskComponent } from './tasks/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +38,17 @@ import { AddProjectComponent } from './projects/add/add.component';
     ProjectsComponent,
     UserProjectComponent,
     ProjectDetailsComponent,
-    AddProjectComponent
+    AddProjectComponent/*,
+    TasksComponent,
+    TaskDetailsComponent,
+    AddTaskComponent*/
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+   /* NgbModule*/
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

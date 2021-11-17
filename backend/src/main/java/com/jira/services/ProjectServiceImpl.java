@@ -9,18 +9,20 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class ProjectService {
+@Service("ProjectServiceImpl")
+public class ProjectServiceImpl implements ProjectService{
     @Autowired
     private ProjectRepo projectRepo ;
 
     @Autowired
     private TeamDetailsServiceImpl teamService;
 
+    @Override
     @Transactional
     public List<ProjectDto> getProjectsList(){
         List<Project> projects = projectRepo.findAll();
@@ -35,6 +37,7 @@ public class ProjectService {
         return projectDtoList;
     }
 
+    @Override
     @Transactional
     public ProjectDto getProjectByUserId(long userId){
         Project project = projectRepo.findProjectByTeam_Users_IdIs(userId)
@@ -44,6 +47,7 @@ public class ProjectService {
         return ProjectDto.build(project);
     }
 
+    @Override
     @Transactional
     public ProjectDto getOne(Long id){
         Project project = projectRepo.findById(id)
@@ -53,6 +57,7 @@ public class ProjectService {
         return ProjectDto.build(project);
     }
 
+    @Override
     @Transactional
     public ProjectDto addProject(ProjectDto projectRequest){
         Project project = new Project();
@@ -66,6 +71,7 @@ public class ProjectService {
         return ProjectDto.build(project);
     }
 
+    @Override
     @Transactional
     public ProjectDto updateProject(Long id, ProjectDto projectRequest){
         Project project = projectRepo.findById(id)
@@ -76,6 +82,12 @@ public class ProjectService {
         projectRepo.save(project);
 
         return ProjectDto.build(project);
+    }
+
+    @Override
+    @Transactional
+    public void delete( Project project) {
+        projectRepo.delete(project);
     }
 
 }

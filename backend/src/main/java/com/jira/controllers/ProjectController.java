@@ -1,11 +1,12 @@
 package com.jira.controllers;
 
 import com.jira.models.Project;
-import com.jira.pojo.MessageResponse;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
+import com.jira.services.ProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,7 @@ public class ProjectController {
     private ProjectRepo projectRepo;
 
     @Autowired
+    @Qualifier("ProjectServiceImpl")
     private ProjectService projectService;
 
     public ProjectController(ProjectRepo projectRepo) {
@@ -54,7 +56,7 @@ public class ProjectController {
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
     public void delete(@PathVariable("id") Project project) {
-        projectRepo.delete(project);
+        projectService.delete(project);
     }
 
     @PostMapping

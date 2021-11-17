@@ -12,6 +12,9 @@ import {ProjectsComponent} from "./projects/project-list/projects.component";
 import {UserProjectComponent} from "./projects/user-project/user-project.component";
 import {ProjectDetailsComponent} from "./projects/project-details/project-details.component";
 import {AddProjectComponent} from "./projects/add/add.component";
+import {TasksComponent} from "./tasks/task-list/tasks.component";
+import {TaskDetailsComponent} from "./tasks/task-details/task-details.component";
+import {AddTaskComponent} from "./tasks/add-task/add-task.component";
 
 const routes: Routes = [
   {
@@ -50,6 +53,18 @@ const routes: Routes = [
     path: 'projects/add',
     component:AddProjectComponent
   },
+ /* {
+    path: 'tasks/task-list',
+    component:TasksComponent
+  },
+  {
+    path: 'tasks/task-details/:id',
+    component:TaskDetailsComponent
+  },
+  {
+    path: 'tasks/add-task',
+    component:AddTaskComponent
+  },*/
   {
     path: 'signin',
     component:LoginComponent

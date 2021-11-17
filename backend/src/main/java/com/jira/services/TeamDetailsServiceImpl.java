@@ -5,17 +5,20 @@ import com.jira.models.Team;
 import com.jira.models.User;
 import com.jira.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Service
-public class TeamDetailsServiceImpl {
+@Service("TeamDetailsServiceImpl")
+public class TeamDetailsServiceImpl implements TeamService{
     @Autowired
     private TeamRepo teamRepo;
 
+    @Override
     public Team createNewTeam(User user){
         Team team = new Team();
 
@@ -28,6 +31,7 @@ public class TeamDetailsServiceImpl {
         return team;
     }
 
+    @Override
     public void countNumOfUsers(){
         Iterable<Team> teamList = teamRepo.findAll();
         for (Team team: teamList) {
@@ -37,6 +41,7 @@ public class TeamDetailsServiceImpl {
         }
     }
 
+    @Override
     public void countNumOfUsers(Project project){
         long teamId = project.getTeam().getId();
         int numOfUsers = teamRepo.countByTeam_Id(teamId);
@@ -45,10 +50,30 @@ public class TeamDetailsServiceImpl {
         teamRepo.save(team);
     }
 
+    @Override
     public void countNumOfUsers(List<Project> projects){
         for (Project project: projects) {
             countNumOfUsers(project);
         }
+    }
+
+    public Iterable<Team> getAll() {
+        return teamRepo.findAll();
+    }
+
+
+    public Team getOne(Team team) {
+        return teamRepo.findById(team.getId());
+    }
+
+
+    public Team put( Team team) {
+        return teamRepo.save(team);
+    }
+
+
+    public void delete( Team team) {
+        teamRepo.delete(team);
     }
 
 }
