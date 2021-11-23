@@ -1,0 +1,33 @@
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">Name Surname</th>
+    <th scope="col">Email</th>
+    <th scope="col">Actions</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let tempAccount of listAccount">
+    <td>{{tempAccount.id}}</td>
+    <td>
+      {{tempAccount.name}} {{tempAccount.surname}}
+    </td>
+    <td>
+      {{tempAccount.email}}
+    </td>
+    <td class="overflow-hidden">
+      <div ngbDropdown container="body">
+        <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
+        <div ngbDropdownMenu>
+          <button ngbDropdownItem>More info</button>
+          <button ngbDropdownItem (click)="setUserManager(tempAccount.id)">Set manager</button>
+          <div class="dropdown-divider"></div>
+          <button ngbDropdownItem (click)="deleteUser(tempAccount.id)">Delete</button>
+        </div>
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -8,13 +8,22 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { UserComponent } from './user/user.component';
 import { ManagerComponent } from './manager/manager.component';
-import { AdminComponent } from './admin/admin.component';
-import { TasksComponent } from './tasks/tasks.component';
-import { FormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
-import { ProjectsComponent } from './projects/project-list/projects.component';
+import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 import {httpInterceptorProviders} from "./auth/auth-interceptor";
-import { UserProjectComponent } from './projects/user-project/user-project.component';
+import { AccountComponent } from './account/account.component';
+/*
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+*/
+import { UserlistComponent } from './admin/userlist/userlist.component';
+import {ProjectsComponent} from "./projects/project-list/projects.component";
+import {UserProjectComponent} from "./projects/user-project/user-project.component";
+import { ProjectDetailsComponent } from './projects/project-details/project-details.component';
+import { AddProjectComponent } from './projects/add/add.component';
+
+import {TasksComponent} from "./tasks/task-list/tasks.component";
+import { TaskDetailsComponent } from './tasks/task-details/task-details.component';
+import { AddTaskComponent } from './tasks/add-task/add-task.component';
 
 @NgModule({
   declarations: [
@@ -24,16 +33,22 @@ import { UserProjectComponent } from './projects/user-project/user-project.compo
     HomeComponent,
     UserComponent,
     ManagerComponent,
-    AdminComponent,
-    TasksComponent,
+    AccountComponent,
+    UserlistComponent,
     ProjectsComponent,
-    UserProjectComponent
+    UserProjectComponent,
+    ProjectDetailsComponent,
+    AddProjectComponent/*,
+    TasksComponent,
+    TaskDetailsComponent,
+    AddTaskComponent*/
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+   /* NgbModule*/
   ],
   providers: [httpInterceptorProviders],
   bootstrap: [AppComponent]

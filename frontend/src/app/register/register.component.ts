@@ -11,6 +11,7 @@ export class RegisterComponent implements OnInit {
 
   form: any = {};
   signupInfo!: SignUpInfo;
+  isManager = false;
   isSignedUp = false;
   isSignUpFailed = false;
   errorMessage = '';
@@ -19,13 +20,20 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() { }
 
+  onChange() {
+    this.form.isManager = !this.form.isManager;
+  }
+
   onSubmit() {
     console.log(this.form);
 
     this.signupInfo = new SignUpInfo(
       this.form.name,
+      this.form.surname,
+      this.form.email,
       this.form.login,
-      this.form.password);
+      this.form.password,
+      this.form.isManager);
 
     this.authService.signUp(this.signupInfo).subscribe(
       data => {

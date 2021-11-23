@@ -1,5 +1,8 @@
 package com.jira.pojo;
 
+import com.jira.validator.ValidatorLoginAndPassword;
+
+@ValidatorLoginAndPassword
 public class LoginRequest {
 
     private String login;

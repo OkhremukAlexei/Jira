@@ -1,27 +1,22 @@
 export class ProjectsInfo {
+  id: number;
   name: string;
   linkToGit: string;
   progress: number;
-  team: TeamInfo;
+  numOfPersonsInTeam: number;
+  users: UserInfo[];
+  manager: UserInfo;
 
 
-  constructor(name: string, linkToGit: string, progress: number, team: TeamInfo) {
+  constructor(id: number,name: string, linkToGit: string, progress: number, numOfPersonsInTeam: number, users: UserInfo[], manager: UserInfo) {
+    this.id = id;
     this.name = name;
     this.linkToGit = linkToGit;
     this.progress = progress;
-    this.team = team;
+    this.numOfPersonsInTeam = numOfPersonsInTeam;
+    this.users = users;
+    this.manager = manager
   }
-}
-
-export class TeamInfo{
-  numberOfPersons: number;
-  users: UserInfo[];
-
-  constructor(numberOfPersons: number, users: UserInfo[]) {
-    this.numberOfPersons = numberOfPersons;
-    this.users = users
-  }
-
 }
 
 export class UserInfo{
