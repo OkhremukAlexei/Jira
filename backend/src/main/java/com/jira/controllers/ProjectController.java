@@ -1,18 +1,13 @@
 package com.jira.controllers;
 
 import com.jira.models.Project;
-import com.jira.models.User;
-import com.jira.pojo.MessageResponse;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-
-import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -64,10 +59,12 @@ public class ProjectController {
     public ResponseEntity<?> add(@RequestBody ProjectDto project) {
         return ResponseEntity.ok(projectService.addProject(project));
     }
+}
 
   /*  @PutMapping("/people")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> addPeople(@RequestBody ProjectDto project){
         return ResponseEntity.ok(projectService.addPeople(project));
-    }*/
-}
+    }*
+
+*/
