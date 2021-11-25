@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {TasksInfo} from "../tasks/tasks-info";
+import {TasksInfo} from "../models/tasks-info";
 import {catchError, map, tap} from "rxjs/operators";
 
 @Injectable({

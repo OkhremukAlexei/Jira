@@ -7,7 +7,8 @@ import com.jira.models.User;
 import java.util.List;
 
 public interface TeamService {
-    Team createNewTeam(User user);
+    void createNewTeam(User user);
+    Team getNewTeam(User user);
     void countNumOfUsers();
     void countNumOfUsers(Project project);
     void countNumOfUsers(List<Project> projects);

@@ -16,6 +16,9 @@ import {ProjectListComponent} from "../../pages/projects/project-list/project-li
 import {PeopleComponent} from "../../pages/projects/people/people.component";
 import {AddProjectComponent} from "../../pages/projects/add-project/add-project.component";
 import {SearchPipe} from "../../pipes/search.pipe";
+import {TasksComponent} from "../../pages/tasks/task-list/tasks.component";
+import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.component";
+import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -34,7 +37,10 @@ import {SearchPipe} from "../../pipes/search.pipe";
         ProjectListComponent,
         PeopleComponent,
         AddProjectComponent,
-        SearchPipe
+        SearchPipe,
+        TasksComponent,
+        TaskDetailsComponent,
+        AddTaskComponent
     ]
 })
 

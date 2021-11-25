@@ -22,6 +22,9 @@ public class ProjectServiceImpl implements ProjectService{
     @Autowired
     private TeamDetailsServiceImpl teamService;
 
+    @Autowired
+    private UserDetailsServiceImpl userService;
+
     @Override
     @Transactional
     public List<ProjectDto> getProjectsList(){
@@ -37,6 +40,7 @@ public class ProjectServiceImpl implements ProjectService{
         return projectDtoList;
     }
 
+    /*
     @Override
     @Transactional
     public ProjectDto getProjectByUserId(long userId){
@@ -45,6 +49,22 @@ public class ProjectServiceImpl implements ProjectService{
         teamService.countNumOfUsers(project);
 
         return ProjectDto.build(project);
+    }
+    */
+
+    @Override
+    @Transactional
+    public List<ProjectDto> getProjectsByUserId(Long userId){
+        List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
+        teamService.countNumOfUsers(projects);
+
+        List<ProjectDto> projectDtoList = new ArrayList<>();
+
+        for(Project project: projects){
+            projectDtoList.add(ProjectDto.build(project));
+        }
+
+        return projectDtoList;
     }
 
     @Override
@@ -63,8 +83,9 @@ public class ProjectServiceImpl implements ProjectService{
         Project project = new Project();
         project.setName(projectRequest.getName());
         project.setLinkToGit(projectRequest.getLinkToGit());
-//      project.setProgress(countProgress);
-        project.setTeam(teamService.createNewTeam(projectRequest.getManager()));
+        project.setProgress(0);  //TODO count progress
+
+        project.setTeam(teamService.getNewTeam(userService.getCurrentUser()));
 
         projectRepo.save(project);
 
@@ -83,6 +104,11 @@ public class ProjectServiceImpl implements ProjectService{
 
         return ProjectDto.build(project);
     }
+
+ /*   @Transactional
+    public ProjectDto addPeople(ProjectDto projectRequest){
+        return ProjectDto.build(project);
+    }*/
 
     @Override
     @Transactional

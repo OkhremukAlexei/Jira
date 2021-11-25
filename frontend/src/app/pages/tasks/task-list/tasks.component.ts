@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {TasksInfo} from "../tasks-info";
-import {TasksService} from "../../services/tasks.service";
+import {TasksInfo} from "../../../models/tasks-info";
+import {TasksService} from "../../../services/tasks.service";
 import { Router } from '@angular/router';
 import {Subscription} from "rxjs";
 

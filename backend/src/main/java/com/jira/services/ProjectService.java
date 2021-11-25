@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ProjectService {
     List<ProjectDto> getProjectsList();
-    ProjectDto getProjectByUserId(long userId);
+    List<ProjectDto> getProjectsByUserId(Long userId);
     ProjectDto getOne(Long id);
     ProjectDto addProject(ProjectDto projectRequest);
     ProjectDto updateProject(Long id, ProjectDto projectRequest);

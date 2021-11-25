@@ -6,6 +6,7 @@ import com.jira.models.User;
 import com.jira.repos.TeamRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class TeamDetailsServiceImpl implements TeamService{
     private TeamRepo teamRepo;
 
     @Override
-    public Team createNewTeam(User user){
+    public void createNewTeam(User user){
         Team team = new Team();
         List<User> users = new ArrayList<>();
 
@@ -29,6 +30,7 @@ public class TeamDetailsServiceImpl implements TeamService{
         teamRepo.save(team);
     }
 
+    @Override
     @Transactional
     public Team getNewTeam(User user){
         Team team = new Team();
@@ -70,21 +72,22 @@ public class TeamDetailsServiceImpl implements TeamService{
         }
     }
 
+    @Override
     public Iterable<Team> getAll() {
         return teamRepo.findAll();
     }
 
-
+    @Override
     public Team getOne(Team team) {
         return teamRepo.findById(team.getId());
     }
 
-
+    @Override
     public Team put( Team team) {
         return teamRepo.save(team);
     }
 
-
+    @Override
     public void delete( Team team) {
         teamRepo.delete(team);
     }

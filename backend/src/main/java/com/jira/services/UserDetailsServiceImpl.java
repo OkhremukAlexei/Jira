@@ -35,8 +35,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + principal.getUsername()));
     }
 
-    public List<User> getUsers() {
-        return userRepo.findBySpecificRoles(ERole.ROLE_USER);
-    }
-
 }
