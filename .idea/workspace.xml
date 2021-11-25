@@ -29,42 +29,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3aa3abd9-4e5b-4def-a7b2-78676576126e" name="Default Changelist" comment="fixed preauthorisze">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/HELP.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/services/tasks.service.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/services/tasks.service.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/tasks-info.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/tasks.component.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/tasks.component.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/tasks.component.spec.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/tasks.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/app/tasks/team-info.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/jira.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/controllers/AccountController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/controllers/ProjectController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/controllers/TaskController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/controllers/TeamController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/controllers/UserController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Account.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Comment.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Project.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Role.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Status.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Task.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/Team.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/models/User.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/AccountRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/CommentRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/ProjectRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/TaskRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/TeamRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/jira/repos/UserRepo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app-routing.module.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.component.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/app/app.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/app.module.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
     </list>
     <list id="4083ca39-17ba-489f-b92f-ca81cbde5877" name="added any fields to models" comment="added any fields to models" />
     <list id="75e8e135-dd4c-4b2d-b5ed-04588f4d7fed" name="Revert &quot;Create README.md&quot;" comment="Revert &quot;Create README.md&quot;&#10;&#10;This reverts commit 44a59a61" />
@@ -120,6 +87,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
+    <property name="ExpandSpringBootSpringBootSettingsPanel" value="false" />
     <property name="RequestMappingsPanelOrder0" value="0" />
     <property name="RequestMappingsPanelOrder1" value="1" />
     <property name="RequestMappingsPanelWidth0" value="75" />
@@ -128,7 +97,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/frontend" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -158,8 +127,10 @@
       </method>
     </configuration>
     <configuration name="JiraApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="jira" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.jira.JiraApplication" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -192,6 +163,7 @@
       <workItem from="1635688804412" duration="830000" />
       <workItem from="1635692322806" duration="884000" />
       <workItem from="1636045834006" duration="205000" />
+      <workItem from="1637854475851" duration="526000" />
     </task>
     <task id="LOCAL-00001" summary="app created">
       <created>1633796454393</created>
@@ -308,103 +280,5 @@
     <MESSAGE value="added preauthorisze" />
     <MESSAGE value="fixed preauthorisze" />
     <option name="LAST_COMMIT_MESSAGE" value="fixed preauthorisze" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="440" y="94" key="#Project_Structure" timestamp="1636045922788">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="440" y="94" key="#Project_Structure/0.0.1920.1040@0.0.1920.1040" timestamp="1636045922788" />
-    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1636046018217">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="178" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1636046018217" />
-    <state x="765" y="203" key="#com.intellij.ide.util.MemberChooser" timestamp="1634059889267">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="765" y="203" key="#com.intellij.ide.util.MemberChooser/0.0.1920.1040@0.0.1920.1040" timestamp="1634059889267" />
-    <state x="555" y="85" key="CommitChangelistDialog2" timestamp="1634125623408">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="555" y="85" key="CommitChangelistDialog2/0.0.1920.1040@0.0.1920.1040" timestamp="1634125623408" />
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog" timestamp="1633862266781">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="DiffContextDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633862266781" />
-    <state x="740" y="261" key="FileChooserDialogImpl" timestamp="1634483448274">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="740" y="261" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1634483448274" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1635093362385">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362385" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1635093362384">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362384" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1635093362384">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362384" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1635093362385">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362385" />
-    <state width="1877" height="282" key="GridCell.Tab.1.bottom" timestamp="1635093362387">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362387" />
-    <state width="1877" height="282" key="GridCell.Tab.1.center" timestamp="1635093362386">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362386" />
-    <state width="1877" height="282" key="GridCell.Tab.1.left" timestamp="1635093362385">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362385" />
-    <state width="1877" height="282" key="GridCell.Tab.1.right" timestamp="1635093362387">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state width="1877" height="282" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1635093362387" />
-    <state x="184" y="86" key="MergeDialog" timestamp="1634125599682">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="184" y="86" key="MergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1634125599682" />
-    <state x="598" y="281" key="MultipleFileMergeDialog" timestamp="1634125599698">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="598" y="281" key="MultipleFileMergeDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1634125599698" />
-    <state x="461" y="164" key="SettingsEditor" timestamp="1634483387532">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="461" y="164" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1634483387532" />
-    <state x="92" y="92" width="1736" height="856" key="ShowDiffWithBranchDialog" timestamp="1633861587726">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="92" y="92" width="1736" height="856" key="ShowDiffWithBranchDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633861587726" />
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2" timestamp="1635155560831">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="552" y="252" key="Vcs.Push.Dialog.v2/0.0.1920.1040@0.0.1920.1040" timestamp="1635155560831" />
-    <state x="777" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1635093260215">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="777" y="433" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1920.1040@0.0.1920.1040" timestamp="1635093260215" />
-    <state x="739" y="232" key="git4idea.branch.GitSmartOperationDialog" timestamp="1634413911681">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="739" y="232" key="git4idea.branch.GitSmartOperationDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1634413911681" />
-    <state x="761" y="426" key="git4idea.remote.GitConfigureRemotesDialog" timestamp="1633796723586">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="761" y="426" key="git4idea.remote.GitConfigureRemotesDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1633796723586" />
-    <state x="342" y="180" key="new project wizard" timestamp="1634220874853">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="342" y="180" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1634220874853" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1634220351521">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1634220351521" />
   </component>
 </project>
