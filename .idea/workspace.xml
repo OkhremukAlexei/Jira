@@ -28,10 +28,8 @@
     </select>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3aa3abd9-4e5b-4def-a7b2-78676576126e" name="Default Changelist" comment="fixed preauthorisze">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.gitignore" afterDir="false" />
+    <list default="true" id="3aa3abd9-4e5b-4def-a7b2-78676576126e" name="Default Changelist" comment="some fixes">
+      <change beforePath="$PROJECT_DIR$/backend/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.idea/.gitignore" afterDir="false" />
     </list>
     <list id="4083ca39-17ba-489f-b92f-ca81cbde5877" name="added any fields to models" comment="added any fields to models" />
     <list id="75e8e135-dd4c-4b2d-b5ed-04588f4d7fed" name="Revert &quot;Create README.md&quot;" comment="Revert &quot;Create README.md&quot;&#10;&#10;This reverts commit 44a59a61" />
@@ -86,6 +84,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_MARK_IGNORED_FILES_AS_EXCLUDED" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="ExpandSpringBootSpringBootSettingsPanel" value="false" />
@@ -163,7 +162,7 @@
       <workItem from="1635688804412" duration="830000" />
       <workItem from="1635692322806" duration="884000" />
       <workItem from="1636045834006" duration="205000" />
-      <workItem from="1637854475851" duration="526000" />
+      <workItem from="1637854475851" duration="1053000" />
     </task>
     <task id="LOCAL-00001" summary="app created">
       <created>1633796454393</created>
@@ -242,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635155554095</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="some fixes">
+      <created>1637855184738</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1637855184738</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,6 +285,7 @@
     <MESSAGE value="commit" />
     <MESSAGE value="added preauthorisze" />
     <MESSAGE value="fixed preauthorisze" />
-    <option name="LAST_COMMIT_MESSAGE" value="fixed preauthorisze" />
+    <MESSAGE value="some fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="some fixes" />
   </component>
 </project>
