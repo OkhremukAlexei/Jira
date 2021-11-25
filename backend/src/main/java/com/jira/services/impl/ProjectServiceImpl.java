@@ -1,21 +1,19 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.jira.models.Project;
-import com.jira.models.User;
 import com.jira.pojo.dto.ProjectDto;
-import com.jira.pojo.util.RoleHelper;
 import com.jira.repos.ProjectRepo;
+import com.jira.services.ProjectService;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("ProjectServiceImpl")
-public class ProjectServiceImpl implements ProjectService{
+public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepo projectRepo ;
 

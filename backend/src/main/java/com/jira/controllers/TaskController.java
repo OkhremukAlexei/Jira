@@ -2,7 +2,7 @@ package com.jira.controllers;
 
 import com.jira.models.Task;
 import com.jira.repos.TaskRepo;
-import com.jira.services.TaskServiceImpl;
+import com.jira.services.impl.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;

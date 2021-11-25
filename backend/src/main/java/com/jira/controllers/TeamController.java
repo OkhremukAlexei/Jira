@@ -2,7 +2,6 @@ package com.jira.controllers;
 
 import com.jira.models.Team;
 import com.jira.repos.TeamRepo;
-import com.jira.services.TeamDetailsServiceImpl;
 import com.jira.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

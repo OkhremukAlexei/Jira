@@ -1,11 +1,12 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.jira.models.Task;
 import com.jira.repos.TaskRepo;
+import com.jira.services.TaskService;
 import org.springframework.stereotype.Service;
 
 @Service("TaskServiceImpl")
-public class TaskServiceImpl implements TaskService{
+public class TaskServiceImpl implements TaskService {
 
     private final TaskRepo taskRepo;
 

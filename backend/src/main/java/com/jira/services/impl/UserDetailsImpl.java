@@ -1,4 +1,4 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.jira.validator.ValidatorLoginAndPassword;

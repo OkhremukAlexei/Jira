@@ -1,16 +1,17 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.User;
 import com.jira.repos.UserRepo;
+import com.jira.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("UsersServiceImpl")
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepo userRepo;

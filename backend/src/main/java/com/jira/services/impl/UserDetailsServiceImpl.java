@@ -1,6 +1,5 @@
-package com.jira.services;
+package com.jira.services.impl;
 
-import com.jira.models.ERole;
 import com.jira.models.User;
 import com.jira.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

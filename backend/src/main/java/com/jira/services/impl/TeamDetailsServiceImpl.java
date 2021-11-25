@@ -1,9 +1,10 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.jira.models.Project;
 import com.jira.models.Team;
 import com.jira.models.User;
 import com.jira.repos.TeamRepo;
+import com.jira.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +14,7 @@ import java.util.List;
 
 
 @Service("TeamDetailsServiceImpl")
-public class TeamDetailsServiceImpl implements TeamService{
+public class TeamDetailsServiceImpl implements TeamService {
     @Autowired
     private TeamRepo teamRepo;
 

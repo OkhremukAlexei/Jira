@@ -1,6 +1,6 @@
 package com.jira.configs.jwt;
 
-import com.jira.services.UserDetailsServiceImpl;
+import com.jira.services.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

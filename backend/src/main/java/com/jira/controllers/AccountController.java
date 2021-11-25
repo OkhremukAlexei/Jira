@@ -3,7 +3,6 @@ package com.jira.controllers;
 import com.jira.models.Account;
 import com.jira.repos.AccountRepo;
 import com.jira.services.AccountService;
-import com.jira.services.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;

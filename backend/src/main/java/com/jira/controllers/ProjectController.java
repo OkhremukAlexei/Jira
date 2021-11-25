@@ -4,7 +4,6 @@ import com.jira.models.Project;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
-import com.jira.services.ProjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;

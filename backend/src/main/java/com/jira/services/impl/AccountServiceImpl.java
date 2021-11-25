@@ -1,11 +1,12 @@
-package com.jira.services;
+package com.jira.services.impl;
 
 import com.jira.models.Account;
 import com.jira.repos.AccountRepo;
+import com.jira.services.AccountService;
 import org.springframework.stereotype.Service;
 
 @Service("AccountServiceImpl")
-public class AccountServiceImpl implements AccountService{
+public class AccountServiceImpl implements AccountService {
 
     private final AccountRepo accountRepo;
 
