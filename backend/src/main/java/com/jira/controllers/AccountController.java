@@ -2,6 +2,10 @@ package com.jira.controllers;
 
 import com.jira.models.Account;
 import com.jira.repos.AccountRepo;
+import com.jira.services.AccountService;
+import com.jira.services.AccountServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,10 +19,14 @@ public class AccountController {
         this.accountRepo = accountRepo;
     }
 
+    @Autowired
+    @Qualifier("AccountServiceImpl")
+    private AccountService accountService;
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Iterable<Account> getAll() {
-        return accountRepo.findAll();
+        return accountService.getAll();
     }
 
     @GetMapping("{id}")
@@ -30,12 +38,12 @@ public class AccountController {
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Account put(@RequestBody Account account) {
-        return accountRepo.save(account);
+        return accountService.put(account);
     }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Account account) {
-        accountRepo.delete(account);
+        accountService.delete(account);
     }
 }
