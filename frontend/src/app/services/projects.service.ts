@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ProjectsInfo} from "../projects/projects-info";
-import {catchError, map, tap} from "rxjs/operators";
+import {Projects} from "../models/projects-info";
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +12,28 @@ export class ProjectsService {
 
   constructor(private http: HttpClient) { }
 
-  getAllProjects() : Observable<ProjectsInfo[]> {
-    return this.http.get<ProjectsInfo[]>(`${this.projectUrl}/projectList`, {responseType: "json"});
+  getAllProjects() : Observable<Projects[]> {
+    return this.http.get<Projects[]>(`${this.projectUrl}/projectList`, {responseType: "json"});
   }
 
-  getProjectsFromUserId(id: any) : Observable<ProjectsInfo[]> {
-    return this.http.get<ProjectsInfo[]>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
+  getProjectsFromUserId(id: any) : Observable<Projects[]> {
+    return this.http.get<Projects[]>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
   }
 
   getProjectById(id: any) {
     return this.http.get(`${this.projectUrl}/${id}`);
   }
 
-  updateProject(id: number, data: ProjectsInfo) {
+  updateProject(id: number, data: Projects) {
     return this.http.put(`${this.projectUrl}/${id}`, data).subscribe(data => console.log(data));
   }
 
-  addProject(data: ProjectsInfo) {
+  addProject(data: Projects) {
     return this.http.post(`${this.projectUrl}`, data).subscribe(data => console.log(data));
   }
 
-  addPeopleToProject(id: number, data: ProjectsInfo){
+  addPeopleToProject(id: number, data: Projects){
     return this.http.put(`${this.projectUrl}/people/${id}`, data).subscribe(data => console.log(data));
   }
+
 }

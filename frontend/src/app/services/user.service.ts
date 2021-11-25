@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-
-import {PartialAccountInfo} from "../admin/partial-account-info";
-import {UserInfo} from "../projects/people/users-info";
+import {User} from "../models/users-info";
 
 @Injectable({
   providedIn: 'root'
@@ -30,11 +28,8 @@ export class UserService {
     return this.http.get(this.adminUrl, {responseType: 'text'});
   }
 
-  getUsers(): Observable<UserInfo[]>{
-    return this.http.get<UserInfo[]>(`${this.userUrl}/roleUser`, {responseType: "json"})
+  getUsers(): Observable<User[]>{
+    return this.http.get<User[]>(`${this.userUrl}/roleUser`, {responseType: "json"})
   }
 
-
-
 }
-

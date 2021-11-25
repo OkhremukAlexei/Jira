@@ -36,9 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     public List<User> getUsers() {
-        List<User> users = userRepo.findBySpecificRoles(ERole.ROLE_USER);
-
-        return users;
+        return userRepo.findBySpecificRoles(ERole.ROLE_USER);
     }
 
 }
