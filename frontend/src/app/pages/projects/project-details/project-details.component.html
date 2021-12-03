@@ -1,0 +1,52 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+  <!-- Mask -->
+  <span class="mask bg-gradient-danger opacity-8"></span>
+  <!-- Header container -->
+  <div class="container-fluid d-flex align-items-center">
+    <div class="row">
+      <div class="col-lg-7 col-md-10">
+        <h1 class="display-2 text-white">{{currentProject?.name}}</h1>
+        <p class="text-white mt-0 mb-5"><a href="{{currentProject?.linkToGit}}">{{currentProject?.linkToGit}}</a></p>
+        <a href="#!" class="btn btn-info">Edit project</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-0">
+          <div class="d-flex justify-content-between">
+            <a (click)="addPeople()" class="btn btn-sm btn-info mr-4">People</a>
+            <a href="javascript:void(0)" class="btn btn-sm btn-default float-right">Message</a>
+          </div>
+        </div>
+        <div class="card-body pt-0 pt-md-2">
+          <div class="text-center">
+            <h3>
+              Users
+            </h3>
+            <hr class="my-4" />
+            <p *ngFor="let tempUsers of currentProject?.users">{{tempUsers.account.name}} {{tempUsers.account.surname}}</p>
+            <a href="javascript:void(0)">Show more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Tasks</h3>
+            </div>
+            <div class="col-4 text-right">
+              <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

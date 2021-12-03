@@ -12,7 +12,7 @@ import com.jira.pojo.SignupRequest;
 import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
 import com.jira.repos.UserRepo;
-import com.jira.services.UserDetailsImpl;
+import com.jira.services.impl.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

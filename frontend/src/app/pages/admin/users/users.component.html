@@ -1,0 +1,73 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+
+    </div>
+  </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Users</h3>
+        </div>
+        <div class="table-responsive">
+          <nav class="navbar">
+            <input class="form-control" type="text" name="firstName" [(ngModel)]="firstName" (ngModelChange)="search()"
+            placeholder="Enter First Name to search">
+          </nav>
+          <table class="table align-items-center table-flush table-striped">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col" (click)="sort('id')">Id&nbsp;<i class="fa fa-sort"></i> </th>
+              <th scope="col" (click)="sort('name')">Name Surname&nbsp;<i class="fa fa-sort"></i> </th>
+              <th scope="col" (click)="sort('email')">Email&nbsp;<i class="fa fa-sort"></i> </th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let tempAccount of listAccount | orderBy: key: reverse | paginate:{itemsPerPage : 5, currentPage : p}">
+              <td>{{tempAccount.id}}</td>
+              <th scope="row">
+                <div class="media align-items-center">
+                  <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                    <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                  </a>
+                  <div class="media-body">
+                    <span class="mb-0 text-sm">{{tempAccount.name}} {{tempAccount.surname}}</span>
+                  </div>
+                </div>
+              </th>
+              <td>
+                {{tempAccount.email}}
+              </td>
+              <td class="text-right">
+                <div ngbDropdown placement="bottom-right">
+                  <a class="btn btn-sm btn-icon-only text-light"  ngbDropdownToggle>
+                    <i class="fas fa-ellipsis-v"></i>
+                  </a>
+                  <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+                    <a class="dropdown-item">More info</a>
+                    <a class="dropdown-item" (click)="setUserManager(tempAccount.id)">Set Manager</a>
+                    <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer py-4">
+          <nav aria-label="...">
+            <ul class="pagination justify-content-end mb-0">
+              <pagination-controls class="my-pagination" (pageChange)="p = $event"></pagination-controls>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
