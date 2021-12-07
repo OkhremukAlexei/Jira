@@ -1,6 +1,6 @@
 package com.jira.configs.jwt;
 
-import com.jira.services.UserDetailsImpl;
+import com.jira.services.impl.UserDetailsImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;

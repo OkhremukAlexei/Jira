@@ -2,7 +2,7 @@ package com.jira.configs;
 
 import com.jira.configs.jwt.AuthEntryPointJwt;
 import com.jira.configs.jwt.AuthTokenFilter;
-import com.jira.services.UserDetailsServiceImpl;
+import com.jira.services.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

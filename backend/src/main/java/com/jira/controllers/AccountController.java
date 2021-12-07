@@ -2,7 +2,14 @@ package com.jira.controllers;
 
 import com.jira.models.Account;
 import com.jira.repos.AccountRepo;
+import com.jira.services.AccountService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/accounts")
@@ -14,23 +21,31 @@ public class AccountController {
         this.accountRepo = accountRepo;
     }
 
+    @Autowired
+    @Qualifier("AccountServiceImpl")
+    private AccountService accountService;
+
     @GetMapping
-    public Iterable<Account> getAll() {
-        return accountRepo.findAll();
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<List<Account>> getAll() {
+        return ResponseEntity.ok(accountService.getAll());
     }
 
     @GetMapping("{id}")
-    public Account getOne(@PathVariable("id") Account account) {
-        return account;
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Account> getOne(@PathVariable("id") Account account) {
+        return ResponseEntity.ok(account);
     }
 
     @PutMapping
-    public Account put(@RequestBody Account account) {
-        return accountRepo.save(account);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Account> put(@RequestBody Account account) {
+        return ResponseEntity.ok(accountService.put(account));
     }
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Account account) {
-        accountRepo.delete(account);
+        accountService.delete(account);
     }
 }

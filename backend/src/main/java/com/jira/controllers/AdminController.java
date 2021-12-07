@@ -1,5 +1,7 @@
 package com.jira.controllers;
 
+import com.jira.models.Account;
+import com.jira.models.User;
 import com.jira.pojo.MessageResponse;
 import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -25,7 +30,7 @@ public class AdminController {
 
     @GetMapping("/userlist")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<List<Account>> getAllUsers() {
         return ResponseEntity.ok(accountRepo.findAll());
     }
 
@@ -33,7 +38,7 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getUser(@RequestParam Long id) {
         if (userRepo.existsById(id)) {
-            return ResponseEntity.ok(userRepo.findById(id));
+            return ResponseEntity.ok(accountRepo.findById(id));
         }
         else
             return ResponseEntity.badRequest().

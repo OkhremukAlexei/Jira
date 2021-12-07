@@ -1,5 +1,4 @@
-package com.jira.Validator;
-
+package com.jira.validator;
 
 import com.jira.pojo.LoginRequest;
 import org.springframework.validation.Errors;
@@ -7,8 +6,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 
-import java.lang.reflect.Field;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 public class LoginRequestValidator implements Validator {
@@ -19,25 +16,13 @@ public class LoginRequestValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-        LoginRequest col= (LoginRequest) target;
-        Map<String, String> unmodifiableMap = Map.of("login","[0-9A-Za-z_]","password","[^0-9A-Za-z_]");
-        for (Map.Entry<String,String> entry : unmodifiableMap.entrySet()) {
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors,entry.getKey() , "empty or has whitespaces");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "name", "Field name is empty or has whitespaces");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Field password is empty or has whitespaces");
+        LoginRequest value=(LoginRequest) target;
+        if(value.getLogin().length()>15 | value.getPassword().length()>10 | Pattern.matches("[^0-9A-Za-z_]",value.getPassword())| Pattern.matches("[^0-9A-Za-z_]",value.getLogin())){
             try {
-                Field hand = LoginRequest.class.getDeclaredField(entry.getKey());
-                hand.setAccessible(true);
-                String kValue=(String) hand.get(target);
-                hand.setAccessible(false);
-                if(!Pattern.matches(entry.getValue(),kValue) | kValue.length()>15) {
-                    throw new ValidationException("problems with field "+entry.getKey());
-                }
-            }  catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            }
-            catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-            catch (ValidationException e) {
+                throw new ValidationUserException("Incorrect data");
+            } catch (ValidationUserException e) {
                 e.printStackTrace();
             }
         }
