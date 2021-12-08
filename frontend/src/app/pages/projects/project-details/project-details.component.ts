@@ -1,7 +1,5 @@
 import {
   Component,
-  ContentChild,
-  ElementRef,
   OnInit
 } from '@angular/core';
 import {ActivatedRoute, Params, Router} from "@angular/router";
@@ -20,9 +18,6 @@ import {Observable} from "rxjs";
   styleUrls: ['./project-details.component.css'],
 })
 export class ProjectDetailsComponent implements OnInit{
-
-  @ContentChild("contentEdit", {static:false})
-  targetModal: ElementRef|undefined;
 
   id: number;
   currentProject: Projects;

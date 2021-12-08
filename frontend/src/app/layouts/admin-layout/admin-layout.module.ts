@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -25,15 +25,6 @@ import {NgxPaginationModule} from "ngx-pagination";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        RouterModule.forChild(AdminLayoutRoutes),
-        FormsModule,
-        HttpClientModule,
-        NgbModule,
-        ClipboardModule,
-        ReactiveFormsModule,
-    ],
   imports: [
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),
@@ -41,6 +32,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     HttpClientModule,
     NgbModule,
     ClipboardModule,
+    ReactiveFormsModule,
     Ng2OrderModule,
     NgxPaginationModule
   ],
