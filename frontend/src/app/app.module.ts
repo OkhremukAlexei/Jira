@@ -13,6 +13,9 @@ import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component
 import {httpInterceptorProviders} from "./interceptors/auth-interceptor";
 import {DataTransferService} from "./services/data-transfer.service";
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { Ng2SearchPipeModule} from "ng2-search-filter";
+import { Ng2OrderModule} from "ng2-order-pipe";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -28,11 +31,16 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
     NgbModule,
     BrowserAnimationsModule,
     ComponentsModule,
-    RouterModule
+    RouterModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule
   ],
   providers: [
     httpInterceptorProviders,
     DataTransferService
+  ],
+  exports: [
   ],
   bootstrap: [AppComponent]
 })

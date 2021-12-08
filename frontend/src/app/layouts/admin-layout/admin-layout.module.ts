@@ -19,6 +19,8 @@ import {SearchPipe} from "../../pipes/search.pipe";
 import {TasksComponent} from "../../pages/tasks/task-list/tasks.component";
 import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.component";
 import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
+import {Ng2OrderModule} from "ng2-order-pipe";
+import {NgxPaginationModule} from "ngx-pagination";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -28,7 +30,9 @@ import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
     FormsModule,
     HttpClientModule,
     NgbModule,
-    ClipboardModule
+    ClipboardModule,
+    Ng2OrderModule,
+    NgxPaginationModule
   ],
     declarations: [
         DashboardComponent,
