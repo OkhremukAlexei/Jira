@@ -12,4 +12,8 @@ public interface ProjectService {
     ProjectDto addProject(ProjectDto projectRequest);
     ProjectDto updateProject(Long id, ProjectDto projectRequest);
     void delete( Project project);
+    ProjectDto addPeopleToProject(ProjectDto project);
+
+    boolean existsById(long projectId);
+    void deleteUsersInTeam(long projectId, long userId);
 }

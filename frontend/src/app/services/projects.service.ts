@@ -20,20 +20,24 @@ export class ProjectsService {
     return this.http.get<Projects[]>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
   }
 
-  getProjectById(id: any) {
-    return this.http.get(`${this.projectUrl}/${id}`);
+  getProjectById(id: any) : Observable<Projects>{
+    return this.http.get<Projects>(`${this.projectUrl}/${id}`);
   }
 
   updateProject(id: number, data: Projects) {
-    return this.http.put(`${this.projectUrl}/${id}`, data).subscribe(data => console.log(data));
+    return this.http.put(`${this.projectUrl}/${id}`, data);
   }
 
-  addProject(data: Projects) {
-    return this.http.post(`${this.projectUrl}`, data).subscribe(data => console.log(data));
+  addProject(data: Projects) : Observable<Projects>{
+    return this.http.post<Projects>(`${this.projectUrl}`, data);
   }
 
-  addPeopleToProject(id: number, data: Projects){
-    return this.http.put(`${this.projectUrl}/people/${id}`, data).subscribe(data => console.log(data));
+  addPeopleToProject(data: Projects){
+    return this.http.put(`${this.projectUrl}/people`, data).subscribe(data => console.log(data));
+  }
+
+  deletePeopleInProject(idProject: number, idUser: number){
+    return this.http.delete(`${this.projectUrl}/project/${idProject}/user/${idUser}`).subscribe();
   }
 
 }

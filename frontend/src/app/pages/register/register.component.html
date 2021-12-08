@@ -41,7 +41,7 @@
             <small>Or sign up with credentials</small>
           </div>
           -->
-          <form class="was-validated" name="form" (ngSubmit)="f.form.valid && onSubmit()"  #f="ngForm" novalidate>
+          <form class="was-validated" name="form" (ngSubmit)="f.form.valid && onSubmit(content)"  #f="ngForm" novalidate>
             <div class="form-group">
               <div class="input-group input-group-alternative mb-3">
                 <div class="input-group-prepend">
@@ -128,3 +128,20 @@
   </div>
 </div>
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Successful registration</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>Hello, {{form.name}}!</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')" [routerLink]="['/signin']">Cancel</button>
+  </div>
+</ng-template>
+
+

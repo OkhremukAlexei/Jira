@@ -51,7 +51,13 @@ public class UserController {
     @GetMapping("/roleUser")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> getUsers(){
-        return ResponseEntity.ok(userService.getUsers());
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/project/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getUsersOutsideTheProject(@PathVariable("id") Long projectId){
+        return ResponseEntity.ok(userService.getUsersOutsideTheProject(projectId));
     }
 }
 

@@ -29,7 +29,11 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]>{
-    return this.http.get<User[]>(`${this.userUrl}/roleUser`, {responseType: "json"})
+    return this.http.get<User[]>(`${this.userUrl}/roleUser`, {responseType: "json"});
+  }
+
+  getUsersOutsideProject(id: number): Observable<User[]>{
+    return this.http.get<User[]>(`${this.userUrl}/project/${id}`, {responseType: "json"});
   }
 
 }

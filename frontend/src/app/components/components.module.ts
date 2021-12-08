@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
-import {RouterModule} from "@angular/router";
+import {RouteReuseStrategy, RouterModule} from "@angular/router";
 import {FooterComponent} from "./footer/footer.component";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
-
-
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule,
-    NgbModule
+    NgbModule,
+    FormsModule
   ],
   declarations: [
     FooterComponent,

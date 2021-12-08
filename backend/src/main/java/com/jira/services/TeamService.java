@@ -17,5 +17,8 @@ public interface TeamService {
     Team getOne(Team team);
     Team put( Team team);
     void delete( Team team);
+    boolean existsById(long id);
 
+    Team setNewUsersInTeam(long id, List<User> users);
+    void deleteUsersInTeam(long teamId, long userId);
 }

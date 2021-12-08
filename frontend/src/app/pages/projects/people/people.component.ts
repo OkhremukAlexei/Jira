@@ -3,6 +3,10 @@ import {User} from "../../../models/users-info";
 import {DataTransferService} from "../../../services/data-transfer.service";
 import {Projects} from "../../../models/projects-info";
 import {UserService} from "../../../services/user.service";
+import {ProjectsService} from "../../../services/projects.service";
+import {Observable, Subscription} from "rxjs";
+import {map, startWith, switchMap} from "rxjs/operators";
+import {Params} from "@angular/router";
 
 @Component({
   selector: 'app-people',
@@ -16,26 +20,35 @@ export class PeopleComponent implements OnInit {
   public listAccount!: User[];
   public currentProject: Projects;
 
-  constructor(private userService: UserService, private data: DataTransferService) { }
+
+  constructor(private userService: UserService, private projectService: ProjectsService, private data: DataTransferService) { }
 
   ngOnInit(): void {
-    this.getUsers();
     this.data.currentProject.subscribe(project => this.currentProject = project);
+    this.data.setProject(this.currentProject);
+    this.getUsers();
     console.log(this.currentProject);
-
   }
 
   getUsers(): void {
-    this.userService.getUsers().subscribe(data => {
-      this.listAccount = data;
-    });
+    this.userService.getUsersOutsideProject(this.currentProject.id).subscribe(list => this.listAccount = list);
   }
 
   addPerson(currentUser: User){
-    //this.currentProject.setUsers(this.currentProject.getUsersInProject.push(currentUser));
-    console.log(currentUser);
     this.currentProject?.users.push(currentUser);
-    console.log(this.currentProject);
+    this.projectService.addPeopleToProject(this.currentProject);
+    console.log(this.listAccount);
+
+    var index = this.listAccount.indexOf(currentUser);
+    this.listAccount.splice(index, 1);
   }
 
+    deletePerson(tempUsers: User) {
+        this.projectService.deletePeopleInProject(this.currentProject.id, tempUsers.id);
+
+        var index = this.currentProject.users.indexOf(tempUsers);
+        this.currentProject.users.splice(index, 1);
+        this.listAccount.push(tempUsers);
+
+    }
 }

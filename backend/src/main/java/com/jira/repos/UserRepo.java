@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,5 +18,12 @@ public interface UserRepo extends JpaRepository<User, Long> {
 
     @Query( "select u from User u inner join u.roles r where r.name in :role" )
     List<User> findBySpecificRoles(@Param("role") ERole roleUser);
+
+    List<User> findByTeams_Project_Id(Long id);
+
+
+
+
+
 
 }

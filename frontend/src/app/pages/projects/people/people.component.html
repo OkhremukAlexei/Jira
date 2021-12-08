@@ -4,7 +4,7 @@
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-7 col-md-10" >
         <h1 class="display-2 text-white">{{currentProject?.name}}</h1>
         <p class="text-white mt-0 mb-5"><a href="{{currentProject?.linkToGit}}">{{currentProject?.linkToGit}}</a></p>
         <a href="#!" class="btn btn-info">Edit project</a>
@@ -12,26 +12,64 @@
     </div>
   </div>
 </div>
-<div class="container mt-5" style="max-width: 550px;">
 
-  <div class="form-group">
-    <input type="text" class="form-control mb-4" placeholder="Search" [(ngModel)]="query" id="listSearch">
-  </div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-8 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-0">
 
-  <div class="card mb-1" *ngFor="let currentUser of listAccount | search: query">
-    <form (ngSubmit)="addPerson(currentUser)">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xs-12 col-md-8">
-            <h5 class="card-title">{{currentUser.login}}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">{{currentUser.account.name}} {{currentUser.account.surname}}</h6>
-            <p class="card-text">{{currentUser.account.email}}</p>
+          <div class="form-group">
+            <input type="text" class="form-control mb-4" placeholder="Search" [(ngModel)]="query" id="listSearch">
           </div>
-          <div class="col-xs-6 col-md-4 my-auto">
-            <button type="submit" class="btn btn-primary btn-block" > Add  </button>
+
+          <div class="card mb-1" *ngFor="let currentUser of listAccount | search: query" >
+            <form (ngSubmit)="addPerson(currentUser)">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xs-12 col-md-8" >
+                    <h5 class="card-title">{{currentUser.login}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{currentUser.account.name}} {{currentUser.account.surname}}</h6>
+                    <p class="card-text">{{currentUser.account.email}}</p>
+                  </div>
+                  <div class="col-xs-6 col-md-4 my-auto">
+                    <button type="submit" class="btn btn-primary btn-block" > Add  </button>
+                  </div>
+                </div>
+              </div>
+            </form>
           </div>
         </div>
       </div>
-    </form>
+    </div>
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-0">
+      <div class="card card-profile shadow">
+        <div class="card-body pt-0 pt-md-2">
+          <div class="text-center">
+            <h3>
+              Users in project
+            </h3>
+            <hr class="my-4" />
+
+            <div class="card mb-1" *ngFor="let tempUsers of currentProject?.users" >
+              <form (ngSubmit)="deletePerson(tempUsers)">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-8" >
+                      <h6 class="card-subtitle mb-2 text-muted">{{tempUsers.account.name}} {{tempUsers.account.surname}}</h6>
+                    </div>
+                    <div class="col-xs-6 col-md-4 my-auto">
+                      <button type="submit" class="btn btn-primary btn-block" > Delete  </button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <a href="javascript:void(0)">Show more</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

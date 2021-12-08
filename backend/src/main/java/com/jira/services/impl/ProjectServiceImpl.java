@@ -1,6 +1,7 @@
 package com.jira.services.impl;
 
 import com.jira.models.Project;
+import com.jira.models.Team;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
@@ -37,18 +38,6 @@ public class ProjectServiceImpl implements ProjectService {
 
         return projectDtoList;
     }
-
-    /*
-    @Override
-    @Transactional
-    public ProjectDto getProjectByUserId(long userId){
-        Project project = projectRepo.findProjectByTeam_Users_IdIs(userId)
-                .orElseThrow(() -> new ServiceException("Project Not Found with user id: " + userId));
-        teamService.countNumOfUsers(project);
-
-        return ProjectDto.build(project);
-    }
-    */
 
     @Override
     @Transactional
@@ -103,10 +92,30 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectDto.build(project);
     }
 
- /*   @Transactional
-    public ProjectDto addPeople(ProjectDto projectRequest){
+    @Override
+    @Transactional
+    public ProjectDto addPeopleToProject(ProjectDto projectRequest){
+        Project project = projectRepo.findById(projectRequest.getId())
+                .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
+
+        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), projectRequest.getUsers()));
+
+        projectRepo.save(project);
+
         return ProjectDto.build(project);
-    }*/
+    }
+
+    @Override
+    public boolean existsById(long projectId) {
+        return projectRepo.existsById(projectId);
+    }
+
+    @Override
+    public void deleteUsersInTeam(long projectId, long userId) {
+        long teamId = projectRepo.findById(projectId).get().getTeam().getId();
+        teamService.deleteUsersInTeam(teamId, userId);
+    }
+
 
     @Override
     @Transactional

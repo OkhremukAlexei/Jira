@@ -14,4 +14,9 @@ public interface TeamRepo extends CrudRepository<Team,Integer> {
     Team findById(long teamId);
 
     Team findFirstByOrderByIdDesc();
+
+    Team findByProject_Id(Long id);
+
+
+    boolean existsById(long id);
 }

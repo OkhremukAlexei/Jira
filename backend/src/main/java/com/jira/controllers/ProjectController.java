@@ -1,6 +1,7 @@
 package com.jira.controllers;
 
 import com.jira.models.Project;
+import com.jira.pojo.MessageResponse;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
@@ -40,7 +41,7 @@ public class ProjectController {
 
     @GetMapping("/usersProject/{id}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id){
+    public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(projectService.getProjectsByUserId(id));
     }
 
@@ -61,12 +62,23 @@ public class ProjectController {
     public ResponseEntity<?> add(@RequestBody ProjectDto project) {
         return ResponseEntity.ok(projectService.addProject(project));
     }
-}
 
-  /*  @PutMapping("/people")
+    @PutMapping("/people")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> addPeople(@RequestBody ProjectDto project){
-        return ResponseEntity.ok(projectService.addPeople(project));
-    }*
+    public ResponseEntity<?> addPeople(@RequestBody ProjectDto project) {
+        return ResponseEntity.ok(projectService.addPeopleToProject(project));
+    }
 
-*/
+    @DeleteMapping("/project/{projectId}/user/{userId}")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deletePersonInTeam(@PathVariable("projectId") long projectId, @PathVariable("userId") long userId){
+        if (projectService.existsById(projectId)) {
+            projectService.deleteUsersInTeam(projectId, userId);
+            return ResponseEntity.ok(new MessageResponse("User deleted"));
+        }
+        else
+            return ResponseEntity.badRequest().
+                    body(new MessageResponse("Error: team with this id is not exist "));
+    }
+
+}
