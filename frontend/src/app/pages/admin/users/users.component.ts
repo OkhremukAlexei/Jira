@@ -11,6 +11,10 @@ import {Router} from "@angular/router";
 export class UsersComponent implements OnInit {
 
   listAccount!: PartialAccountInfo[];
+  firstName: any;
+  key: string = 'id';
+  reverse: boolean = false;
+  p: number = 1;
 
   constructor(private adminService: AdminService, private router: Router) { }
 
@@ -31,6 +35,23 @@ export class UsersComponent implements OnInit {
 
   deleteUser(id: number): void {
     this.adminService.deleteUser(id).subscribe();
+  }
+
+  search() {
+    if(this.firstName == ""){
+      this.ngOnInit();
+    }
+    else {
+      this.listAccount = this.listAccount.filter(res => {
+        return res.name.toLocaleLowerCase().match(this.firstName.toLocaleLowerCase());
+      })
+    }
+  }
+
+
+  sort(key: string) {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
 }
