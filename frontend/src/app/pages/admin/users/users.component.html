@@ -52,7 +52,9 @@
                   <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                     <a class="dropdown-item">More info</a>
                     <a class="dropdown-item" (click)="setUserManager(tempAccount.id)">Set Manager</a>
-                    <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+                    <div *ngIf="tempAccount.">
+                      <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+                    </div>
                   </div>
                 </div>
               </td>

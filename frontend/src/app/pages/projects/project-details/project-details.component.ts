@@ -40,7 +40,6 @@ export class ProjectDetailsComponent implements OnInit{
 
     this.currentProject$.subscribe((project:any) => {
         this.currentProject = project;
-        console.log(project);
         this.data.setProject(this.currentProject);
 
       },

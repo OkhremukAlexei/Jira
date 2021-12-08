@@ -1,28 +1,17 @@
-package com.jira.models;
+package com.jira.pojo.dto;
 
+import com.jira.models.User;
 
-import javax.persistence.*;
-
-@Entity
-public class Account {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class AccountDto {
     private Long id;
 
     private String name;
     private String surname;
     private String email;
+    private UserDto user;
 
-    @OneToOne
-    @MapsId
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    public Account() {
-    }
-
-    public Account(String name, String surname, String email, User user) {
+    public AccountDto(Long id, String name, String surname, String email, UserDto user) {
+        this.id = id;
         this.name = name;
         this.surname = surname;
         this.email = email;
@@ -61,11 +50,11 @@ public class Account {
         this.email = email;
     }
 
-    public User getUser() {
+    public UserDto getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserDto user) {
         this.user = user;
     }
 }
