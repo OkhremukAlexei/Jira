@@ -30,7 +30,14 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
+    @OneToOne(mappedBy = "team")
+    private Project project;
+
     public Team() {
+    }
+
+    public Team(List<User> users) {
+        this.users = users;
     }
 
     public long getId() {
@@ -55,6 +62,14 @@ public class Team implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override

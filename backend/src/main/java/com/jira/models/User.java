@@ -31,7 +31,7 @@ public class User implements Serializable {
     @PrimaryKeyJoinColumn
     private Account account;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Team> teams;
 
     public User() {}

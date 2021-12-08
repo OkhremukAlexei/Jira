@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import {RouteReuseStrategy, RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,17 +19,19 @@ import {SearchPipe} from "../../pipes/search.pipe";
 import {TasksComponent} from "../../pages/tasks/task-list/tasks.component";
 import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.component";
 import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
+import {UpdateProjectComponent} from "../../pages/projects/update-project/update-project.component";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    HttpClientModule,
-    NgbModule,
-    ClipboardModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        HttpClientModule,
+        NgbModule,
+        ClipboardModule,
+        ReactiveFormsModule,
+    ],
     declarations: [
         DashboardComponent,
         UsersComponent,
@@ -40,7 +42,8 @@ import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
         SearchPipe,
         TasksComponent,
         TaskDetailsComponent,
-        AddTaskComponent
+        AddTaskComponent,
+        UpdateProjectComponent
     ]
 })
 

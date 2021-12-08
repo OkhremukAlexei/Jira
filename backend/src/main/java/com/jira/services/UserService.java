@@ -10,5 +10,6 @@ public interface UserService {
     User getOne(User us);
     User put(User us);
     void delete(User us);
-    List<User> getUsers();
+    List<User> getAllUsers();
+    List<User> getUsersOutsideTheProject(long id);
 }

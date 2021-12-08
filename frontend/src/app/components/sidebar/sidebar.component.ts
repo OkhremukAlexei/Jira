@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from "../../services/token-storage.service";
 import {ProjectsService} from "../../services/projects.service";
 import {Projects} from "../../models/projects-info";
+import {ModalDismissReasons, NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {NgForm} from "@angular/forms";
 
 declare interface RouteInfo {
   path: string;
@@ -21,22 +23,25 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
 
-  public menuItems: any[];
   public isCollapsed = true;
   listProjects !: Projects[];
   isAuthorized: boolean = false;
   roles!: string[];
   authority!: string;
 
-  constructor(private router: Router, private token: TokenStorageService, private projectService : ProjectsService) { }
+  closeResult: string;
+  currentProject: any = {};
+
+  constructor(private router: Router, private token: TokenStorageService, private projectService : ProjectsService,
+              private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
     this.getAuthority();
     this.getProjects();
+
   }
 
   logout() {
@@ -46,7 +51,7 @@ export class SidebarComponent implements OnInit {
 
   getProjects() : void {
     this.projectService.getProjectsFromUserId(this.token.getId()).
-    subscribe(data => {this.listProjects = data});
+      subscribe(data => {this.listProjects = data});
   }
 
   getAuthority(): void {
@@ -67,7 +72,30 @@ export class SidebarComponent implements OnInit {
     }
   }
 
-  openProjectDetails(id: number) {
-    this.router.navigate(['projects/project-details/' + id]);
+  open(content: any) {
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${SidebarComponent.getDismissReason(reason)}`;
+    });
+  }
+
+  private static getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  onSubmit() {
+    console.log(this.currentProject);
+    this.projectService.addProject(this.currentProject)
+      .subscribe((result) => {
+        this.ngOnInit(); //reload the table
+      });
+    this.modalService.dismissAll(); //dismiss the modal
   }
 }

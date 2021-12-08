@@ -23,7 +23,8 @@ public class Project {
     )
     private Set<Task> tasks;
 
-    @OneToOne(fetch = FetchType.LAZY)  //fixes
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 
     public Project() {
