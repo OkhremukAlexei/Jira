@@ -15,26 +15,29 @@ export class UsersComponent implements OnInit {
   key: string = 'id';
   reverse: boolean = false;
   p: number = 1;
+  isUser: boolean = true;
 
   constructor(private adminService: AdminService, private router: Router) { }
 
   ngOnInit(): void {
     this.getListAccount();
+
   }
 
   getListAccount(): void {
     this.adminService.getAllUsers().subscribe(data => {
       this.listAccount = data;
+
     });
   }
 
   setUserManager(id: number): void {
-    console.log("button work" + id);
-
+    this.adminService.setManager(id).subscribe();
   }
 
   deleteUser(id: number): void {
     this.adminService.deleteUser(id).subscribe();
+    this.isUser = false;
   }
 
   search() {

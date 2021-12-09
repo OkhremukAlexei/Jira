@@ -1,6 +1,7 @@
 package com.jira.pojo.dto;
 
-import com.jira.models.User;
+
+import com.jira.models.Account;
 
 public class AccountDto {
     private Long id;
@@ -16,6 +17,13 @@ public class AccountDto {
         this.surname = surname;
         this.email = email;
         this.user = user;
+    }
+
+    public AccountDto(Long id, String name, String surname, String email) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email = email;
     }
 
     public Long getId() {

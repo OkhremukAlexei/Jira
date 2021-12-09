@@ -54,7 +54,7 @@
               </h3>
               <hr class="my-4" />
 
-              <div class="card mb-1" *ngFor="let tempUsers of currentProject?.users" >
+              <div class="card mb-1" *ngFor="let tempUsers of currentProject.users" >
                 <form (ngSubmit)="deletePerson(tempUsers)">
                   <div class="card-body">
                     <div class="row">

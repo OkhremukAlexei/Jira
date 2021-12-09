@@ -41,13 +41,14 @@ export class ProjectDetailsComponent implements OnInit{
     this.currentProject$.subscribe((project:any) => {
         this.currentProject = project;
         this.data.setProject(this.currentProject);
-
+        console.log(this.currentProject.users);
       },
       error => {
         console.log(error);
       });
 
     this.data.currentProject.subscribe(project => this.currentProject = project);
+
     this.editForm = this.fb.group({
       name: [''],
       linkToGit: ['']

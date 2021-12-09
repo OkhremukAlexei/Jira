@@ -4,12 +4,14 @@ import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.Team;
 import com.jira.models.User;
+import com.jira.pojo.dto.UserDto;
 import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,17 +45,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepo.findBySpecificRoles(ERole.ROLE_USER);
+    public List<UserDto> getAllUsers() {
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (User user: userRepo.findBySpecificRoles(ERole.ROLE_USER)) {
+            userDtoList.add(UserDto.build(user));
+        }
+        return userDtoList;
     }
 
     @Override
-    public List<User> getUsersOutsideTheProject(long id){
+    public List<UserDto> getUsersOutsideTheProject(long id){
         List<User> allUsersList = userRepo.findBySpecificRoles(ERole.ROLE_USER);
         List<User> usersInTeamList = userRepo.findByTeams_Project_Id(id);
         allUsersList.removeAll(usersInTeamList);
 
-        return allUsersList;
+        List<UserDto> userDtoList = new ArrayList<>();
+
+        for (User user: allUsersList) {
+            userDtoList.add(UserDto.build(user));
+        }
+
+        return userDtoList;
     }
 
 

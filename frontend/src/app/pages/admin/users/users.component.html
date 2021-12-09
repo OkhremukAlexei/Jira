@@ -51,10 +51,11 @@
                   </a>
                   <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                     <a class="dropdown-item">More info</a>
-                    <a class="dropdown-item" (click)="setUserManager(tempAccount.id)">Set Manager</a>
-                    <div *ngIf="tempAccount.">
-                      <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+                    <div *ngIf="tempAccount.user.roles =='ROLE_USER' || isUser==false">
+                      <a class="dropdown-item" (click)="setUserManager(tempAccount.id)">Set Manager</a>
                     </div>
+                      <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+
                   </div>
                 </div>
               </td>

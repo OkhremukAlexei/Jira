@@ -66,7 +66,13 @@ public class ProjectController {
     @PutMapping("/people")
     @PreAuthorize("hasRole('MANAGER')")
     public ResponseEntity<?> addPeople(@RequestBody ProjectDto project) {
-        return ResponseEntity.ok(projectService.addPeopleToProject(project));
+        if (projectService.existsById(project.getId())) {
+            projectService.addPeopleToProject(project);
+            return ResponseEntity.ok(new MessageResponse("User added"));
+        }
+        else
+            return ResponseEntity.badRequest().
+                    body(new MessageResponse("Error: team with this id is not exist "));
     }
 
     @DeleteMapping("/project/{projectId}/user/{userId}")

@@ -2,37 +2,24 @@ package com.jira.pojo.dto;
 
 import com.jira.models.Project;
 import com.jira.models.Task;
-import com.jira.models.Team;
 import com.jira.models.User;
 import com.jira.pojo.util.RoleHelper;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class ProjectDto {
+public class PartialProjectDto {
     private Long id;
     private String name;
     private String linkToGit;
     private int progress;
     private Set<Task> tasks;
     private int numOfPersonsInTeam;
-    private List<PartialUserDto> users;
-    private PartialUserDto manager;
+    private List<UserDto> users;
+    private UserDto manager;
 
-    public ProjectDto() {
-    }
-
-    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, PartialUserDto manager) {
-        this.name = name;
-        this.linkToGit = linkToGit;
-        this.progress = progress;
-        this.numOfPersonsInTeam = numOfPersonsInTeam;
-        this.manager = manager;
-    }
-
-    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<PartialUserDto> users, PartialUserDto manager) {
+    public PartialProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<UserDto> users, UserDto manager) {
         this.id = id;
         this.name = name;
         this.linkToGit = linkToGit;
@@ -42,21 +29,20 @@ public class ProjectDto {
         this.manager = manager;
     }
 
-
-    public static ProjectDto build(Project project){
+    public static PartialProjectDto build(Project project){
         User manager = RoleHelper.findManagerInList(project.getTeam().getUsers());
-        PartialUserDto managerDto = null;
+        UserDto managerDto = null;
 
         if (manager != null) {
-            managerDto = PartialUserDto.build(manager);
+            managerDto = UserDto.build(manager);
         }
-        List<PartialUserDto> userDtoList = new ArrayList<>();
+        List<UserDto> userDtoList = new ArrayList<>();
 
         for (User user: project.getTeam().getUsers()) {
-            userDtoList.add(PartialUserDto.build(user));
+            userDtoList.add(UserDto.build(user));
         }
 
-        return new ProjectDto(
+        return new PartialProjectDto(
                 project.getId(),
                 project.getName(),
                 project.getLinkToGit(),
@@ -91,22 +77,11 @@ public class ProjectDto {
         return numOfPersonsInTeam;
     }
 
-    public List<PartialUserDto> getUsers() {
+    public List<UserDto> getUsers() {
         return users;
     }
 
-    public PartialUserDto getManager() {
+    public UserDto getManager() {
         return manager;
-    }
-
-    @Override
-    public String toString() {
-        return "ProjectDto{" +
-                "name='" + name + '\'' +
-                ", linkToGit='" + linkToGit + '\'' +
-                ", progress=" + progress +
-                ", numOfPersonsInTeam=" + numOfPersonsInTeam +
-                ", manager=" + manager +
-                '}';
     }
 }

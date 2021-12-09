@@ -50,7 +50,7 @@ export class PeopleComponent implements OnInit {
   addPerson(currentUser: User){
     this.currentProject?.users.push(currentUser);
     this.projectService.addPeopleToProject(this.currentProject);
-    console.log(this.listAccount);
+    console.log(this.currentProject);
 
     var index = this.listAccount.indexOf(currentUser);
     this.listAccount.splice(index, 1);

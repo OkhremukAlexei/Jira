@@ -5,6 +5,6 @@ import com.jira.pojo.dto.AccountDto;
 import java.util.List;
 
 public interface AdminService {
-    void setManager();
+    void setManager(Long id);
     List<AccountDto> findAll();
 }

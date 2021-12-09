@@ -40,7 +40,7 @@ public class AdminController {
 
     @PostMapping("/userinfo/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> getUser(@RequestParam Long id) {
+    public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
         if (userRepo.existsById(id)) {
             return ResponseEntity.ok(userRepo.findById(id));
         }
@@ -49,11 +49,11 @@ public class AdminController {
                     body(new MessageResponse("Error: User with this id is not exist "));
     }
 
-    @PostMapping("/setmanager/{id}")
+    @PostMapping("/manager/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> setManager(@RequestParam Long id) {
+    public ResponseEntity<?> setManager(@PathVariable("id") Long id) {
         if (userRepo.existsById(id)){
-            adminService.setManager();
+            adminService.setManager(id);
             return ResponseEntity.ok(new MessageResponse("Set Manager"));
         }
         else

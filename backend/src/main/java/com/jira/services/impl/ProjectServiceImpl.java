@@ -1,9 +1,12 @@
 package com.jira.services.impl;
 
 import com.jira.models.Project;
-import com.jira.models.Team;
+import com.jira.models.User;
+import com.jira.pojo.dto.PartialProjectDto;
+import com.jira.pojo.dto.PartialUserDto;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
+import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +27,19 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserDetailsServiceImpl userService;
 
+    @Autowired
+    private UserRepo userRepo;
+
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsList(){
+    public List<PartialProjectDto> getProjectsList(){
         List<Project> projects = projectRepo.findAll();
         teamService.countNumOfUsers(projects);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
+        List<PartialProjectDto> projectDtoList = new ArrayList<>();
 
         for (Project project: projects) {
-            projectDtoList.add(ProjectDto.build(project));
+            projectDtoList.add(PartialProjectDto.build(project));
         }
 
         return projectDtoList;
@@ -41,14 +47,14 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsByUserId(Long userId){
+    public List<PartialProjectDto> getProjectsByUserId(Long userId){
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
         teamService.countNumOfUsers(projects);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
+        List<PartialProjectDto> projectDtoList = new ArrayList<>();
 
         for(Project project: projects){
-            projectDtoList.add(ProjectDto.build(project));
+            projectDtoList.add(PartialProjectDto.build(project));
         }
 
         return projectDtoList;
@@ -56,12 +62,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public ProjectDto getOne(Long id){
+    public PartialProjectDto getOne(Long id){
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
         teamService.countNumOfUsers(project);
 
-        return ProjectDto.build(project);
+        return PartialProjectDto.build(project);
     }
 
     @Override
@@ -94,15 +100,21 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public ProjectDto addPeopleToProject(ProjectDto projectRequest){
+    public void addPeopleToProject(ProjectDto projectRequest){
         Project project = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
 
-        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), projectRequest.getUsers()));
+        List<User> users = new ArrayList<>();
+        for (PartialUserDto user: projectRequest.getUsers()) {
+            User userH = userRepo.getById(user.getId());
+            users.add(userH);
+        }
+
+        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), users));
 
         projectRepo.save(project);
 
-        return ProjectDto.build(project);
+        ProjectDto.build(project);
     }
 
     @Override
