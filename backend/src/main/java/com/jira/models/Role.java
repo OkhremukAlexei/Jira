@@ -62,4 +62,5 @@ public class Role {
         result = 31 * result + name.hashCode();
         return result;
     }
+
 }

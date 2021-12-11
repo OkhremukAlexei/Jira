@@ -1,8 +1,12 @@
 package com.jira.services.impl;
 
 import com.jira.models.Project;
+import com.jira.models.User;
+import com.jira.pojo.dto.PartialProjectDto;
+import com.jira.pojo.dto.PartialUserDto;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.repos.ProjectRepo;
+import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,43 +27,34 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private UserDetailsServiceImpl userService;
 
+    @Autowired
+    private UserRepo userRepo;
+
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsList(){
+    public List<PartialProjectDto> getProjectsList(){
         List<Project> projects = projectRepo.findAll();
         teamService.countNumOfUsers(projects);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
+        List<PartialProjectDto> projectDtoList = new ArrayList<>();
 
         for (Project project: projects) {
-            projectDtoList.add(ProjectDto.build(project));
+            projectDtoList.add(PartialProjectDto.build(project));
         }
 
         return projectDtoList;
     }
 
-    /*
     @Override
     @Transactional
-    public ProjectDto getProjectByUserId(long userId){
-        Project project = projectRepo.findProjectByTeam_Users_IdIs(userId)
-                .orElseThrow(() -> new ServiceException("Project Not Found with user id: " + userId));
-        teamService.countNumOfUsers(project);
-
-        return ProjectDto.build(project);
-    }
-    */
-
-    @Override
-    @Transactional
-    public List<ProjectDto> getProjectsByUserId(Long userId){
+    public List<PartialProjectDto> getProjectsByUserId(Long userId){
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
         teamService.countNumOfUsers(projects);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
+        List<PartialProjectDto> projectDtoList = new ArrayList<>();
 
         for(Project project: projects){
-            projectDtoList.add(ProjectDto.build(project));
+            projectDtoList.add(PartialProjectDto.build(project));
         }
 
         return projectDtoList;
@@ -67,12 +62,12 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public ProjectDto getOne(Long id){
+    public PartialProjectDto getOne(Long id){
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
         teamService.countNumOfUsers(project);
 
-        return ProjectDto.build(project);
+        return PartialProjectDto.build(project);
     }
 
     @Override
@@ -103,10 +98,36 @@ public class ProjectServiceImpl implements ProjectService {
         return ProjectDto.build(project);
     }
 
- /*   @Transactional
-    public ProjectDto addPeople(ProjectDto projectRequest){
-        return ProjectDto.build(project);
-    }*/
+    @Override
+    @Transactional
+    public void addPeopleToProject(ProjectDto projectRequest){
+        Project project = projectRepo.findById(projectRequest.getId())
+                .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
+
+        List<User> users = new ArrayList<>();
+        for (PartialUserDto user: projectRequest.getUsers()) {
+            User userH = userRepo.getById(user.getId());
+            users.add(userH);
+        }
+
+        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), users));
+
+        projectRepo.save(project);
+
+        ProjectDto.build(project);
+    }
+
+    @Override
+    public boolean existsById(long projectId) {
+        return projectRepo.existsById(projectId);
+    }
+
+    @Override
+    public void deleteUsersInTeam(long projectId, long userId) {
+        long teamId = projectRepo.findById(projectId).get().getTeam().getId();
+        teamService.deleteUsersInTeam(teamId, userId);
+    }
+
 
     @Override
     @Transactional

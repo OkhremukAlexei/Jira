@@ -4,10 +4,10 @@
   <!-- Header container -->
   <div class="container-fluid d-flex align-items-center">
     <div class="row">
-      <div class="col-lg-7 col-md-10">
+      <div class="col-lg-7 col-md-10" *ngIf="currentProject as currentProject">
         <h1 class="display-2 text-white">{{currentProject?.name}}</h1>
         <p class="text-white mt-0 mb-5"><a href="{{currentProject?.linkToGit}}">{{currentProject?.linkToGit}}</a></p>
-        <a href="#!" class="btn btn-info">Edit project</a>
+        <a (click)="openEdit(contentEdit ,currentProject)" class="btn btn-info">Edit project</a>
       </div>
     </div>
   </div>
@@ -28,7 +28,7 @@
               Users
             </h3>
             <hr class="my-4" />
-            <p *ngFor="let tempUsers of currentProject?.users">{{tempUsers.account.name}} {{tempUsers.account.surname}}</p>
+            <p *ngFor="let tempUsers of currentProject?.users">{{tempUsers.account?.name}} {{tempUsers.account?.surname}}</p>
             <a href="javascript:void(0)">Show more</a>
           </div>
         </div>
@@ -50,3 +50,38 @@
     </div>
   </div>
 </div>
+
+
+
+<ng-template #contentEdit let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit project</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="editForm" novalidate>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <div class="input-group">
+          <input formControlName="name" class="form-control">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="linkToGit">Link To Git</label>
+        <div class="input-group">
+          <input formControlName="linkToGit" class="form-control">
+        </div>
+      </div>
+      <div class="text-center">
+        <button data-dismiss="modal" class="btn btn-info" (click)="updateProject()">Save Changes</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer pt-md-0 pb-md-4">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
+
+

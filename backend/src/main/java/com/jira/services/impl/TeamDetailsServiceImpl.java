@@ -4,6 +4,7 @@ import com.jira.models.Project;
 import com.jira.models.Team;
 import com.jira.models.User;
 import com.jira.repos.TeamRepo;
+import com.jira.repos.UserRepo;
 import com.jira.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,9 @@ import java.util.List;
 public class TeamDetailsServiceImpl implements TeamService {
     @Autowired
     private TeamRepo teamRepo;
+
+    @Autowired
+    private UserRepo userRepo;
 
     @Override
     public void createNewTeam(User user){
@@ -91,6 +95,25 @@ public class TeamDetailsServiceImpl implements TeamService {
     @Override
     public void delete( Team team) {
         teamRepo.delete(team);
+    }
+
+    @Override
+    public Team setNewUsersInTeam(long teamId, List<User> users) {
+        Team team = teamRepo.findById(teamId);
+        team.setUsers(users);
+        return teamRepo.save(team);
+    }
+
+    @Override
+    public void deleteUsersInTeam(long teamId, long userId) {
+        User user = userRepo.findById(userId).get();
+        Team team = teamRepo.findById(teamId);
+        team.getUsers().remove(user);
+        teamRepo.save(team);
+    }
+
+    public boolean existsById(long id){
+        return teamRepo.existsById(id);
     }
 
 }

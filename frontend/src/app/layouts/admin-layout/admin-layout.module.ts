@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import {SearchPipe} from "../../pipes/search.pipe";
 import {TasksComponent} from "../../pages/tasks/task-list/tasks.component";
 import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.component";
 import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
+import {UpdateProjectComponent} from "../../pages/projects/update-project/update-project.component";
 import {Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
 // import { ToastrModule } from 'ngx-toastr';
@@ -31,6 +32,7 @@ import {NgxPaginationModule} from "ngx-pagination";
     HttpClientModule,
     NgbModule,
     ClipboardModule,
+    ReactiveFormsModule,
     Ng2OrderModule,
     NgxPaginationModule
   ],
@@ -44,7 +46,8 @@ import {NgxPaginationModule} from "ngx-pagination";
         SearchPipe,
         TasksComponent,
         TaskDetailsComponent,
-        AddTaskComponent
+        AddTaskComponent,
+        UpdateProjectComponent
     ]
 })
 

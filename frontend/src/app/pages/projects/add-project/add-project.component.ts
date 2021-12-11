@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, TemplateRef} from '@angular/core';
 import {ProjectsService} from "../../../services/projects.service";
 import {DataTransferService} from "../../../services/data-transfer.service";
 
@@ -11,6 +11,7 @@ export class AddProjectComponent implements OnInit {
 
   currentProject: any = {};
   isAdded = false;
+  add: TemplateRef<any>
 
   constructor(private projectService : ProjectsService, private data: DataTransferService) { }
 

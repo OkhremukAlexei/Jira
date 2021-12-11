@@ -22,9 +22,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit() {
     this.listTitles = ROUTES.filter(listTitle => listTitle);
     this.info = {
-      token : this.token.getToken(),
       login : this.token.getLogin(),
-      roles : this.token.getAuthorities()
     };
   }
   getTitle(){

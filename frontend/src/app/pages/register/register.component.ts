@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SignUpInfo} from "../../models/auth/signup-info";
 import {AuthService} from "../../services/auth.service";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   isSignUpFailed = false;
   errorMessage = '';
 
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private modalService: NgbModal) { }
 
   ngOnInit() { }
 
@@ -24,7 +25,7 @@ export class RegisterComponent implements OnInit {
     this.form.isManager = !this.form.isManager;
   }
 
-  onSubmit() {
+  onSubmit(content: any) {
     console.log(this.form);
 
     this.signupInfo = new SignUpInfo(
@@ -45,6 +46,10 @@ export class RegisterComponent implements OnInit {
         this.isSignUpFailed = true;
       }
     );
+
+    if (!this.isSignedUp) {
+      this.modalService.open(content);
+    }
   }
 
 }

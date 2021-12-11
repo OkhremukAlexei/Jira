@@ -108,18 +108,24 @@
           </a>
         </li>
         <li class="nav-item" *ngIf="authority === 'user' || authority === 'manager'">
-          <p>
-            <a class="nav-link" data-toggle="collapse" href="#collapseExample" aria-expanded="false"
+            <a class="nav-link" data-toggle="collapse" href="#collapseData" aria-expanded="false"
                aria-controls="collapseExample">
               <i class="ni ni-tv-2 text-primary"></i>
               Projects
             </a>
-          </p>
-          <div class="collapse" id="collapseExample">
-            <ul class="card card-body nav-link list-unstyled" *ngFor="let tempProjects of listProjects">
-              <li>
-                <i class="ni ni-tv-2 text-primary"></i>
-                <a  [routerLink]="'projects/project-details/' + tempProjects.id"> {{tempProjects.name}}</a>
+          <div class="collapse" id="collapseData">
+            <ul class="card nav-item list-unstyled">
+              <li class="nav-item" *ngFor="let tempProjects of listProjects">
+                <a class="nav-link" [routerLink]="['projects/project-details', tempProjects.id]">
+                  <i class="ni ni-tv-2 text-primary"></i>
+                  {{tempProjects.name}}
+                </a>
+              </li>
+              <li class="nav-item" *ngIf="authority === 'manager'">
+                <a class="nav-link btn" (click)="open(content)"  routerLinkActive="active">
+                  <i class="ni ni-tv-2 text-primary"></i>
+                  Add project
+                </a>
               </li>
             </ul>
           </div>
@@ -129,3 +135,36 @@
     </div>
   </div>
 </nav>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">New Friend</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form class="was-validated" name="form" *ngIf="currentProject" (ngSubmit)="f.form.valid && onSubmit()"  #f="ngForm" novalidate>
+      <div class="form-group">
+        <label>Project name</label>
+        <input type="text" class="form-control" name="nameProject" [(ngModel)]="currentProject.name" #name="ngModel" required/>
+        <div *ngIf="f.submitted && name.invalid">
+          <div *ngIf="name.errors"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Link to project GitHub</label>
+        <input type="text" class="form-control" name="linkToGit" [(ngModel)]="currentProject.linkToGit" #linkToGit="ngModel" required/>
+        <div *ngIf="f.submitted && linkToGit.invalid">
+          <div *ngIf="linkToGit.errors"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <button type="submit" data-dismiss="modal" class="btn btn-primary btn-block"> Add  </button>
+      </div> <!-- form-group// -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Cancel</button>
+  </div>
+</ng-template>
