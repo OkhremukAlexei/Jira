@@ -1,10 +1,12 @@
 package com.jira.controllers;
 
 import com.jira.models.Team;
+import com.jira.pojo.MessageResponse;
 import com.jira.repos.TeamRepo;
 import com.jira.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +46,17 @@ public class TeamController {
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public void delete(@PathVariable("id") Team team) {
         teamDetailsService.delete(team);
+    }
+
+    @DeleteMapping("/team/{teamId}/people/{userId}")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> deletePersonInTeam(@PathVariable("teamId") long teamId, @PathVariable("userId") long userId){
+        if (teamDetailsService.existsById(teamId)) {
+            teamDetailsService.deleteUsersInTeam(teamId, userId);
+            return ResponseEntity.ok(new MessageResponse("User deleted"));
+        }
+        else
+            return ResponseEntity.badRequest().
+                    body(new MessageResponse("Error: team with this id is not exist "));
     }
 }

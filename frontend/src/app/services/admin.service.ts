@@ -17,6 +17,7 @@ export class AdminService {
 
   private userListUrl = 'http://localhost:8080/api/admin/userlist';
   private userInfoUrl = 'http://localhost:8080/api/admin/userinfo';
+  private userToManager = 'http://localhost:8080/api/admin/manager';
 
   constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
 
@@ -29,8 +30,9 @@ export class AdminService {
     return this.http.post<PartialUserInfo>(this.userInfoUrl+'/'+id, id, httpOptions);
   }
 
-  setManager(id: number): Observable<string> {
-    return this.http.post<string>(this.userListUrl, id);
+  setManager(id: number) {
+    console.log(id);
+    return this.http.post(this.userToManager + '/' + id, id, httpOptions);
   }
 
   deleteUser(id: number): Observable<string> {

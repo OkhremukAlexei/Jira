@@ -31,7 +31,7 @@ public class User implements Serializable {
     @PrimaryKeyJoinColumn
     private Account account;
 
-    @ManyToMany(mappedBy = "users")
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Team> teams;
 
     public User() {}
@@ -39,6 +39,13 @@ public class User implements Serializable {
     public User(String login, String password) {
         this.login = login;
         this.password = password;
+    }
+
+    public User(Long id, String login, String password, Set<Role> roles) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -71,6 +78,10 @@ public class User implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getRole(){
+        return roles.iterator().next().getName().name();
     }
 
     public Account getAccount() {

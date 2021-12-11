@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {RouterModule} from "@angular/router";
+import {RouteReuseStrategy, RouterModule} from "@angular/router";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ComponentsModule} from "./components/components.module";
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
@@ -21,7 +21,7 @@ import {NgxPaginationModule} from "ngx-pagination";
   declarations: [
     AppComponent,
     AuthLayoutComponent,
-    AdminLayoutComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
@@ -34,12 +34,15 @@ import {NgxPaginationModule} from "ngx-pagination";
     RouterModule,
     Ng2SearchPipeModule,
     Ng2OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    RouterModule,
+    ReactiveFormsModule
   ],
   providers: [
     httpInterceptorProviders,
     DataTransferService
   ],
+
   exports: [
   ],
   bootstrap: [AppComponent]
