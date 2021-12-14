@@ -17,18 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class ProjectController {
 
     @Autowired
-    private ProjectRepo projectRepo;
-
-    @Autowired
     @Qualifier("ProjectServiceImpl")
     private ProjectService projectService;
 
-    public ProjectController(ProjectRepo projectRepo) {
-        this.projectRepo = projectRepo;
-    }
-
     @GetMapping("/projectList")
-    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(projectService.getProjectsList());
     }

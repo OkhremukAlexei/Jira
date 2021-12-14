@@ -1,8 +1,5 @@
 package com.jira.pojo.dto;
 
-
-import com.jira.models.Account;
-
 public class AccountDto {
     private Long id;
 

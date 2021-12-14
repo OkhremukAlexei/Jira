@@ -1,38 +1,76 @@
 package com.jira.controllers;
 
 import com.jira.models.Task;
+import com.jira.pojo.MessageResponse;
+import com.jira.pojo.dto.ProjectDto;
+import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.TaskRepo;
 import com.jira.services.impl.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.text.ParseException;
 
 @RestController
 @RequestMapping("api/v1/tasks")
 public class TaskController {
-
-    private final TaskRepo taskRepo;
-
-    public TaskController(TaskRepo taskRepo) {
-        this.taskRepo = taskRepo;
-    }
-
 
     @Autowired
     @Qualifier("TaskServiceImpl")
     private TaskServiceImpl taskService;
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public Iterable<Task> getAll() {
-        return taskService.getAll();
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> getAll() {
+        return ResponseEntity.ok(taskService.getAll());
+    }
+
+    @GetMapping("/project/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(taskService.getProjectTasks(id));
+    }
+
+    @GetMapping("/project/{projectId}/user/{userId}")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> getById(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId){
+        return ResponseEntity.ok(taskService.getUsersTasks(projectId, userId));
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public Task getOne(@PathVariable("id") Task task) {
         return task;
+    }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> add(@RequestBody TaskDto taskDto){
+        taskService.addTask(taskDto);
+        return ResponseEntity.ok(new MessageResponse("Task added"));
+    }
+
+    @PutMapping("{id}/start")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> startTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+        return ResponseEntity.ok(taskService.startTask(id, taskDto));
+    }
+
+    @PutMapping("{id}/complete")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<?> completeTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+        taskService.completeTask(id);
+        return ResponseEntity.ok(new MessageResponse("Task completed"));
+    }
+
+    @PutMapping("{id}/close")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> closeTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+        taskService.closeTask(id);
+        return ResponseEntity.ok(new MessageResponse("Task completed"));
     }
 
     @PutMapping

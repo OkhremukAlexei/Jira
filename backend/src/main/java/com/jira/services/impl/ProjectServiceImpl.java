@@ -28,6 +28,9 @@ public class ProjectServiceImpl implements ProjectService {
     private UserDetailsServiceImpl userService;
 
     @Autowired
+    private TaskServiceImpl taskService;
+
+    @Autowired
     private UserRepo userRepo;
 
     @Override
@@ -39,6 +42,7 @@ public class ProjectServiceImpl implements ProjectService {
         List<PartialProjectDto> projectDtoList = new ArrayList<>();
 
         for (Project project: projects) {
+            project.setProgress(taskService.countProgress(project.getId()));
             projectDtoList.add(PartialProjectDto.build(project));
         }
 
@@ -76,7 +80,7 @@ public class ProjectServiceImpl implements ProjectService {
         Project project = new Project();
         project.setName(projectRequest.getName());
         project.setLinkToGit(projectRequest.getLinkToGit());
-        project.setProgress(0);  //TODO count progress
+        project.setProgress(0);
 
         project.setTeam(teamService.getNewTeam(userService.getCurrentUser()));
 

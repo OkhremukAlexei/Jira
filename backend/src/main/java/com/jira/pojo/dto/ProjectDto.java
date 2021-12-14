@@ -16,7 +16,7 @@ public class ProjectDto {
     private String name;
     private String linkToGit;
     private int progress;
-    private Set<Task> tasks;
+//    private Set<Task> tasks;
     private int numOfPersonsInTeam;
     private List<PartialUserDto> users;
     private PartialUserDto manager;
@@ -81,10 +81,6 @@ public class ProjectDto {
 
     public int getProgress() {
         return progress;
-    }
-
-    public Set<Task> getTasks() {
-        return tasks;
     }
 
     public int getNumOfPersonsInTeam() {
