@@ -75,6 +75,7 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
 
+
         if (userRepo.existsByLogin(signupRequest.getLogin())) {
             return ResponseEntity
                     .badRequest()
