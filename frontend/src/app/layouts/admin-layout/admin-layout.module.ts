@@ -22,6 +22,7 @@ import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
 import {UpdateProjectComponent} from "../../pages/projects/update-project/update-project.component";
 import {Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
+import {ProfileComponent} from "../../pages/profile/profile.component";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
@@ -47,7 +48,8 @@ import {NgxPaginationModule} from "ngx-pagination";
         TasksComponent,
         TaskDetailsComponent,
         AddTaskComponent,
-        UpdateProjectComponent
+        UpdateProjectComponent,
+        ProfileComponent
     ]
 })
 

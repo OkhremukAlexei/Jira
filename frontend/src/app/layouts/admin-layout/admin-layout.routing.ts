@@ -5,6 +5,7 @@ import {UsersComponent} from "../../pages/admin/users/users.component";
 import {ProjectListComponent} from "../../pages/projects/project-list/project-list.component";
 import {ProjectDetailsComponent} from "../../pages/projects/project-details/project-details.component";
 import {PeopleComponent} from "../../pages/projects/people/people.component";
+import {ProfileComponent} from "../../pages/profile/profile.component";
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -27,5 +28,9 @@ export const AdminLayoutRoutes: Routes = [
   {
     path: 'projects/people',
     component: PeopleComponent
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent
   }
 ];

@@ -1,10 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<div class="container p-8">
+
+<h1>
   Profile
-</body>
-</html>
+</h1>
+
+  <h2>
+    User's info:
+  </h2>
+<table>
+  <tr>
+    <td>Login: </td>
+    <td>{{user.login}}</td>
+  </tr>
+  <tr>
+    <td>Password:</td>
+    <td>{{user.password}}</td>
+  </tr>
+  <tr>
+    <td>Role:</td>
+    <td>{{user.roles}}</td>
+  </tr>
+  <tr>
+    <td>Name:</td>
+    <td>{{user.account.name}}</td>
+  </tr>
+
+  <tr>
+    <td>Surname:</td>
+    <td>{{user.account.surname}}</td>
+  </tr>
+  <tr>
+    <td>Email:</td>
+    <td>{{user.account.email}}</td>
+  </tr>
+</table>
+  <br>
+  <h2>
+    Projects:
+  </h2>
+
+  <table>
+    <tr *ngFor="let project of projects">
+      <td>{{project.name}}</td>
+    </tr>
+  </table>
+
+  <h2>
+    Tasks:
+  </h2>
+</div>

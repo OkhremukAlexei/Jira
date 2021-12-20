@@ -20,6 +20,9 @@ export class TasksService {
   getTaskById(id: any) {
     return this.http.get(`${this.taskUrl}/${id}`);
   }
+  getAllTasksByUserId(id:string):Observable<TasksInfo[]>{
+    return this.http.get<TasksInfo[]>(`${this.taskUrl}/user/${id}`)
+  }
 
   updateTask(id: number, data: TasksInfo) {
     return this.http.put(`${this.taskUrl}/${id}`, data).subscribe(data=>console.log(data));

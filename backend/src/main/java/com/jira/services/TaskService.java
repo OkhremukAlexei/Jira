@@ -25,6 +25,8 @@ public interface TaskService {
 
     void closeTask(int id);
 
+    List<TaskDto> getAllUsersTasks (Long id);
+
     List<TaskDto> getProjectTasks(Long id);
 
     int countProgress(Long id);
