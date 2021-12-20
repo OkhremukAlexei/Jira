@@ -2,9 +2,10 @@ package com.jira.models;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class Account {
+public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -61,5 +62,11 @@ public class Account {
         this.email = email;
     }
 
+    public User getUser() {
+        return user;
+    }
 
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

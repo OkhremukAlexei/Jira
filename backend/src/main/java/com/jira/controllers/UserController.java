@@ -6,12 +6,9 @@ import com.jira.repos.UserRepo;
 import com.jira.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/users")
@@ -29,26 +26,20 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<User>> getAll() {
-        final List<User> users =  userService.getAll();
-        return users != null &&  !users.isEmpty()
-                ? new ResponseEntity<>(users, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public Iterable<User> getAll() {
+        return userService.getAll();
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<User> getOne(@PathVariable("id") User user) {
-        return user != null
-                ? new ResponseEntity<>(user, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public User getOne(@PathVariable("id") User user) {
+        return user;
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<User> put(@RequestBody User user) {
-        final User update = userService.put(user);
-        return new ResponseEntity<>(update,HttpStatus.OK);
+    public User put(@RequestBody User user) {
+        return userService.put(user);
     }
 
     @DeleteMapping("{id}")
@@ -59,11 +50,14 @@ public class UserController {
 
     @GetMapping("/roleUser")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public ResponseEntity<List<User>> getUsers(){
-        final List <User> users = userService.getUsers();
-        return users!=null && !users.isEmpty()
-                ? new ResponseEntity<>(users,HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> getUsers(){
+        return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @GetMapping("/project/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> getUsersOutsideTheProject(@PathVariable("id") Long projectId){
+        return ResponseEntity.ok(userService.getUsersOutsideTheProject(projectId));
     }
 }
 

@@ -5,8 +5,6 @@ import com.jira.repos.AccountRepo;
 import com.jira.services.AccountService;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service("AccountServiceImpl")
 public class AccountServiceImpl implements AccountService {
 
@@ -17,7 +15,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public List<Account> getAll() {
+    public Iterable<Account> getAll() {
         return accountRepo.findAll();
     }
     @Override
@@ -31,15 +29,5 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void delete(Account account) {
         accountRepo.delete(account);
-    }
-
-    @Override
-    public boolean exisitById(Long id) {
-        return false;
-    }
-
-    @Override
-    public boolean existsById(Long id) {
-        return false;
     }
 }

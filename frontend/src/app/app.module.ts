@@ -3,41 +3,49 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { HomeComponent } from './home/home.component';
-import { UserComponent } from './user/user.component';
-import { ManagerComponent } from './manager/manager.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import {httpInterceptorProviders} from "./auth/auth-interceptor";
-import { TasksComponent } from './tasks/tasks.component';
-import { ProjectsComponent } from './projects/project-list/projects.component';
-import { UserProjectComponent } from './projects/user-project/user-project.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UserlistComponent } from './admin/userlist/userlist.component';
+import {RouteReuseStrategy, RouterModule} from "@angular/router";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ComponentsModule} from "./components/components.module";
+import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
+import {httpInterceptorProviders} from "./interceptors/auth-interceptor";
+import {DataTransferService} from "./services/data-transfer.service";
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
+import { Ng2SearchPipeModule} from "ng2-search-filter";
+import { Ng2OrderModule} from "ng2-order-pipe";
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    UserComponent,
-    ManagerComponent,
-    TasksComponent,
-    ProjectsComponent,
-    UserProjectComponent,
-    UserlistComponent
+    AuthLayoutComponent,
+    AdminLayoutComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    BrowserAnimationsModule,
+    ComponentsModule,
+    RouterModule,
+    Ng2SearchPipeModule,
+    Ng2OrderModule,
+    NgxPaginationModule,
+    RouterModule,
+    ReactiveFormsModule
   ],
-  providers: [httpInterceptorProviders],
+  providers: [
+    httpInterceptorProviders,
+    DataTransferService
+  ],
+
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

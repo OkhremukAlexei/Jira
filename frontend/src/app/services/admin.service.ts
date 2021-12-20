@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {TokenStorageService} from "./token-storage.service";
 import {Observable} from "rxjs";
-import {PartialAccountInfo} from "../admin/partial-account-info";
-import {TokenStorageService} from "../auth/token-storage.service";
-import {UserInfo} from "../admin/user-info";
+import {PartialAccountInfo} from "../models/partial-account-info";
+import {PartialUserInfo} from "../models/partial-user";
 
 const httpOptions = {
   headers: new  HttpHeaders({'Content-Type':'application/json'})
@@ -17,6 +17,7 @@ export class AdminService {
 
   private userListUrl = 'http://localhost:8080/api/admin/userlist';
   private userInfoUrl = 'http://localhost:8080/api/admin/userinfo';
+  private userToManager = 'http://localhost:8080/api/admin/manager';
 
   constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
 
@@ -25,12 +26,13 @@ export class AdminService {
     return this.http.get<PartialAccountInfo[]>(this.userListUrl);
   }
 
-  getUserInfo(id: number): Observable<UserInfo> {
-    return this.http.post<UserInfo>(this.userInfoUrl+'/'+id, id, httpOptions);
+  getUserInfo(id: number): Observable<PartialUserInfo> {
+    return this.http.post<PartialUserInfo>(this.userInfoUrl+'/'+id, id, httpOptions);
   }
 
-  setManager(id: number): Observable<string> {
-    return this.http.post<string>(this.userListUrl, id);
+  setManager(id: number) {
+    console.log(id);
+    return this.http.post(this.userToManager + '/' + id, id, httpOptions);
   }
 
   deleteUser(id: number): Observable<string> {

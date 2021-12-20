@@ -1,11 +1,12 @@
 package com.jira.models;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class Project {
+public class Project implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,15 +16,11 @@ public class Project {
     private String linkToGit;
     private int progress;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "project_task",
-            joinColumns = @JoinColumn(name = "project_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id")
-    )
+    @OneToMany(mappedBy="project")
     private Set<Task> tasks;
 
-    @OneToOne(fetch = FetchType.LAZY)  //fixes
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 
     public Project() {

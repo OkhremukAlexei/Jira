@@ -1,24 +1,43 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {ProjectsInfo} from "../projects/projects-info";
+import {Projects} from "../models/projects-info";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectsService {
 
-  private projectListUrl = 'http://localhost:8080/api/v1/projects/projectList';
-
-  private projectUrl = 'http://localhost:8080/api/v1/projects/usersProject/';
+  private projectUrl = 'http://localhost:8080/api/v1/projects';
 
   constructor(private http: HttpClient) { }
 
-  getAllProjects() : Observable<ProjectsInfo[]> {
-    return this.http.get<ProjectsInfo[]>(this.projectListUrl, {responseType: "json"});
+  getAllProjects() : Observable<Projects[]> {
+    return this.http.get<Projects[]>(`${this.projectUrl}/projectList`, {responseType: "json"});
   }
 
-  getProjectFromUserId(id: number) : Observable<ProjectsInfo[]> {
-    return this.http.get<ProjectsInfo[]>(this.projectUrl + id);
+  getProjectsFromUserId(id: any) : Observable<Projects[]> {
+    return this.http.get<Projects[]>(`${this.projectUrl}/usersProject/${id}`, {responseType: "json"});
   }
+
+  getProjectById(id: any) : Observable<Projects>{
+    return this.http.get<Projects>(`${this.projectUrl}/${id}`);
+  }
+
+  updateProject(id: number, data: Projects) {
+    return this.http.put(`${this.projectUrl}/${id}`, data);
+  }
+
+  addProject(data: Projects) : Observable<Projects>{
+    return this.http.post<Projects>(`${this.projectUrl}`, data);
+  }
+
+  addPeopleToProject(data: Projects){
+    return this.http.put(`${this.projectUrl}/people`, data).subscribe(data => console.log(data));
+  }
+
+  deletePeopleInProject(idProject: number, idUser: number){
+    return this.http.delete(`${this.projectUrl}/project/${idProject}/user/${idUser}`).subscribe();
+  }
+
 }

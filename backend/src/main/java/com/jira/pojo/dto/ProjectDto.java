@@ -7,8 +7,8 @@ import com.jira.models.User;
 import com.jira.pojo.util.RoleHelper;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 public class ProjectDto {
@@ -16,15 +16,15 @@ public class ProjectDto {
     private String name;
     private String linkToGit;
     private int progress;
-    private Set<Task> tasks;
+//    private Set<Task> tasks;
     private int numOfPersonsInTeam;
-    private List<User> users;
-    private User manager;
+    private List<PartialUserDto> users;
+    private PartialUserDto manager;
 
     public ProjectDto() {
     }
 
-    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, User manager) {
+    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, PartialUserDto manager) {
         this.name = name;
         this.linkToGit = linkToGit;
         this.progress = progress;
@@ -32,7 +32,7 @@ public class ProjectDto {
         this.manager = manager;
     }
 
-    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<User> users, User manager) {
+    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<PartialUserDto> users, PartialUserDto manager) {
         this.id = id;
         this.name = name;
         this.linkToGit = linkToGit;
@@ -42,8 +42,19 @@ public class ProjectDto {
         this.manager = manager;
     }
 
+
     public static ProjectDto build(Project project){
         User manager = RoleHelper.findManagerInList(project.getTeam().getUsers());
+        PartialUserDto managerDto = null;
+
+        if (manager != null) {
+            managerDto = PartialUserDto.build(manager);
+        }
+        List<PartialUserDto> userDtoList = new ArrayList<>();
+
+        for (User user: project.getTeam().getUsers()) {
+            userDtoList.add(PartialUserDto.build(user));
+        }
 
         return new ProjectDto(
                 project.getId(),
@@ -51,8 +62,8 @@ public class ProjectDto {
                 project.getLinkToGit(),
                 project.getProgress(),
                 project.getTeam().getNumberOfPersons(),
-                project.getTeam().getUsers(),
-                manager
+                userDtoList,
+                managerDto
         );
     }
 
@@ -72,19 +83,15 @@ public class ProjectDto {
         return progress;
     }
 
-    public Set<Task> getTasks() {
-        return tasks;
-    }
-
     public int getNumOfPersonsInTeam() {
         return numOfPersonsInTeam;
     }
 
-    public List<User> getUsers() {
+    public List<PartialUserDto> getUsers() {
         return users;
     }
 
-    public User getManager() {
+    public PartialUserDto getManager() {
         return manager;
     }
 
@@ -97,18 +104,5 @@ public class ProjectDto {
                 ", numOfPersonsInTeam=" + numOfPersonsInTeam +
                 ", manager=" + manager +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ProjectDto that = (ProjectDto) o;
-        return progress == that.progress && numOfPersonsInTeam == that.numOfPersonsInTeam && id.equals(that.id) && name.equals(that.name) && Objects.equals(linkToGit, that.linkToGit) && Objects.equals(tasks, that.tasks) && Objects.equals(users, that.users) && Objects.equals(manager, that.manager);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, linkToGit, progress, tasks, numOfPersonsInTeam, users, manager);
     }
 }

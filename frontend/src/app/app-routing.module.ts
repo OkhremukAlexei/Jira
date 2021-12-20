@@ -1,52 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from "@angular/router";
-import {HomeComponent} from "./home/home.component";
-import {UserComponent} from "./user/user.component";
-import {ManagerComponent} from "./manager/manager.component";
-import {LoginComponent} from "./login/login.component";
-import {RegisterComponent} from "./register/register.component";
-import {AccountComponent} from "./account/account.component";
-import {UserlistComponent} from "./admin/userlist/userlist.component";
-import {TasksComponent} from "./tasks/tasks.component";
-import {ProjectsComponent} from "./projects/project-list/projects.component";
+import {AuthLayoutComponent} from "./layouts/auth-layout/auth-layout.component";
+import {AdminLayoutComponent} from "./layouts/admin-layout/admin-layout.component";
 
 const routes: Routes = [
+
   {
-    path: 'home',
-    component:HomeComponent
+    path: '',
+    component: AuthLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('src/app/layouts/auth-layout/auth-layout.module').then(m => m.AuthLayoutModule)
+      }
+    ]
   },
   {
-    path: 'user',
-    component:UserComponent
-  },
-  {
-    path: 'manager',
-    component:ManagerComponent
-  },
-  {
-    path: 'admin/userlist',
-    component:UserlistComponent
-  },
-  {
-    path: 'account',
-    component:AccountComponent
-  },
-  {
-    path: 'signin',
-    component:LoginComponent
-  },
-  {
-    path: 'signup',
-    component:RegisterComponent
-  },
-  {
-    path: 'tasks',
-    component:TasksComponent
-  },
-  {
-    path: 'projects',
-    component:ProjectsComponent
+    path: '',
+    component: AdminLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('src/app/layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
+      }
+    ]
   },
   {
     path: '',

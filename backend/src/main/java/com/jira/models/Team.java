@@ -2,17 +2,10 @@ package com.jira.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
@@ -30,7 +23,14 @@ public class Team implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
+    @OneToOne(mappedBy = "team")
+    private Project project;
+
     public Team() {
+    }
+
+    public Team(List<User> users) {
+        this.users = users;
     }
 
     public long getId() {
@@ -55,6 +55,14 @@ public class Team implements Serializable {
 
     public void setUsers(List<User> users) {
         this.users = users;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @Override
