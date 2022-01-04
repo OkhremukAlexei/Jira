@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private TeamRepo teamRepo;
 
     @Override
-    public Iterable<User> getAll() {
+    public List<User> getAll() {
         return userRepo.findAll();
     }
 
@@ -42,6 +42,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(User us) {
         userRepo.delete(us);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return userRepo.findBySpecificRoles(ERole.ROLE_USER);
     }
 
     @Override

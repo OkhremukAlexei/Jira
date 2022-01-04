@@ -6,6 +6,7 @@ import com.jira.repos.TeamRepo;
 import com.jira.services.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -26,20 +27,26 @@ public class TeamController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public Iterable<Team> getAll() {
-        return teamDetailsService.getAll();
+    public ResponseEntity<Iterable<Team>> getAll() {
+        final Iterable<Team> teams = teamDetailsService.getAll();
+        return teams != null// &&  !teams.isEmpty()   //&&&&
+                ? new ResponseEntity<>(teams, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public Team getOne(@PathVariable("id") Team team) {
-        return team;
+    public ResponseEntity<Team> getOne(@PathVariable("id") Team team) {
+        return team != null
+                ? new ResponseEntity<>(team, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public Team put(@RequestBody Team team) {
-        return teamDetailsService.put(team);
+    public ResponseEntity<Team> put(@RequestBody Team team) {
+        final Team update = teamDetailsService.put(team);
+        return new ResponseEntity<>(update,HttpStatus.OK);
     }
 
     @DeleteMapping("{id}")
