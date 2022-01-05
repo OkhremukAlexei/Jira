@@ -1,31 +1,190 @@
-<table class="table">
-  <thead>
-  <tr>
-    <th scope="col">#</th>
-    <th scope="col">Title</th>
-    <th scope="col">Description</th>
-    <th scope="col">DateTime</th>
-    <th scope="col">SpentTime</th>
+<!--suppress ALL -->
+<div class="table-responsive" *ngIf=" authority === 'manager'">
+  <div class="row align-items-center">
+    <div class="col-8">
+      <h3 class="mb-0">Задачи</h3>
+    </div>
+    <div class="col-4 text-right">
+      <a (click)="open(content)" class="btn btn-sm btn-primary">Добавить задачу</a>
+    </div>
+  </div>
 
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let tempTasks of listTasks; let i = index">
-    <td>{{i+1}}</td>
-    <td><a href="#">{{tempTasks.title}}</a> </td>
-    <td><a href="#">{{tempTasks.description}}</a></td>
-    <td><a href="#">{{tempTasks.dateTime}}</a> </td>
-    <td><a href="#">{{tempTasks.spentTime}}</a></td>
+  <br/>
 
-    <td class="overflow-hidden">
-      <div ngbDropdown container="body">
-        <button class="btn btn-outline-primary btn-sm" ngbDropdownToggle>Actions</button>
-        <div ngbDropdownMenu>
-          <button ngbDropdownItem (click)="updateTask(tempTasks.id)">Update</button>
-          <button ngbDropdownItem (click)="deleteTask(tempTasks.id)">Delete</button>
+  <table class="table align-items-center table-flush table-striped">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Задача</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Старт</th>
+      <th scope="col">Запланированно</th>
+      <th scope="col">Пользователь</th>
+      <th scope="col">Статус</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tempTasks of listTasks; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{tempTasks.title}}</td>
+      <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block" >{{tempTasks.description}}</td>
+      <td>{{tempTasks.dateTime}}</td>
+      <td>{{tempTasks.spentTime}}</td>
+      <td>{{tempTasks.user?.account.name}} {{tempTasks.user?.account.surname}}</td>
+      <td>{{tempTasks.status}}</td>
+      <td class="text-right">
+        <div ngbDropdown placement="bottom-right">
+          <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+            <i class="fas fa-ellipsis-v"></i>
+          </a>
+          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+            <div *ngIf="tempTasks.status === 'COMPLETED'">
+              <a class="dropdown-item" (click)="closeTask(tempTasks)">Закрыть задачу</a>
+            </div>
+            <a class="dropdown-item">Удалить</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="table-responsive" *ngIf=" authority === 'user'">
+  <div class="row align-items-center">
+    <div class="col-8">
+      <h3 class="mb-0">Мои задачи</h3>
+    </div>
+  </div>
+
+  <br/>
+
+  <table class="table align-items-center table-flush table-striped">
+    <thead class="thead-light">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Задача</th>
+      <th scope="col">Описание</th>
+      <th scope="col">Время начала</th>
+      <th scope="col">Планируемое время</th>
+      <th scope="col">Статус</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let tempTasks of listUserTasks; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{tempTasks.title}}</td>
+      <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block">{{tempTasks.description}}</td>
+      <td>{{tempTasks.dateTime}}</td>
+      <td>{{tempTasks.spentTime}}</td>
+      <td>{{tempTasks.status}}</td>
+      <td class="text-right">
+        <div ngbDropdown placement="bottom-right">
+          <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
+            <i class="fas fa-ellipsis-v"></i>
+          </a>
+          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
+            <div *ngIf="tempTasks.status === 'NEW'">
+              <a class="dropdown-item" (click)="openStart(contentStart ,tempTasks)">Начать выполнение задачи</a>
+            </div>
+            <div *ngIf="tempTasks.status === 'ASSIGNED'">
+              <a class="dropdown-item" (click)="completeTask(tempTasks)">Завершить задачу</a>
+            </div>
+            <a class="dropdown-item">Удалить</a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Новая задача</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form  name="form" *ngIf="currentTask" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+      <div class="form-group">
+        <label>Задача</label>
+        <input type="text" class="form-control" name="title" [(ngModel)]="currentTask.title" #title="ngModel" required/>
+        <div *ngIf="f.submitted && title.invalid">
+          <div *ngIf="title.errors"></div>
         </div>
       </div>
-    </td>
-  </tr>
-  </tbody>
-</table>
+      <div class="form-group">
+        <label>Описание</label>
+        <textarea rows="4" class="form-control form-control-alternative" placeholder="Description"
+                  name="description" [(ngModel)]="currentTask.description" #description="ngModel" required></textarea>
+        <div *ngIf="f.submitted && description.invalid">
+          <div *ngIf="description.errors"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <p><strong>Выберите человека выполняющего задачу</strong></p>
+        <p><select name="user" [(ngModel)]="currentTask.user" #users="ngModel" required>
+          <option [ngValue]="null" disabled>Выберите исполнителя</option>
+          <option *ngFor="let user of currentProject.users"
+                  [ngValue]="user">{{user.account.name}} {{user.account.surname}}</option>
+        </select>
+        </p>
+      </div>
+      <div class="form-group">
+        <button type="submit" data-dismiss="modal" class="btn btn-primary btn-block"> Добавить</button>
+      </div> <!-- form-group// -->
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Закрыть</button>
+  </div>
+</ng-template>
+
+
+<ng-template #contentStart let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title-start">Начать выполнение задачи</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="startForm" >
+      <div class="form-group">
+        <label for="title">Задача</label>
+        <div class="input-group">
+          <input formControlName="title" class="form-control"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="description">Описание</label>
+        <div class="input-group">
+          <textarea formControlName="description" rows="4" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="form-group">
+        <label >Текущее время</label>
+        <div class="input-group">
+          <p>{{today | date:'dd-MM-yyyy hh:mm a':'+0530'}}</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Время за которое планируется выполнить задачу</label>
+        <div class="input-group">
+          <input type="time" id="spentTime" name="spentTime"
+                 min="09:00" max="18:00" formControlName="spentTime" required/>
+        </div>
+      </div>
+      <div class="text-center">
+        <button data-dismiss="modal" class="btn btn-info" (click)="startTask()">Начать задачу</button>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer pt-md-0 pb-md-4">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Закрыть</button>
+  </div>
+</ng-template>

@@ -146,6 +146,11 @@ public class TaskServiceImpl implements TaskService {
         int numAllTasks = taskRepo.countAmountTasksInProject(id);
         int numClosedTasks = taskRepo.countAmountClosedTasksInProject(id);
 
-        return numClosedTasks * 100 / numAllTasks;
+        if(numAllTasks == 0){
+            return 0;
+        }
+        else {
+            return numClosedTasks * 100 / numAllTasks;
+        }
     }
 }

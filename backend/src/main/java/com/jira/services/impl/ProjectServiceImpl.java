@@ -132,7 +132,6 @@ public class ProjectServiceImpl implements ProjectService {
         teamService.deleteUsersInTeam(teamId, userId);
     }
 
-
     @Override
     @Transactional
     public void delete( Project project) {
