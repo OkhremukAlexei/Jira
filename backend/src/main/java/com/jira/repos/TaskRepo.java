@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskRepo extends JpaRepository<Task,Integer> {
     @Query("select count(t) from Task t where t.project.id=:id")
@@ -18,6 +19,4 @@ public interface TaskRepo extends JpaRepository<Task,Integer> {
     List<Task> findByProject_IdAndUsers_Id(Long id, Long id1);
 
     List<Task> findByProject_Id(Long id);
-
-
 }

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface AdminService {
     void setManager(Long id);
+
     List<AccountDto> findAll();
 }

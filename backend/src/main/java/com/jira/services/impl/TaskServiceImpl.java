@@ -51,8 +51,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getOne(Task task) {
-        return taskRepo.findById(task.getId()).get();
+    public TaskDto getOne(Integer id) {
+        Task task = taskRepo.findById(id).get();
+        return TaskDto.build(task);
     }
 
     @Override

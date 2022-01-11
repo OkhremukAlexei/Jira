@@ -1,35 +1,129 @@
-<div *ngIf="isUpdated; else taskDetailsForm">
-  Task updated successful.
-</div>
+<div *ngIf="isProject; else projectsList">
 
-<ng-template #taskDetailsForm>
-  <div class="row d-flex justify-content-center align-items-center" style="height: 80vh;">
-    <div class="col-lg-4 col-md-3 col-sm-12">
-      <div class="card mx-auto  " style="width: 25rem;" >
-        <article class="card-body">
-          <h4 class="card-title mb-4 mt-1">Task</h4>
-          <form class="was-validated" name="form" *ngIf="currentTask" (ngSubmit)="f.form.valid && updateTask()"  #f="ngForm" novalidate>
-            <div class="form-group">
-              <label>Task name</label>
-              <input type="text" class="form-control" name="title" [(ngModel)]="currentTask.title" #title="ngModel" required/>
-              <div *ngIf="f.submitted && title.invalid">
-                <div *ngIf="title.errors.required"></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label>Description</label>
-              <input type="text" class="form-control" name="description" [(ngModel)]="currentTask.description" #description="ngModel" required/>
-              <div *ngIf="f.submitted && description.invalid">
-                <div *ngIf="description.errors.required"></div>
-              </div>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-primary btn-block"> Edit  </button>
-
-            </div> <!-- form-group// -->
-          </form>
-        </article>
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10" >
+          <h1 class="display-2 text-white">{{currentProject?.name}}</h1>
+          <p class="text-white mt-0 mb-5"><a href="{{currentProject?.linkToGit}}">{{currentProject?.linkToGit}}</a></p>
+        </div>
       </div>
     </div>
   </div>
+
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-8 order-xl-2 mb-5 mb-xl-0">
+        <div class="card card-profile shadow">
+          <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-0">
+
+            <div class="card mb-1" >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-xs-12 col-md-8" >
+                      <h5 class="card-title">{{currentTask.title}}</h5>
+                      <h6 class="card-subtitle mb-2 text-muted">{{currentTask.description}}</h6>
+                      <p class="card-text">{{currentTask.dateTime}}</p>
+                      <p class="card-text">{{currentTask.spentTime}}</p>
+                      <p class="card-text">{{currentTask.user.name}} {{currentTask.user.surname}}</p>
+                      <p class="card-text">{{currentTask.status}}</p>
+                    </div>
+                    <div class="col-xs-6 col-md-4 my-auto">
+                      <button type="submit" class="btn btn-primary btn-block" > Add  </button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<ng-template #projectsList>
+
+  <div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" style="min-height: 600px; background-image: url(assets/img/theme/profile-cover.jpg); background-size: cover; background-position: center top;">
+    <!-- Mask -->
+    <span class="mask bg-gradient-danger opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-12 col-md-10" >
+          <h1 class="display-2 text-white">Choose project</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+      <div class="col">
+        <div class="card shadow">
+          <div class="card-header border-0">
+            <h3 class="mb-0">Projects table</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table align-items-center table-flush">
+              <thead class="thead-light">
+              <tr>
+                <th scope="col">Name</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let tempProjects of listProjects">
+                <th scope="row">
+                  <div class="media align-items-center">
+                    <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
+                      <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
+                    </a>
+                    <div class="media-body">
+                      <a class="btn" (click)="chooseProject(tempProjects)">
+                        {{tempProjects.name}}
+                      </a>
+                    </div>
+                  </div>
+                </th>
+
+              </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer py-4">
+            <nav aria-label="...">
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item disabled">
+                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
+                    <i class="fas fa-angle-left"></i>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+                <li class="page-item active">
+                  <a class="page-link" href="javascript:void(0)">1</a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">2 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
+                <li class="page-item">
+                  <a class="page-link" href="javascript:void(0)">
+                    <i class="fas fa-angle-right"></i>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </ng-template>
+
