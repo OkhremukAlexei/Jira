@@ -16,7 +16,7 @@ public class ProjectDto {
     private String name;
     private String linkToGit;
     private int progress;
-    private Set<Task> tasks;
+    private Set<TaskDto> tasks;
     private int numOfPersonsInTeam;
     private List<UserDto> users;
     private UserDto manager;
