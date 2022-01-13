@@ -22,7 +22,7 @@ export class TaskDetailsComponent implements OnInit {
   public currentProject: Projects;
   listProjects !: Projects[];
 
-  isProject = true;
+  isProject = false;
 
   constructor(private projectService: ProjectsService, private token: TokenStorageService,
               private data: DataTransferService, private taskService : TasksService, private route: ActivatedRoute) {

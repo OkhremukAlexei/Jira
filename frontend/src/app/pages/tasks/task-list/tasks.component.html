@@ -27,7 +27,7 @@
     <tbody>
     <tr *ngFor="let tempTasks of listTasks; let i = index">
       <td>{{i + 1}}</td>
-      <td>{{tempTasks.title}}</td>
+      <td><a href="tasks/task-details/{{tempTasks.id}}">{{tempTasks.title}}</a></td>
       <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block" >{{tempTasks.description}}</td>
       <td>{{tempTasks.dateTime}}</td>
       <td>{{tempTasks.spentTime}}</td>

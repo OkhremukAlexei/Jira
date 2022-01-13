@@ -16,15 +16,15 @@ public class ProjectDto {
     private String name;
     private String linkToGit;
     private int progress;
-//    private Set<Task> tasks;
+    private Set<Task> tasks;
     private int numOfPersonsInTeam;
-    private List<PartialUserDto> users;
-    private PartialUserDto manager;
+    private List<UserDto> users;
+    private UserDto manager;
 
     public ProjectDto() {
     }
 
-    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, PartialUserDto manager) {
+    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, UserDto manager) {
         this.name = name;
         this.linkToGit = linkToGit;
         this.progress = progress;
@@ -32,7 +32,7 @@ public class ProjectDto {
         this.manager = manager;
     }
 
-    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<PartialUserDto> users, PartialUserDto manager) {
+    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<UserDto> users, UserDto manager) {
         this.id = id;
         this.name = name;
         this.linkToGit = linkToGit;
@@ -45,15 +45,15 @@ public class ProjectDto {
 
     public static ProjectDto build(Project project){
         User manager = RoleHelper.findManagerInList(project.getTeam().getUsers());
-        PartialUserDto managerDto = null;
+        UserDto managerDto = null;
 
         if (manager != null) {
-            managerDto = PartialUserDto.build(manager);
+            managerDto = UserDto.build(manager);
         }
-        List<PartialUserDto> userDtoList = new ArrayList<>();
+        List<UserDto> userDtoList = new ArrayList<>();
 
         for (User user: project.getTeam().getUsers()) {
-            userDtoList.add(PartialUserDto.build(user));
+            userDtoList.add(UserDto.build(user));
         }
 
         return new ProjectDto(
@@ -87,11 +87,11 @@ public class ProjectDto {
         return numOfPersonsInTeam;
     }
 
-    public List<PartialUserDto> getUsers() {
+    public List<UserDto> getUsers() {
         return users;
     }
 
-    public PartialUserDto getManager() {
+    public UserDto getManager() {
         return manager;
     }
 
