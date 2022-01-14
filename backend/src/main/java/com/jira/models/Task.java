@@ -1,12 +1,18 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.sql.Time;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-public class  Task {
+public class  Task implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,18 +23,33 @@ public class  Task {
     @Column(name="description")
     private String description;
     @Column(name="dateTime")
+    @DateTimeFormat
     private LocalDateTime dateTime;
     @Column(name="spentTime")
-    private int spentTime;
+    @JsonFormat(pattern = "HH:mm")
+    @DateTimeFormat
+    private Date spentTime;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
 
-    @ManyToMany(mappedBy = "tasks")
-    private Set<Project> projects;
+    @ManyToOne
+    @JoinColumn(name="project_id", nullable=false)
+    private Project project;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "task_user",
+            joinColumns = @JoinColumn(name = "task_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private Set<User> users;
 
 
     public Task() {
     }
 
-    public Task(int id, String title, String description, LocalDateTime dateTime, int spentTime) {
+    public Task(int id, String title, String description, LocalDateTime dateTime, Date spentTime) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -68,12 +89,44 @@ public class  Task {
         this.dateTime = dateTime;
     }
 
-    public int getSpentTime() {
+    public Date getSpentTime() {
         return spentTime;
     }
 
-    public void setSpentTime(int spentTime) {
+    public void setSpentTime(Date spentTime) {
         this.spentTime = spentTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Project getProjects() {
+        return project;
+    }
+
+    public void setProjects(Project project) {
+        this.project = project;
+    }
+
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

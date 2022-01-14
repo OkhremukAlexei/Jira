@@ -10,6 +10,9 @@ public class UserDto {
     private String roles;
     private AccountDto accountDto;
 
+    public UserDto() {
+    }
+
     public UserDto(Long id, String login, String password, String roles) {
         this.id = id;
         this.login = login;

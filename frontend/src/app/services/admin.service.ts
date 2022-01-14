@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {TokenStorageService} from "./token-storage.service";
 import {Observable} from "rxjs";
-import {PartialAccountInfo} from "../models/partial-account-info";
 import {PartialUserInfo} from "../models/partial-user";
+import {User} from "../models/users-info";
 
 const httpOptions = {
   headers: new  HttpHeaders({'Content-Type':'application/json'})
@@ -22,8 +22,8 @@ export class AdminService {
   constructor(private http: HttpClient, private tokenStorageService: TokenStorageService) { }
 
 
-  getAllUsers(): Observable<PartialAccountInfo[]> {
-    return this.http.get<PartialAccountInfo[]>(this.userListUrl);
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(this.userListUrl);
   }
 
   getUserInfo(id: number): Observable<PartialUserInfo> {

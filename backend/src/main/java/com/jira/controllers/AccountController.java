@@ -12,12 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/accounts")
 public class AccountController {
 
-    private final AccountRepo accountRepo;
-
-    public AccountController(AccountRepo accountRepo) {
-        this.accountRepo = accountRepo;
-    }
-
     @Autowired
     @Qualifier("AccountServiceImpl")
     private AccountService accountService;

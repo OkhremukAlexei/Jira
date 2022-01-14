@@ -29,20 +29,20 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let tempAccount of listAccount | orderBy: key: reverse | paginate:{itemsPerPage : 5, currentPage : p}">
-              <td>{{tempAccount.id}}</td>
+            <tr *ngFor="let tempUser of listUsers | orderBy: key: reverse | paginate:{itemsPerPage : 5, currentPage : p}">
+              <td>{{tempUser.account.id}}</td>
               <th scope="row">
                 <div class="media align-items-center">
                   <a href="javascript:void(0)" class="avatar rounded-circle mr-3">
                     <img alt="Image placeholder" src="../assets/img/theme/bootstrap.jpg">
                   </a>
                   <div class="media-body">
-                    <span class="mb-0 text-sm">{{tempAccount.name}} {{tempAccount.surname}}</span>
+                    <span class="mb-0 text-sm">{{tempUser.account.name}} {{tempUser.account.surname}}</span>
                   </div>
                 </div>
               </th>
               <td>
-                {{tempAccount.email}}
+                {{tempUser.account.email}}
               </td>
               <td class="text-right">
                 <div ngbDropdown placement="bottom-right">
@@ -51,10 +51,10 @@
                   </a>
                   <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
                     <a class="dropdown-item">More info</a>
-                    <div *ngIf="tempAccount.user.roles =='ROLE_USER' || isUser==false">
-                      <a class="dropdown-item" (click)="setUserManager(tempAccount.id)">Set Manager</a>
+                    <div *ngIf="tempUser.roles =='ROLE_USER' || isUser==false">
+                      <a class="dropdown-item" (click)="setUserManager(tempUser.account.id)">Set Manager</a>
                     </div>
-                      <a class="dropdown-item" (click)="deleteUser(tempAccount.id)">Delete</a>
+                      <a class="dropdown-item" (click)="deleteUser(tempUser.account.id)">Delete</a>
 
                   </div>
                 </div>

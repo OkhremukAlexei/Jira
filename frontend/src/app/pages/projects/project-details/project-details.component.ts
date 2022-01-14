@@ -11,6 +11,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import { switchMap } from 'rxjs/operators';
 import {Observable} from "rxjs";
+import {TokenStorageService} from "../../../services/token-storage.service";
 
 @Component({
   selector: 'app-project-details',
@@ -24,14 +25,16 @@ export class ProjectDetailsComponent implements OnInit{
   public currentProject$: Observable<any>
 
   editForm: FormGroup;
+  roles!: string[];
+  authority!: string;
 
   constructor(private projectService : ProjectsService, private route: ActivatedRoute, private data: DataTransferService,
-              private router : Router, private modalService: NgbModal, private fb: FormBuilder) {
+              private router : Router, private modalService: NgbModal, private fb: FormBuilder, private token: TokenStorageService) {
 
   }
 
   ngOnInit(): void {
-
+    this.getAuthority();
     let projectId = this.route.snapshot.paramMap.get('id');
     this.currentProject$ = this.route.params.pipe(
       switchMap((params: Params) =>
@@ -77,6 +80,21 @@ export class ProjectDetailsComponent implements OnInit{
           this.modalService.dismissAll();
           this.ngOnInit();
         });
+  }
+
+  getAuthority(): void {
+    this.roles = this.token.getAuthorities();
+    this.roles.every(role => {
+      if (role === 'ROLE_ADMIN') {
+        this.authority = 'admin';
+        return false;
+      } else if (role === 'ROLE_MANAGER') {
+        this.authority = 'manager';
+        return false;
+      }
+      this.authority = 'user';
+      return true;
+    });
   }
 
 }
