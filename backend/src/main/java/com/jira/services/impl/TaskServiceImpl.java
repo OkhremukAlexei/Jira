@@ -4,17 +4,14 @@ import com.jira.models.Project;
 import com.jira.models.Status;
 import com.jira.models.Task;
 import com.jira.models.User;
-import com.jira.pojo.dto.PartialProjectDto;
 import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
 import com.jira.repos.UserRepo;
-import com.jira.services.ProjectService;
 import com.jira.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -51,8 +48,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task getOne(Task task) {
-        return taskRepo.findById(task.getId()).get();
+    public TaskDto getOne(Integer id) {
+        Task task = taskRepo.findById(id).get();
+        return TaskDto.build(task);
     }
 
     @Override
@@ -160,6 +158,11 @@ public class TaskServiceImpl implements TaskService {
         int numAllTasks = taskRepo.countAmountTasksInProject(id);
         int numClosedTasks = taskRepo.countAmountClosedTasksInProject(id);
 
-        return numClosedTasks * 100 / numAllTasks;
+        if(numAllTasks == 0){
+            return 0;
+        }
+        else {
+            return numClosedTasks * 100 / numAllTasks;
+        }
     }
 }

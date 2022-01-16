@@ -17,12 +17,6 @@ import java.util.List;
 @RequestMapping("api/v1/users")
 public class UserController {
 
-    private final UserRepo userRepo;
-
-    public UserController(UserRepo userRepo) {
-        this.userRepo = userRepo;
-    }
-
     @Autowired
     @Qualifier("UsersServiceImpl")
     private UserService userService;

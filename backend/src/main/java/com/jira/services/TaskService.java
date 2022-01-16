@@ -9,7 +9,7 @@ import java.util.List;
 public interface TaskService {
     List<TaskDto> getAll();
 
-    Task getOne(Task task);
+    TaskDto getOne(Integer id);
 
     Task put(Task task);
 

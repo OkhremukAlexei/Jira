@@ -28,9 +28,15 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getAll());
     }
 
+    @GetMapping("/task/{id}")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')")
+    public ResponseEntity<?> getById(@PathVariable("id") Integer id){
+        return ResponseEntity.ok(taskService.getOne(id));
+    }
+
     @GetMapping("/project/{id}")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id){
+    public ResponseEntity<?> getByProjectId(@PathVariable("id") Long id){
         return ResponseEntity.ok(taskService.getProjectTasks(id));
     }
 
@@ -42,8 +48,14 @@ public class TaskController {
 
     @GetMapping("/project/{projectId}/user/{userId}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> getById(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId){
+    public ResponseEntity<?> getByUserId(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId){
         return ResponseEntity.ok(taskService.getUsersTasks(projectId, userId));
+    }
+
+    @GetMapping("/project/{projectId}/task/{taskId}")
+    @PreAuthorize("hasRole('ROLE_MANAGER') or hasRole('ROLE_USER')")
+    public ResponseEntity<?> getTaskInProject(@PathVariable("projectId") Long projectId, @PathVariable("taskId") Integer taskId){
+        return ResponseEntity.ok(new MessageResponse("work"));
     }
 
     @GetMapping("{id}")
@@ -66,16 +78,16 @@ public class TaskController {
 
     @PutMapping("{id}/complete")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> completeTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+    public ResponseEntity<?> completeTask(@PathVariable("id") int id) {
         taskService.completeTask(id);
         return ResponseEntity.ok(new MessageResponse("Task completed"));
     }
 
     @PutMapping("{id}/close")
     @PreAuthorize("hasRole('ROLE_MANAGER')")
-    public ResponseEntity<?> closeTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+    public ResponseEntity<?> closeTask(@PathVariable("id") int id) {
         taskService.closeTask(id);
-        return ResponseEntity.ok(new MessageResponse("Task completed"));
+        return ResponseEntity.ok(new MessageResponse("Task closed"));
     }
 
     @PutMapping
