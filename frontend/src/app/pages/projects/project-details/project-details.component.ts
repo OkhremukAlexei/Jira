@@ -44,7 +44,6 @@ export class ProjectDetailsComponent implements OnInit{
     this.currentProject$.subscribe((project:any) => {
         this.currentProject = project;
         this.data.setProject(this.currentProject);
-        console.log(this.currentProject.users);
       },
       error => {
         console.log(error);

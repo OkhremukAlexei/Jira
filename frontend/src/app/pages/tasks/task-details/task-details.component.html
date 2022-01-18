@@ -28,7 +28,7 @@
                       <h6 class="card-subtitle mb-2 text-muted">{{currentTask.description}}</h6>
                       <p class="card-text">{{currentTask.dateTime}}</p>
                       <p class="card-text">{{currentTask.spentTime}}</p>
-                      <p class="card-text">{{currentTask.user.account.name}} {{currentTask.user.account.surname}}</p>
+                      <p class="card-text">{{currentTask.user?.account.name}} {{currentTask.user.account.surname}}</p>
                       <p class="card-text">{{currentTask.status}}</p>
                     </div>
                     <div class="col-xs-6 col-md-4 my-auto">

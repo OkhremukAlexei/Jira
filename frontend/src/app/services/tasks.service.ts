@@ -18,7 +18,7 @@ export class TasksService {
   }
 
   getTaskById(id: any) {
-    return this.http.get(`${this.taskUrl}/${id}`);
+    return this.http.get(`${this.taskUrl}/task/${id}`);
   }
 
   updateTask(id: number, data: TasksInfo) {

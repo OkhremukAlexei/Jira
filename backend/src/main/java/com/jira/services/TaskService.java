@@ -11,6 +11,8 @@ public interface TaskService {
 
     TaskDto getOne(Integer id);
 
+    TaskDto getOne(Long projectId, Integer taskId);
+
     Task put(Task task);
 
     void delete(Task task);
