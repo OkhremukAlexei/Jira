@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {PartialAccountInfo} from "../../../models/partial-account-info";
 import {AdminService} from "../../../services/admin.service";
 import {Router} from "@angular/router";
+import {User} from "../../../models/users-info";
 
 @Component({
   selector: 'app-users',
@@ -10,7 +10,7 @@ import {Router} from "@angular/router";
 })
 export class UsersComponent implements OnInit {
 
-  listAccount!: PartialAccountInfo[];
+  listUsers!: User[];
   firstName: any;
   key: string = 'id';
   reverse: boolean = false;
@@ -26,7 +26,7 @@ export class UsersComponent implements OnInit {
 
   getListAccount(): void {
     this.adminService.getAllUsers().subscribe(data => {
-      this.listAccount = data;
+      this.listUsers = data;
 
     });
   }
@@ -45,8 +45,8 @@ export class UsersComponent implements OnInit {
       this.ngOnInit();
     }
     else {
-      this.listAccount = this.listAccount.filter(res => {
-        return res.name.toLocaleLowerCase().match(this.firstName.toLocaleLowerCase());
+      this.listUsers = this.listUsers.filter(res => {
+        return res.account.name.toLocaleLowerCase().match(this.firstName.toLocaleLowerCase());
       })
     }
   }

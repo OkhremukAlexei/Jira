@@ -14,7 +14,7 @@ export class TasksService {
   constructor(private http: HttpClient) { }
 
   getAllTasks() : Observable<TasksInfo[]> {
-    return this.http.get<TasksInfo[]>(`${this.taskUrl}/tasksList`, {responseType: "json"});
+    return this.http.get<TasksInfo[]>(`${this.taskUrl}`, {responseType: "json"});
   }
 
   getTaskById(id: any) {
@@ -27,5 +27,25 @@ export class TasksService {
 
   addTask(data: TasksInfo) {
     return this.http.post(`${this.taskUrl}`, data)
+  }
+
+  startTask(id: any, data: TasksInfo) {
+    return this.http.put(`${this.taskUrl}/${id}/start`, data);
+  }
+
+  getProjectUserTasks(projectId: any, userId: any) : Observable<TasksInfo[]>{
+    return this.http.get<TasksInfo[]>(`${this.taskUrl}/project/${projectId}/user/${userId}`, {responseType: "json"});
+  }
+
+  completeTask(id: number, data: TasksInfo) {
+    return this.http.put(`${this.taskUrl}/${id}/complete`, data);
+  }
+
+  closeTask(id: number, data: TasksInfo) {
+    return this.http.put(`${this.taskUrl}/${id}/close`, data);
+  }
+
+  getProjectTasks(id: any) {
+    return this.http.get<TasksInfo[]>(`${this.taskUrl}/project/${id}`, {responseType: "json"});
   }
 }

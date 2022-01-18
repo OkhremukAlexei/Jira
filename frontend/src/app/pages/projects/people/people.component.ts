@@ -30,7 +30,7 @@ export class PeopleComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentProject.subscribe(project => this.currentProject = project);
-
+    console.log(this.currentProject);
     if (this.currentProject == null) {
       this.isProject = false;
       this.projectService.getProjectsFromUserId(this.token.getId()).
