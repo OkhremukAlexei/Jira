@@ -3,6 +3,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {TasksInfo} from "../models/tasks-info";
 import {catchError, map, tap} from "rxjs/operators";
+import {DataStateChangeEventArgs} from "@syncfusion/ej2-angular-kanban";
 
 @Injectable({
   providedIn: 'root'

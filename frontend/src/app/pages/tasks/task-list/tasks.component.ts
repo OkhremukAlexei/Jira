@@ -1,31 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {TasksInfo} from "../../../models/tasks-info";
 import {TasksService} from "../../../services/tasks.service";
 import { Router } from '@angular/router';
-import {Subscription} from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {DataTransferService} from "../../../services/data-transfer.service";
 import {Projects} from "../../../models/projects-info";
+import {ProjectDetailsComponent} from "../../projects/project-details/project-details.component";
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit {
+export class TasksComponent implements OnInit{
 
   listTasks !: TasksInfo[];
   listUserTasks !: TasksInfo[];
   currentTask: any = {};
   closeResult: string;
-  currentProject: Projects;
-  authority!: string;
-  roles!: string[];
 
   today: number = Date.now();
   startForm: FormGroup;
+
+  @Input() currentProject!: Projects;
+  @Input() authority!: string;
 
   constructor(private taskService : TasksService, private router : Router, private data: DataTransferService,
               private modalService: NgbModal, private fb: FormBuilder, private token: TokenStorageService) {
@@ -33,28 +34,24 @@ export class TasksComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentProject.subscribe(project => {
-      this.currentProject = project
+      this.currentProject = project;
 
-      this.getAuthority();
-
-      console.log("auth");
-      if(this.authority === 'manager'){
-        console.log(project?.id);
-        this.taskService.getProjectTasks(project?.id)
-          .subscribe(data => {
-            this.listTasks = data;
-          });
+      if(this.currentProject != null) {
+        if (this.authority === 'manager') {
+          console.log(this.currentProject?.id);
+          this.taskService.getProjectTasks(this.currentProject?.id)
+            .subscribe(data => {
+              this.listTasks = data;
+            });
+        }
+        if (this.authority === 'user') {
+          this.taskService.getProjectUserTasks(this.currentProject?.id, this.token.getId())
+            .subscribe(data => {
+              this.listUserTasks = data
+            });
+        }
       }
-      if(this.authority === 'user'){
-        this.taskService.getProjectUserTasks(project?.id, this.token.getId())
-          .subscribe(data => {
-            this.listUserTasks = data
-          });
-      }
-
-
     });
-
 
     this.startForm = this.fb.group({
       title: [''],
@@ -98,21 +95,6 @@ export class TasksComponent implements OnInit {
 
   deleteTask(id: number) {
 
-  }
-
-  getAuthority(): void {
-    this.roles = this.token.getAuthorities();
-    this.roles.every(role => {
-      if (role === 'ROLE_ADMIN') {
-        this.authority = 'admin';
-        return false;
-      } else if (role === 'ROLE_MANAGER') {
-        this.authority = 'manager';
-        return false;
-      }
-      this.authority = 'user';
-      return true;
-    });
   }
 
   openStart(targetModal: any, currentTask: TasksInfo) {

@@ -1,15 +1,19 @@
 package com.jira.services;
 
 import com.jira.models.Task;
+import com.jira.pojo.dto.TaskDto;
+
+import java.text.ParseException;
+import java.util.List;
 
 public interface TaskService {
     List<TaskDto> getAll();
 
     TaskDto getOne(Integer id);
 
-    Task put(Task task);
+    TaskDto put(Integer id, TaskDto task);
 
-    void delete(Task task);
+    void delete(Integer id);
 
     void addTask(TaskDto taskDto);
 

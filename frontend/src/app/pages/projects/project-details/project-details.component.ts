@@ -22,7 +22,7 @@ export class ProjectDetailsComponent implements OnInit{
 
   id: number;
   currentProject: Projects;
-  public currentProject$: Observable<any>
+  public currentProject$: Observable<Projects>
 
   editForm: FormGroup;
   roles!: string[];
@@ -41,16 +41,16 @@ export class ProjectDetailsComponent implements OnInit{
         this.projectService.getProjectById(params['id']))
     );
 
-    this.currentProject$.subscribe((project:any) => {
+    this.currentProject$.subscribe((project:Projects) => {
         this.currentProject = project;
+        console.log(project);
         this.data.setProject(this.currentProject);
-        console.log(this.currentProject.users);
       },
       error => {
         console.log(error);
       });
 
-    this.data.currentProject.subscribe(project => this.currentProject = project);
+    console.log(this.currentProject);
 
     this.editForm = this.fb.group({
       name: [''],
