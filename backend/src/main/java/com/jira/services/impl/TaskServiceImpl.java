@@ -54,12 +54,6 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto getOne(Long projectId, Integer taskId) {
-
-        return null;
-    }
-
-    @Override
     public Task put(Task task) {
         return taskRepo.save(task);
     }

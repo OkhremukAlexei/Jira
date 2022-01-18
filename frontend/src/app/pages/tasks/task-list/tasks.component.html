@@ -1,5 +1,5 @@
 <!--suppress ALL -->
-<div class="table-responsive" *ngIf=" authority === 'manager'">
+<div class="container-fluid" *ngIf=" authority === 'manager'">
   <div class="row align-items-center">
     <div class="col-8">
       <h3 class="mb-0">Задачи</h3>
@@ -9,46 +9,8 @@
     </div>
   </div>
 
-  <br/>
 
-  <table class="table align-items-center table-flush table-striped">
-    <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Задача</th>
-      <th scope="col">Описание</th>
-      <th scope="col">Старт</th>
-      <th scope="col">Запланированно</th>
-      <th scope="col">Пользователь</th>
-      <th scope="col">Статус</th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let tempTasks of listTasks; let i = index">
-      <td>{{i + 1}}</td>
-      <td><a href="tasks/task-details/{{tempTasks.id}}">{{tempTasks.title}}</a></td>
-      <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block" >{{tempTasks.description}}</td>
-      <td>{{tempTasks.dateTime}}</td>
-      <td>{{tempTasks.spentTime}}</td>
-      <td>{{tempTasks.user?.account.name}} {{tempTasks.user?.account.surname}}</td>
-      <td>{{tempTasks.status}}</td>
-      <td class="text-right">
-        <div ngbDropdown placement="bottom-right">
-          <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
-            <i class="fas fa-ellipsis-v"></i>
-          </a>
-          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-            <div *ngIf="tempTasks.status === 'COMPLETED'">
-              <a class="dropdown-item" (click)="closeTask(tempTasks)">Закрыть задачу</a>
-            </div>
-            <a class="dropdown-item">Удалить</a>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+<app-kanban-board></app-kanban-board>
 </div>
 
 <div class="table-responsive" *ngIf=" authority === 'user'">
@@ -75,7 +37,7 @@
     <tbody>
     <tr *ngFor="let tempTasks of listUserTasks; let i = index">
       <td>{{i + 1}}</td>
-      <td><a (click)="openTaskDetails(tempTasks.id)">{{tempTasks.title}}</a></td>
+      <td>{{tempTasks.title}}</td>
       <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block">{{tempTasks.description}}</td>
       <td>{{tempTasks.dateTime}}</td>
       <td>{{tempTasks.spentTime}}</td>

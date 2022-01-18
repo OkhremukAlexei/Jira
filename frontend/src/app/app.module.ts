@@ -16,6 +16,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { Ng2SearchPipeModule} from "ng2-search-filter";
 import { Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
+import {KanbanModule} from "@syncfusion/ej2-angular-kanban";
 
 @NgModule({
   declarations: [

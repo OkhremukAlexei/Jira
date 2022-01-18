@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {TasksService} from "../../../services/tasks.service";
 import {ActivatedRoute, Router} from "@angular/router";
+import {TasksInfo} from "../../../models/tasks-info";
 import {Projects} from "../../../models/projects-info";
+import {UserService} from "../../../services/user.service";
 import {ProjectsService} from "../../../services/projects.service";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {DataTransferService} from "../../../services/data-transfer.service";
+import {User} from "../../../models/users-info";
 
 @Component({
   selector: 'app-task-details',
@@ -13,13 +16,13 @@ import {DataTransferService} from "../../../services/data-transfer.service";
 })
 export class TaskDetailsComponent implements OnInit {
 
-  public currentProject: Projects;
   currentTask: any = {};
-  isUpdated = true;
+  isUpdated = false;
 
+  public currentProject: Projects;
   listProjects !: Projects[];
 
-  isProject = true;
+  isProject = false;
 
   constructor(private projectService: ProjectsService, private token: TokenStorageService,
               private data: DataTransferService, private taskService : TasksService, private route: ActivatedRoute) {
@@ -27,7 +30,7 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.currentProject.subscribe(project => this.currentProject = project);
-    console.log(this.currentProject);
+
     if (this.currentProject == null) {
       this.isProject = false;
       this.projectService.getProjectsFromUserId(this.token.getId()).

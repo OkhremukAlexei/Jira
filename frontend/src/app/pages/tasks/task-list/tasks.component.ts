@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import {TasksInfo} from "../../../models/tasks-info";
 import {TasksService} from "../../../services/tasks.service";
-import {Params, Router} from '@angular/router';
-import {Observable, Subscription} from "rxjs";
+import { Router } from '@angular/router';
+import {Subscription} from "rxjs";
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {DataTransferService} from "../../../services/data-transfer.service";
 import {Projects} from "../../../models/projects-info";
-import {switchMap} from "rxjs/operators";
 
 @Component({
   selector: 'app-tasks',
@@ -30,30 +29,31 @@ export class TasksComponent implements OnInit {
 
   constructor(private taskService : TasksService, private router : Router, private data: DataTransferService,
               private modalService: NgbModal, private fb: FormBuilder, private token: TokenStorageService) {
-
-    this.data.currentProject.subscribe(project => {this.currentProject = project; console.log(project);});
   }
 
   ngOnInit(): void {
-    this.data.currentProject.subscribe(project => {this.currentProject = project; console.log(project);});
+    this.data.currentProject.subscribe(project => {
+      this.currentProject = project
 
-    console.log(this.currentProject);
+      this.getAuthority();
 
-    this.getAuthority();
+      console.log("auth");
+      if(this.authority === 'manager'){
+        console.log(project?.id);
+        this.taskService.getProjectTasks(project?.id)
+          .subscribe(data => {
+            this.listTasks = data;
+          });
+      }
+      if(this.authority === 'user'){
+        this.taskService.getProjectUserTasks(project?.id, this.token.getId())
+          .subscribe(data => {
+            this.listUserTasks = data
+          });
+      }
 
-    if(this.authority === 'manager'){
-      console.log(this.currentProject?.id);
-      this.taskService.getProjectTasks(this.currentProject?.id)
-        .subscribe(data => {
-          this.listTasks = data;
-        });
-    }
-    if(this.authority === 'user'){
-      this.taskService.getProjectUserTasks(this.currentProject?.id, this.token.getId())
-        .subscribe(data => {
-          this.listUserTasks = data
-        });
-    }
+
+    });
 
 
     this.startForm = this.fb.group({
@@ -92,7 +92,7 @@ export class TasksComponent implements OnInit {
     }
   }
 
-  openTaskDetails(id: number){
+  updateTask(id: number) {
     this.router.navigate(['tasks/task-details', id]);
   }
 

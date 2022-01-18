@@ -20,20 +20,22 @@ import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.
 import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
 import {Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
+import {ComponentsModule} from "../../components/components.module";
 // import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule.forChild(AdminLayoutRoutes),
-    FormsModule,
-    HttpClientModule,
-    NgbModule,
-    ClipboardModule,
-    ReactiveFormsModule,
-    Ng2OrderModule,
-    NgxPaginationModule
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(AdminLayoutRoutes),
+        FormsModule,
+        HttpClientModule,
+        NgbModule,
+        ClipboardModule,
+        ReactiveFormsModule,
+        Ng2OrderModule,
+        NgxPaginationModule,
+        ComponentsModule
+    ],
     declarations: [
         DashboardComponent,
         UsersComponent,
