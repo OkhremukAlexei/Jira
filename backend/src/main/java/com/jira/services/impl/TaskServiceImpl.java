@@ -67,6 +67,11 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void delete(Integer id) {
+        Task task = taskRepo.findById(id).get();
+
+        task.getUsers().removeAll(task.getUsers());
+        taskRepo.save(task);
+
         taskRepo.deleteById(id);
     }
 
