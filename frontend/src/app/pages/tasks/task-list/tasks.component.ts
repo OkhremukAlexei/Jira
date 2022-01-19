@@ -73,7 +73,10 @@ export class TasksComponent implements OnInit {
       }
 
       let state = { skip: 0, take: 10 };
-      this.taskService.execute(state, project?.id);
+
+      if (project != null) {
+        this.taskService.execute(state, project?.id);
+      }
       this.cardSettings = {
         headerField: 'id',
         contentField: 'title',
