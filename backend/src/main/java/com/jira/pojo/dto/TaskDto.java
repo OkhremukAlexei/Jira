@@ -135,6 +135,33 @@ public class TaskDto {
     public String getStatus() {
         return status;
     }
+    public Status getStatusEnum(String status){
+        switch (status){
+            case "NEW": {
+                return Status.NEW;
+            }
+            case "ASSIGNED": {
+                return Status.ASSIGNED;
+            }
+            case "DISCUSSION": {
+                return Status.DISCUSSION;
+            }
+            case "CANCELED": {
+                return Status.CANCELED;
+            }
+            case "POSTPONED": {
+                return Status.POSTPONED;
+            }
+            case "COMPLETED": {
+                return Status.COMPLETED;
+            }
+            case "CLOSED": {
+                return Status.CLOSED;
+            }
+        }
+
+        return null;
+    }
 
     public void setStatus(String status) {
         this.status = status;

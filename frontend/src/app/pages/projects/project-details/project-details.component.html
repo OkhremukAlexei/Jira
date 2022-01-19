@@ -11,8 +11,7 @@
           <span class="btn-inner--text">Github</span>
         </a></p>
         <div *ngIf="authority ==='manager'">
-          <a (click)="openEdit(contentEdit ,currentProject)" class="btn btn-info">Редактировать проект</a>
-        </div>
+          <a (click)="openEdit(contentEdit ,currentProject)" class="btn btn-info">Edit project</a>        </div>
       </div>
     </div>
   </div>
@@ -23,14 +22,13 @@
       <div class="card card-profile shadow">
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-0">
           <div class="d-flex justify-content-between" *ngIf="authority ==='manager'">
-            <a (click)="addPeople()" class="btn btn-sm btn-info mr-4">Пользователи в проекте</a>
-
+            <a (click)="addPeople()" class="btn btn-sm btn-info mr-4">Add users in project</a>
           </div>
         </div>
         <div class="card-body pt-0 pt-md-2">
           <div class="text-center">
             <h3>
-              Пользователи
+              Users
             </h3>
             <hr class="my-4" />
             <p *ngFor="let tempUsers of currentProject?.users">{{tempUsers.account?.name}} {{tempUsers.account?.surname}}</p>
@@ -42,7 +40,7 @@
     <div class="col-xl-9 order-xl-1">
       <div class="card bg-secondary shadow">
         <div class="card-header bg-white border-0">
-          <app-tasks></app-tasks>
+          <app-tasks [authority]="authority" [currentProject]="currentProject"></app-tasks>
         </div>
       </div>
     </div>

@@ -10,58 +10,18 @@
   </div>
 
 
-<app-kanban-board></app-kanban-board>
-</div>
-
-<div class="table-responsive" *ngIf=" authority === 'user'">
-  <div class="row align-items-center">
-    <div class="col-8">
-      <h3 class="mb-0">Мои задачи</h3>
-    </div>
+  <div class="container-fluid py-2">
+    <ejs-kanban #kanbanObj keyField='status' [dataSource]='cards | async' [cardSettings]='cardSettings' (dataStateChange)= 'dataStateChange($event)' >
+      <e-columns>
+        <e-column headerText='To Do' keyField='NEW'></e-column>
+        <e-column headerText='In Progress' keyField='ASSIGNED'></e-column>
+        <e-column headerText='Testing' keyField='COMPLETED'></e-column>
+        <e-column headerText='Done' keyField='CLOSE'></e-column>
+      </e-columns>
+    </ejs-kanban>
   </div>
-
-  <br/>
-
-  <table class="table align-items-center table-flush table-striped">
-    <thead class="thead-light">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Задача</th>
-      <th scope="col">Описание</th>
-      <th scope="col">Время начала</th>
-      <th scope="col">Планируемое время</th>
-      <th scope="col">Статус</th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let tempTasks of listUserTasks; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{tempTasks.title}}</td>
-      <td style="width: 200px; text-overflow: ellipsis; overflow: hidden; display: block">{{tempTasks.description}}</td>
-      <td>{{tempTasks.dateTime}}</td>
-      <td>{{tempTasks.spentTime}}</td>
-      <td>{{tempTasks.status}}</td>
-      <td class="text-right">
-        <div ngbDropdown placement="bottom-right">
-          <a class="btn btn-sm btn-icon-only text-light" ngbDropdownToggle>
-            <i class="fas fa-ellipsis-v"></i>
-          </a>
-          <div ngbDropdownMenu class=" dropdown-menu-right dropdown-menu-arrow">
-            <div *ngIf="tempTasks.status === 'NEW'">
-              <a class="dropdown-item" (click)="openStart(contentStart ,tempTasks)">Начать выполнение задачи</a>
-            </div>
-            <div *ngIf="tempTasks.status === 'ASSIGNED'">
-              <a class="dropdown-item" (click)="completeTask(tempTasks)">Завершить задачу</a>
-            </div>
-            <a class="dropdown-item">Удалить</a>
-          </div>
-        </div>
-      </td>
-    </tr>
-    </tbody>
-  </table>
 </div>
+
 
 <ng-template #content let-modal>
   <div class="modal-header">

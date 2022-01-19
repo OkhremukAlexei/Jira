@@ -1,5 +1,6 @@
 
-  `<ejs-kanban keyField='Status' cssClass='kanban-overview' [dataSource]='data' [cardSettings]='cardSettings' [swimlaneSettings]='swimlaneSettings'>
+  `<ejs-kanban keyField='Status' cssClass='kanban-overview' locale="ru" [dataSource]='data' [cardSettings]='cardSettings'
+               [swimlaneSettings]='swimlaneSettings' (dialogOpen)='dialogOpen($event)'>
   <e-columns>
     <e-column *ngFor="let column of columns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='true'>
       <ng-template #template let-data>

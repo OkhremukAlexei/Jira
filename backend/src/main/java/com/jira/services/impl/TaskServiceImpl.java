@@ -9,6 +9,7 @@ import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.TaskService;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -54,13 +55,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task put(Task task) {
-        return taskRepo.save(task);
+    public TaskDto put(Integer id, TaskDto taskDto) {
+        Task task = taskRepo.getById(id);
+        task.setTitle(taskDto.getTitle());
+        task.setDescription(taskDto.getDescription());
+        task.setStatus(taskDto.getStatusEnum(taskDto.getStatus()));
+
+        taskRepo.save(task);
+        return TaskDto.build(task);
     }
 
     @Override
-    public void delete(Task task) {
-        taskRepo.delete(task);
+    public void delete(Integer id) {
+        taskRepo.deleteById(id);
     }
 
     @Override
