@@ -61,4 +61,10 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
   getProjectTasks(id: any) {
     return this.http.get<TasksInfo[]>(`${this.taskUrl}/project/${id}`, {responseType: "json"});
   }
+
+  deleteCard(state: any) {
+    const id = state.deletedRecords[0].id;
+    const url = `${this.taskUrl}/${id}`;
+    return this.http.delete(url);
+  }
 }

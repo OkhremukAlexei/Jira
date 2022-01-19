@@ -30,10 +30,10 @@ export class TasksComponent implements OnInit {
   public cardSettings: CardSettingsModel;
 
   public columns: ColumnsModel[] = [
-    { headerText: 'Новая', keyField: 'Open' },
-    { headerText: 'В процессе', keyField: 'InProgress' },
-    { headerText: 'Выполнена', keyField: 'Review' },
-    { headerText: 'Закрыта', keyField: 'Close' }
+    { headerText: 'To Do', keyField: 'NEW' },
+    { headerText: 'In Progress', keyField: 'ASSIGNED' },
+    { headerText: 'Testing', keyField: 'COMPLETED' },
+    { headerText: 'Close', keyField: 'CLOSE' }
   ];
 
   listTasks !: TasksInfo[];
@@ -91,21 +91,23 @@ export class TasksComponent implements OnInit {
 
   }
 
-  /*public dataSourceChanged(state: DataSourceChangedEventArgs): void {
+  public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
-      this.crudService.addCard(state).subscribe(() => {
-        state.endEdit();
-      });
-    } else if (state.requestType === 'cardChanged') {
-      this.crudService.updateCard(state).subscribe(() => {
-        state.endEdit();
-      });
-    } else if (state.requestType === 'cardRemoved') {
-      this.crudService.deleteCard(state).subscribe(() => {
+
+
+      // @ts-ignore
+      state.endEdit(); }
+    else if (state.requestType === 'cardChanged') { // @ts-ignore
+
+
+      state.endEdit() }
+    else if (state.requestType === 'cardRemoved') {
+      this.taskService.deleteCard(state).subscribe(() => {
+        // @ts-ignore
         state.endEdit();
       });
     }
-  }*/
+  }
 
   onSubmit() {
     this.currentTask.project = this.currentProject;
@@ -179,6 +181,7 @@ export class TasksComponent implements OnInit {
     this.taskService.execute(state, this.currentProject.id);
   }
 
+  public swimlaneSettings: SwimlaneSettingsModel = { keyField: 'userName' };
 
   dialogOpen(args: DialogEventArgs): void {
 
