@@ -52,6 +52,7 @@ export class ProjectDetailsComponent implements OnInit{
 
     console.log(this.currentProject);
 
+
     this.editForm = this.fb.group({
       name: [''],
       linkToGit: ['']

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {TasksInfo} from "../../../models/tasks-info";
 import {TasksService} from "../../../services/tasks.service";
 import { Router } from '@angular/router';
@@ -8,14 +8,33 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {TokenStorageService} from "../../../services/token-storage.service";
 import {DataTransferService} from "../../../services/data-transfer.service";
 import {Projects} from "../../../models/projects-info";
-import {ProjectDetailsComponent} from "../../projects/project-details/project-details.component";
+import {L10n} from "@syncfusion/ej2-base";
+import {kanbanData} from "./datasource";
+import {
+  CardSettingsModel,
+  ColumnsModel, DataSourceChangedEventArgs,
+  DataStateChangeEventArgs,
+  DialogEventArgs,
+  SwimlaneSettingsModel
+} from "@syncfusion/ej2-angular-kanban";
 
 @Component({
   selector: 'app-tasks',
   templateUrl: './tasks.component.html',
   styleUrls: ['./tasks.component.css']
 })
-export class TasksComponent implements OnInit{
+export class TasksComponent implements OnInit {
+
+  public cards: Observable<DataStateChangeEventArgs>;
+  public state: DataStateChangeEventArgs;
+  public cardSettings: CardSettingsModel;
+
+  public columns: ColumnsModel[] = [
+    { headerText: 'To Do', keyField: 'NEW' },
+    { headerText: 'In Progress', keyField: 'ASSIGNED' },
+    { headerText: 'Testing', keyField: 'COMPLETED' },
+    { headerText: 'Close', keyField: 'CLOSE' }
+  ];
 
   listTasks !: TasksInfo[];
   listUserTasks !: TasksInfo[];
@@ -30,6 +49,7 @@ export class TasksComponent implements OnInit{
 
   constructor(private taskService : TasksService, private router : Router, private data: DataTransferService,
               private modalService: NgbModal, private fb: FormBuilder, private token: TokenStorageService) {
+    this.cards = taskService;
   }
 
   ngOnInit(): void {
@@ -51,6 +71,15 @@ export class TasksComponent implements OnInit{
             });
         }
       }
+
+      let state = { skip: 0, take: 10 };
+      this.taskService.execute(state, project?.id);
+      this.cardSettings = {
+        headerField: 'id',
+        contentField: 'title',
+        selectionType: 'Multiple'
+      };
+
     });
 
     this.startForm = this.fb.group({
@@ -60,6 +89,24 @@ export class TasksComponent implements OnInit{
     } );
 
 
+  }
+
+  public dataSourceChanged(state: DataSourceChangedEventArgs): void {
+    if (state.requestType === 'cardCreated') {
+
+
+      // @ts-ignore
+      state.endEdit(); }
+    else if (state.requestType === 'cardChanged') { // @ts-ignore
+
+
+      state.endEdit() }
+    else if (state.requestType === 'cardRemoved') {
+      this.taskService.deleteCard(state).subscribe(() => {
+        // @ts-ignore
+        state.endEdit();
+      });
+    }
   }
 
   onSubmit() {
@@ -128,5 +175,15 @@ export class TasksComponent implements OnInit{
 
   closeTask(currentTask: TasksInfo): void{
     this.taskService.closeTask(currentTask.id, currentTask).subscribe((results)=>{this.ngOnInit()});
+  }
+
+  public dataStateChange(state: DataStateChangeEventArgs): void {
+    this.taskService.execute(state, this.currentProject.id);
+  }
+
+  public swimlaneSettings: SwimlaneSettingsModel = { keyField: 'userName' };
+
+  dialogOpen(args: DialogEventArgs): void {
+
   }
 }

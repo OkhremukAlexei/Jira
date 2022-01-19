@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from "../../services/token-storage.service";
 import {ProjectsService} from "../../services/projects.service";
@@ -27,11 +27,10 @@ export class SidebarComponent implements OnInit {
   listProjects !: Projects[];
   isAuthorized: boolean = false;
   roles!: string[];
+  @Input() authority!: string;
 
   closeResult: string;
   currentProject: any = {};
-
-  @Input() authority!: string;
 
   constructor(private router: Router, private token: TokenStorageService, private projectService : ProjectsService,
               private modalService: NgbModal) { }
@@ -42,11 +41,6 @@ export class SidebarComponent implements OnInit {
     });
     this.getProjects();
 
-  }
-
-  logout() {
-    this.token.signOut();
-    window.location.reload();
   }
 
   getProjects() : void {

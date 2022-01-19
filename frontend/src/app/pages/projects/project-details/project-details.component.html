@@ -11,8 +11,7 @@
           <span class="btn-inner--text">Github</span>
         </a></p>
         <div *ngIf="authority ==='manager'">
-          <a (click)="openEdit(contentEdit ,currentProject)" class="btn btn-info">Edit project</a>
-        </div>
+          <a (click)="openEdit(contentEdit ,currentProject)" class="btn btn-info">Edit project</a>        </div>
       </div>
     </div>
   </div>
@@ -24,7 +23,6 @@
         <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-0">
           <div class="d-flex justify-content-between" *ngIf="authority ==='manager'">
             <a (click)="addPeople()" class="btn btn-sm btn-info mr-4">Add users in project</a>
-
           </div>
         </div>
         <div class="card-body pt-0 pt-md-2">

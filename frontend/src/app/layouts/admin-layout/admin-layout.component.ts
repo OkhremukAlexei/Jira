@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TokenStorageService} from "../../services/token-storage.service";
 
 @Component({
@@ -7,11 +7,12 @@ import {TokenStorageService} from "../../services/token-storage.service";
   styleUrls: ['./admin-layout.component.css']
 })
 export class AdminLayoutComponent implements OnInit {
+
   isAuthorized: boolean = false;
   roles!: string[];
   authority!: string;
 
-  constructor(private token: TokenStorageService,) { }
+  constructor(private token: TokenStorageService) { }
 
   ngOnInit(): void {
     this.getAuthority();
