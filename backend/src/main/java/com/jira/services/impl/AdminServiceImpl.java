@@ -45,20 +45,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<AccountDto> findAll(){
-        List<Account> accountList = accountRepo.findAll();
-        List<AccountDto> accountDtos = new ArrayList<>();
+    public List<UserDto> findAll(){
+        List<User> userList = userRepo.findAll();
+        List<UserDto> userDtoList = new ArrayList<>();
 
-        for (Account account: accountList) {
-            accountDtos.add(new AccountDto(
-                    account.getId(),
-                    account.getName(),
-                    account.getSurname(),
-                    account.getEmail(),
-                    UserDto.build(account.getUser())
-            ));
+        for (User user: userList) {
+            userDtoList.add(UserDto.build(user));
         }
 
-        return accountDtos;
+        return userDtoList;
     }
 }
