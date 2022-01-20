@@ -34,6 +34,9 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Team> teams;
 
+    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Task> tasks;
+
     public User() {}
 
     public User(String login, String password) {
@@ -91,6 +94,23 @@ public class User implements Serializable {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
 
     @Override
     public boolean equals(Object o) {
