@@ -73,7 +73,15 @@ export class TasksComponent implements OnInit {
       }
 
       let state = { skip: 0, take: 10 };
-      this.taskService.execute(state, project?.id);
+
+
+      if (project != null) {
+        if(this.authority == 'manager')
+          this.taskService.execute(state, project?.id, "0");
+        else
+          this.taskService.execute(state, project?.id, this.token.getId());
+      }
+
       this.cardSettings = {
         headerField: 'id',
         contentField: 'title',
@@ -94,12 +102,15 @@ export class TasksComponent implements OnInit {
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
 
-
       // @ts-ignore
       state.endEdit(); }
-    else if (state.requestType === 'cardChanged') { // @ts-ignore
+    else if (state.requestType === 'cardChanged') {
 
-
+      this.taskService.updateCard(state);
+      // @ts-ignore
+      let task = state.changedRecords[0];
+      console.log(task)
+      // @ts-ignore
       state.endEdit() }
     else if (state.requestType === 'cardRemoved') {
       this.taskService.deleteCard(state).subscribe(() => {
@@ -178,7 +189,10 @@ export class TasksComponent implements OnInit {
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    this.taskService.execute(state, this.currentProject.id);
+    if(this.authority == 'manager')
+      this.taskService.execute(state, this.currentProject?.id, "0");
+    else
+      this.taskService.execute(state, this.currentProject?.id, this.token.getId());
   }
 
   public swimlaneSettings: SwimlaneSettingsModel = { keyField: 'userName' };

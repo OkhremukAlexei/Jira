@@ -66,9 +66,10 @@ public class TaskController {
     }
 
     @PutMapping("{id}/start")
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<?> startTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
-        return ResponseEntity.ok(taskService.startTask(id, taskDto));
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
+    public ResponseEntity<?> startTask(@PathVariable("id") int id) throws ParseException {
+        System.out.println(id + '\n');
+        return ResponseEntity.ok(taskService.startTask(id));
     }
 
     @PutMapping("{id}/complete")

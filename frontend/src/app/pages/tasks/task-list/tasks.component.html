@@ -26,6 +26,22 @@
   </div>
 </div>
 
+<div class="container-fluid" *ngIf=" authority === 'user'">
+  <div class="container-fluid py-2">
+    <ejs-kanban #kanbanObj keyField='status' cssClass="kanban-overview" [dataSource]='cards | async' [cardSettings]='cardSettings'  (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)' >
+      <e-columns>
+        <e-column *ngFor="let column of columns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='true'>
+          <ng-template #template let-cards>
+            <div class="header-template-wrap">
+              <div class="header-icon e-icons {{cards.keyField}}"></div>
+              <div class="header-text">{{cards.headerText}}</div>
+            </div>
+          </ng-template>
+        </e-column>
+      </e-columns>
+    </ejs-kanban>
+  </div>
+</div>
 
 <ng-template #content let-modal>
   <div class="modal-header">

@@ -17,7 +17,7 @@ public interface TaskService {
 
     void addTask(TaskDto taskDto);
 
-    TaskDto startTask(int id, TaskDto taskDto) throws ParseException;
+    TaskDto startTask(int id) throws ParseException;
 
     List<TaskDto> getUsersTasks(Long projectId, Long userId);
 
