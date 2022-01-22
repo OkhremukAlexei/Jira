@@ -3,6 +3,7 @@ package com.jira.configs;
 import com.jira.configs.jwt.AuthEntryPointJwt;
 import com.jira.configs.jwt.AuthTokenFilter;
 import com.jira.services.impl.UserDetailsServiceImpl;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -72,5 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .allowedMethods("*");
     }
 
-
+    @Bean
+    public ModelMapper getMapper() {
+        return new ModelMapper();
+    }
 }

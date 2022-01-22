@@ -1,18 +1,18 @@
 package com.jira.pojo.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountDto {
     private Long id;
 
     private String name;
     private String surname;
     private String email;
-
-    public AccountDto(Long id, String name, String surname, String email) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
 
     public Long getId() {
         return id;

@@ -1,13 +1,12 @@
 package com.jira.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jira.models.Status;
 import com.jira.models.Task;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
@@ -21,15 +20,7 @@ public class TaskDto {
     private UserDto user;
     private String status;
 
-    public TaskDto() {
-    }
-
-    public TaskDto(int id, String title, String description, UserDto user) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.user = user;
-    }
+    public TaskDto(){}
 
     public TaskDto(int id, String title, String description, String dateTime, String spentTime, UserDto user) {
         this.id = id;

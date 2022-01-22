@@ -6,14 +6,14 @@ import com.jira.pojo.dto.ProjectDto;
 import java.util.List;
 
 public interface ProjectService {
-    List<ProjectDto> getProjectsList();
-    List<ProjectDto> getProjectsByUserId(Long userId);
-    ProjectDto getOne(Long id);
-    ProjectDto addProject(ProjectDto projectRequest);
-    ProjectDto updateProject(Long id, ProjectDto projectRequest);
+    List<Project> getProjectsList();
+    List<Project> getProjectsByUserId(Long userId);
+    Project getOne(Long id);
+    Project addProject(Project project);
+    Project updateProject(Long id, Project project);
     void delete(Project project);
 
-    void addPeopleToProject(ProjectDto project);
+    void addPeopleToProject(Project project);
 
     boolean existsById(long projectId);
     void deleteUsersInTeam(long projectId, long userId);

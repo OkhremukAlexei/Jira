@@ -1,31 +1,26 @@
 package com.jira.pojo.dto;
 
 import com.jira.models.User;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserDto {
     private Long id;
 
     private String login;
     private String password;
     private String roles;
-    private AccountDto accountDto;
-
-    public UserDto() {
-    }
+    private AccountDto account;
 
     public UserDto(Long id, String login, String password, String roles) {
         this.id = id;
         this.login = login;
         this.password = password;
         this.roles = roles;
-    }
-
-    public UserDto(Long id, String login, String password, String roles, AccountDto accountDto) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-        this.accountDto = accountDto;
     }
 
     public UserDto(String login, String password, String roles) {
@@ -82,11 +77,11 @@ public class UserDto {
     }
 
     public AccountDto getAccount() {
-        return accountDto;
+        return account;
     }
 
-    public void setAccountDto(AccountDto accountDto) {
-        this.accountDto = accountDto;
+    public void setAccount(AccountDto account) {
+        this.account = account;
     }
 
     @Override
@@ -100,7 +95,7 @@ public class UserDto {
         if (!login.equals(userDto.login)) return false;
         if (!password.equals(userDto.password)) return false;
         if (!roles.equals(userDto.roles)) return false;
-        return accountDto.equals(userDto.accountDto);
+        return account.equals(userDto.account);
     }
 
     @Override
@@ -109,7 +104,7 @@ public class UserDto {
         result = 31 * result + login.hashCode();
         result = 31 * result + password.hashCode();
         result = 31 * result + roles.hashCode();
-        result = 31 * result + accountDto.hashCode();
+        result = 31 * result + account.hashCode();
         return result;
     }
 
@@ -120,7 +115,7 @@ public class UserDto {
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
                 ", roles='" + roles + '\'' +
-                ", account=" + accountDto +
+                ", account=" + account +
                 '}';
     }
 }
