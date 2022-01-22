@@ -90,15 +90,15 @@ public class TaskController {
         return ResponseEntity.ok(new MessageResponse("Task closed"));
     }
 
-    @PutMapping
+    @PutMapping("task/{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public Task put(@RequestBody Task task) {
-        return taskService.put(task);
+    public TaskDto put(@PathVariable("id") Integer id, @RequestBody TaskDto task) {
+        return taskService.put(id, task);
     }
 
     @DeleteMapping("{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
-    public void delete(@PathVariable("id") Task task) {
-        taskService.delete(task);
+    public void delete(@PathVariable("id") Integer id) {
+        taskService.delete(id);
     }
 }

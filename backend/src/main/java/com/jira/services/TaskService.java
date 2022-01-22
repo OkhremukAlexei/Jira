@@ -11,9 +11,9 @@ public interface TaskService {
 
     TaskDto getOne(Integer id);
 
-    Task put(Task task);
+    TaskDto put(Integer id, TaskDto task);
 
-    void delete(Task task);
+    void delete(Integer id);
 
     void addTask(TaskDto taskDto);
 

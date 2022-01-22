@@ -1,0 +1,16 @@
+
+  `<ejs-kanban keyField='Status' cssClass='kanban-overview' locale="ru" [dataSource]='data' [cardSettings]='cardSettings'
+               [swimlaneSettings]='swimlaneSettings' (dialogOpen)='dialogOpen($event)'>
+  <e-columns>
+    <e-column *ngFor="let column of columns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='true'>
+      <ng-template #template let-data>
+        <div class="header-template-wrap">
+          <div class="header-icon e-icons {{data.keyField}}"></div>
+          <div class="header-text">{{data.headerText}}</div>
+        </div>
+      </ng-template>
+    </e-column>
+  </e-columns>
+</ejs-kanban>`
+
+
