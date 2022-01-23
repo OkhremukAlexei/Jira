@@ -103,14 +103,18 @@ public class ProjectController {
     private ProjectDto convertToDto(Project project) {
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
 
+        projectDto.setNumOfPersonsInTeam(project.getTeam().getNumberOfPersons());
         projectDto.setUsers(project.getTeam().getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
-        projectDto.setManager(convertToDto(RoleHelper.findManagerInList(project.getTeam().getUsers())));
+        projectDto.setManager(convertToDto(RoleHelper.findManager(project.getTeam().getUsers())));
 
         return projectDto;
     }
 
     private UserDto convertToDto(User user) {
-        return modelMapper.map(user, UserDto.class);
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+
+        userDto.setRoles(user.getRole());
+        return userDto;
     }
 
     private Project convertToEntity(ProjectDto projectDto) {
@@ -119,5 +123,3 @@ public class ProjectController {
         return project;
     }
 }
-
-//TODO check add project

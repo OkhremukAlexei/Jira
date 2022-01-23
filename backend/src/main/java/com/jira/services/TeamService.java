@@ -9,8 +9,8 @@ import java.util.List;
 public interface TeamService {
     void createNewTeam(User user);
     Team getNewTeam(User user);
-    void countNumOfUsers();
-    void countNumOfUsers(Project project);
+
+    int countNumOfUsers(Project project);
     void countNumOfUsers(List<Project> projects);
 
     Iterable<Team> getAll();

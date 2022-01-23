@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -50,15 +49,7 @@ public class ProjectDto {
     public void setProgress(int progress) {
         this.progress = progress;
     }
-/*
-    public Set<TaskDto> getTasks() {
-        return tasks;
-    }
 
-    public void setTasks(Set<TaskDto> tasks) {
-        this.tasks = tasks;
-    }
-*/
     public int getNumOfPersonsInTeam() {
         return numOfPersonsInTeam;
     }

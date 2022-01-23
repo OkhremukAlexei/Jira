@@ -52,22 +52,14 @@ public class TeamDetailsServiceImpl implements TeamService {
     }
 
     @Override
-    public void countNumOfUsers(){
-        Iterable<Team> teamList = teamRepo.findAll();
-        for (Team team: teamList) {
-            int numOfUsers = teamRepo.countByTeam_Id(team.getId());
-            team.setNumberOfPersons(numOfUsers);
-            teamRepo.save(team);
-        }
-    }
-
-    @Override
-    public void countNumOfUsers(Project project){
+    public int countNumOfUsers(Project project){
         long teamId = project.getTeam().getId();
         int numOfUsers = teamRepo.countByTeam_Id(teamId);
         Team team = teamRepo.findById(teamId);
         team.setNumberOfPersons(numOfUsers);
         teamRepo.save(team);
+
+        return numOfUsers;
     }
 
     @Override

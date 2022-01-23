@@ -32,10 +32,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     public List<Project> getProjectsList(){
         List<Project> projects = projectRepo.findAll();
-        teamService.countNumOfUsers(projects);
 
         for (Project project: projects) {
             project.setProgress(taskService.countProgress(project.getId()));
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
         }
 
         return projects;
@@ -45,7 +45,10 @@ public class ProjectServiceImpl implements ProjectService {
     @Transactional
     public List<Project> getProjectsByUserId(Long userId){
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
-        teamService.countNumOfUsers(projects);
+
+        for (Project project: projects) {
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
+        }
 
         return projects;
     }
@@ -55,7 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
     public Project getOne(Long id){
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
-        teamService.countNumOfUsers(project);
+        project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
 
         return project;
     }
@@ -98,6 +101,7 @@ public class ProjectServiceImpl implements ProjectService {
         }*/
 
         projectFromDB.setTeam(teamService.setNewUsersInTeam(projectFromDB.getTeam().getId(), projectRequest.getTeam().getUsers()));
+        projectFromDB.getTeam().setNumberOfPersons(teamService.countNumOfUsers(projectFromDB));
 
         projectRepo.save(projectFromDB);
 
