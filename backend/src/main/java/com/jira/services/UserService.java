@@ -7,10 +7,11 @@ import com.jira.pojo.dto.UserDto;
 import java.util.List;
 
 public interface UserService {
-    Iterable<User> getAll();
+    List<User> getAll();
     User getOne(User us);
     User put(User us);
     void delete(User us);
     List<UserDto> getAllUsers();
     List<UserDto> getUsersOutsideTheProject(long id);
+    List<User> getUsers();
 }

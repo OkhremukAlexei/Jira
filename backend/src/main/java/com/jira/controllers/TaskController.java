@@ -56,6 +56,12 @@ public class TaskController {
                 .collect(Collectors.toList()));
     }
 
+    @GetMapping("/user/{id}")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
+    public ResponseEntity<?> getTasksByUserId(@PathVariable("id") Long id){
+        return ResponseEntity.ok(taskService.getAllUsersTasks(id));
+    }
+
     @GetMapping("/project/{projectId}/user/{userId}")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> getByUserId(@PathVariable("projectId") Long projectId, @PathVariable("userId") Long userId){
@@ -71,7 +77,6 @@ public class TaskController {
         taskService.addTask(convertToEntity(taskDto));
         return ResponseEntity.ok(new MessageResponse("Task added"));
     }
-
     @PutMapping("{id}/start")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<?> startTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {

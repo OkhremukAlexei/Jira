@@ -1,5 +1,7 @@
 package com.jira.controllers;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +15,12 @@ public class TestController {
 
     @GetMapping("/all")
     public String allAccess() {
-        return "public API";
+        return "public API";  //???
     }
-
+ /*   public ResponseEntity<String> allAccess() {
+        final String answer = "public API";
+        return ResponseEntity<>(answer, HttpStatus.OK);  //???
+    }*/
     @GetMapping("/user")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('MANAGER') or hasRole('ROLE_ADMIN')")
     public String userAccess() {

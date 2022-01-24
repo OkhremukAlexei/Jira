@@ -51,7 +51,7 @@ public class AuthController {
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<JwtResponse> authUser(@RequestBody LoginRequest loginRequest) {
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
@@ -73,7 +73,8 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
+
 
         if (userRepo.existsByLogin(signupRequest.getLogin())) {
             return ResponseEntity

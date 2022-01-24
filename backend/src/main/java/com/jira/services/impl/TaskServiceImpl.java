@@ -95,6 +95,20 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    public List<TaskDto> getAllUsersTasks(Long userId) {
+        List<Task> tasks = taskRepo.findAllActiveTasksByUserId(userId);
+
+        List<TaskDto> taskDtoList = new ArrayList<>();
+
+        for (Task task: tasks) {
+            taskDtoList.add(TaskDto.build(task));
+        }
+
+        return taskDtoList;
+
+    }
+
+    @Override
     public void completeTask(int id) {
         Task task = taskRepo.getById(id);
 

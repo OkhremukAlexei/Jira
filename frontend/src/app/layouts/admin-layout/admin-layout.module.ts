@@ -20,6 +20,7 @@ import {TaskDetailsComponent} from "../../pages/tasks/task-details/task-details.
 import {AddTaskComponent} from "../../pages/tasks/add-task/add-task.component";
 import {Ng2OrderModule} from "ng2-order-pipe";
 import {NgxPaginationModule} from "ngx-pagination";
+import {ProfileComponent} from "../../pages/profile/profile.component";
 import {ComponentsModule} from "../../components/components.module";
 import {KanbanModule} from "@syncfusion/ej2-angular-kanban";
 // import { ToastrModule } from 'ngx-toastr';
@@ -47,7 +48,8 @@ import {KanbanModule} from "@syncfusion/ej2-angular-kanban";
         SearchPipe,
         TasksComponent,
         TaskDetailsComponent,
-        AddTaskComponent
+        AddTaskComponent,
+        ProfileComponent
     ]
 })
 

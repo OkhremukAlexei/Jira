@@ -33,6 +33,9 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
   getTaskById(id: any) {
     return this.http.get(`${this.taskUrl}/task/${id}`);
   }
+  getAllTasksByUserId(id:string):Observable<TasksInfo[]>{
+    return this.http.get<TasksInfo[]>(`${this.taskUrl}/user/${id}`)
+  }
 
   updateTask(id: number, data: TasksInfo) {
     return this.http.put(`${this.taskUrl}/${id}`, data).subscribe(data=>console.log(data));
