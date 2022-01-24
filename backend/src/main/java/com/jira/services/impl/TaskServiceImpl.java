@@ -1,68 +1,50 @@
 package com.jira.services.impl;
 
-import com.jira.models.Project;
 import com.jira.models.Status;
 import com.jira.models.Task;
-import com.jira.models.User;
-import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.TaskService;
-import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Service("TaskServiceImpl")
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepo taskRepo;
 
-    public TaskServiceImpl(TaskRepo taskRepo) {
+    private final ProjectRepo projectRepo;
+
+    public TaskServiceImpl(TaskRepo taskRepo, ProjectRepo projectRepo) {
         this.taskRepo = taskRepo;
-    }
-
-    @Autowired
-    private ProjectRepo projectRepo;
-
-    @Autowired
-    private UserRepo userRepo;
-
-    @Override
-    public List<TaskDto> getAll() {
-        List<Task> tasks = taskRepo.findAll();
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+        this.projectRepo = projectRepo;
     }
 
     @Override
-    public TaskDto getOne(Integer id) {
-        Task task = taskRepo.findById(id).get();
-        return TaskDto.build(task);
+    public List<Task> getAll() {
+        return taskRepo.findAll();
     }
 
     @Override
-    public TaskDto put(Integer id, TaskDto taskDto) {
+    public Task getOne(Integer id) {
+        return taskRepo.findById(id).get();
+    }
+
+    @Override
+    public Task put(Integer id, Task taskRequest) {
         Task task = taskRepo.getById(id);
-        task.setTitle(taskDto.getTitle());
-        task.setDescription(taskDto.getDescription());
-        task.setStatus(taskDto.getStatusEnum(taskDto.getStatus()));
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
+      //  task.setStatus(taskRequest.getStatusEnum(taskDto.getStatus()));
 
         taskRepo.save(task);
-        return TaskDto.build(task);
+        return task;
     }
 
     @Override
@@ -76,48 +58,40 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTask(TaskDto taskDto) {
-        Task task = new Task();
+    public void addTask(Task task) {
+     //   Task task = new Task();
 
-        Set<User> userSet = new HashSet<>();
-        User user = userRepo.getById(taskDto.getUser().getId());
-        userSet.add(user);
 
-        Project project = projectRepo.getById(taskDto.getProject().getId());
+      //  Set<User> user = userRepo.getById(task.getUsers());
 
-        task.setTitle(taskDto.getTitle());
-        task.setDescription(taskDto.getDescription());
+    //    Project project = projectRepo.getById(task.getProject().getId());
+
+        task.setTitle(task.getTitle());
+        task.setDescription(task.getDescription());
         task.setStatus(Status.NEW);
-        task.setProjects(project);
-        task.setUsers(userSet);
+        task.setProject(projectRepo.getById(task.getProject().getId()));
+        task.setUsers(task.getUsers());
 
         taskRepo.save(task);
     }
 
     @Override
-    public TaskDto startTask(int id, TaskDto taskDto) throws ParseException {
+    public Task startTask(int id, Task taskRequest) {
         Task task = taskRepo.getById(id);
 
-        task.setSpentTime(new SimpleDateFormat("HH:mm").parse(taskDto.getSpentTime()));
-        task.setDateTime(LocalDateTime.now());
+        task.setSpentTime(taskRequest.getSpentTime());
+        task.setDateTime(Date.from(Instant.from(LocalDateTime.now())));
+    //    task.setDateTime(LocalDateTime.now());
         task.setStatus(Status.ASSIGNED);
 
         taskRepo.save(task);
 
-        return TaskDto.build(task);
+        return task;
     }
 
     @Override
-    public List<TaskDto> getUsersTasks(Long projectId, Long userId) {
-        List<Task> tasks = taskRepo.findByProject_IdAndUsers_Id(projectId, userId);
-
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+    public List<Task> getUsersTasks(Long projectId, Long userId) {
+        return taskRepo.findByProject_IdAndUsers_Id(projectId, userId);
     }
 
     @Override
@@ -153,16 +127,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getProjectTasks(Long id) {
-        List<Task> tasks = taskRepo.findByProject_Id(id);
-
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+    public List<Task> getProjectTasks(Long id) {
+        return taskRepo.findByProject_Id(id);
     }
 
     @Override

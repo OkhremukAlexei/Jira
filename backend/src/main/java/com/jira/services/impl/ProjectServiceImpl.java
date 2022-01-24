@@ -1,9 +1,6 @@
 package com.jira.services.impl;
 
 import com.jira.models.Project;
-import com.jira.models.User;
-import com.jira.pojo.dto.ProjectDto;
-import com.jira.pojo.dto.UserDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
@@ -12,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("ProjectServiceImpl")
@@ -34,90 +30,81 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsList(){
+    public List<Project> getProjectsList(){
         List<Project> projects = projectRepo.findAll();
-        teamService.countNumOfUsers(projects);
-
-        List<ProjectDto> projectDtoList = new ArrayList<>();
 
         for (Project project: projects) {
             project.setProgress(taskService.countProgress(project.getId()));
-            projectDtoList.add(ProjectDto.build(project));
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
         }
 
-        return projectDtoList;
+        return projects;
     }
 
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsByUserId(Long userId){
+    public List<Project> getProjectsByUserId(Long userId){
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
-        teamService.countNumOfUsers(projects);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
-
-        for(Project project: projects){
-            projectDtoList.add(ProjectDto.build(project));
+        for (Project project: projects) {
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
         }
 
-        return projectDtoList;
+        return projects;
     }
 
     @Override
     @Transactional
-    public ProjectDto getOne(Long id){
+    public Project getOne(Long id){
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
-        teamService.countNumOfUsers(project);
+        project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
 
-        return ProjectDto.build(project);
+        return project;
     }
 
     @Override
     @Transactional
-    public ProjectDto addProject(ProjectDto projectRequest){
-        Project project = new Project();
-        project.setName(projectRequest.getName());
-        project.setLinkToGit(projectRequest.getLinkToGit());
+    public Project addProject(Project project){
         project.setProgress(0);
 
         project.setTeam(teamService.getNewTeam(userService.getCurrentUser()));
 
         projectRepo.save(project);
 
-        return ProjectDto.build(project);
+        return project;
     }
 
     @Override
     @Transactional
-    public ProjectDto updateProject(Long id, ProjectDto projectRequest){
-        Project project = projectRepo.findById(id)
+    public Project updateProject(Long id, Project project){
+        Project projectFromDB = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
-        project.setName(projectRequest.getName());
-        project.setLinkToGit(projectRequest.getLinkToGit());
+        projectFromDB.setName(project.getName());
+        projectFromDB.setLinkToGit(project.getLinkToGit());
 
-        projectRepo.save(project);
+        projectRepo.save(projectFromDB);
 
-        return ProjectDto.build(project);
+        return projectFromDB;
     }
 
     @Override
     @Transactional
-    public void addPeopleToProject(ProjectDto projectRequest){
-        Project project = projectRepo.findById(projectRequest.getId())
+    public void addPeopleToProject(Project projectRequest){
+        Project projectFromDB = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
-
+/*
         List<User> users = new ArrayList<>();
         for (UserDto userDto: projectRequest.getUsers()) {
             User user = userRepo.getById(userDto.getId());
             users.add(user);
-        }
+        }*/
 
-        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), users));
+        projectFromDB.setTeam(teamService.setNewUsersInTeam(projectFromDB.getTeam().getId(), projectRequest.getTeam().getUsers()));
+        projectFromDB.getTeam().setNumberOfPersons(teamService.countNumOfUsers(projectFromDB));
 
-        projectRepo.save(project);
+        projectRepo.save(projectFromDB);
 
-        ProjectDto.build(project);
     }
 
     @Override
