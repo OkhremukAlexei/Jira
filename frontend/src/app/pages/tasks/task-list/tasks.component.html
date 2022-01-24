@@ -28,7 +28,7 @@
 
 <div class="container-fluid" *ngIf=" authority === 'user'">
   <div class="container-fluid py-2">
-    <ejs-kanban #kanbanObj keyField='status' cssClass="kanban-overview" [dataSource]='cards | async' [cardSettings]='cardSettings'  (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)' >
+    <ejs-kanban #kanbanObj keyField='status' cssClass="kanban-overview" [dataSource]='cards | async' [cardSettings]='cardSettings'  (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)'  (dialogOpen)='dialogOpen($event)' >
       <e-columns>
         <e-column *ngFor="let column of columns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='true'>
           <ng-template #template let-cards>
