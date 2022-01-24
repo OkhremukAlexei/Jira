@@ -78,8 +78,10 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
     return this.http.delete(url);
   }
 
-  updateCard(state: any): Observable<any> {
+  updateCard(state: DataSourceChangedEventArgs): Observable<any> {
+    // @ts-ignore
     const id = state.changedRecords[0].id;
-    return this.http.put(`${this.taskUrl}/${id}/start`, state.changedRecords[0]);
+    // @ts-ignore
+    return this.http.put(`${this.taskUrl}/${id}/start`, state.changedRecords[0]).subscribe(data=>console.log(data));
   }
 }

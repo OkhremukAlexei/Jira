@@ -33,7 +33,7 @@ export class TasksComponent implements OnInit {
     { headerText: 'To Do', keyField: 'NEW' },
     { headerText: 'In Progress', keyField: 'ASSIGNED' },
     { headerText: 'Testing', keyField: 'COMPLETED' },
-    { headerText: 'Close', keyField: 'CLOSE' }
+    { headerText: 'Close', keyField: 'CLOSED' }
   ];
 
   listTasks !: TasksInfo[];
@@ -95,7 +95,6 @@ export class TasksComponent implements OnInit {
       spentTime: ['']
     } );
 
-
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
@@ -107,7 +106,9 @@ export class TasksComponent implements OnInit {
 
       this.taskService.updateCard(state);
       // @ts-ignore
-      state.endEdit() }
+      state.endEdit();
+      this.dataStateChange(this.state);
+    }
     else if (state.requestType === 'cardRemoved') {
       this.taskService.deleteCard(state).subscribe(() => {
         // @ts-ignore

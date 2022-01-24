@@ -96,11 +96,10 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public TaskDto startTask(int id, TaskDto taskDto) throws ParseException {
-        Task task = taskRepo.getById(id);
+        Task task = taskRepo.findById(id).orElse(null);
 
-        task.setSpentTime(new SimpleDateFormat("HH:mm").parse(taskDto.getSpentTime()));
-        task.setDateTime(LocalDateTime.now());
-        task.setStatus(Status.ASSIGNED);
+
+        task.setStatus(taskDto.getStatusEnum(taskDto.getStatus()));
 
         taskRepo.save(task);
 
