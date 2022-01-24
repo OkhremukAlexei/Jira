@@ -74,7 +74,6 @@ export class TasksComponent implements OnInit {
 
       let state = { skip: 0, take: 10 };
 
-
       if (project != null) {
         if(this.authority == 'manager')
           this.taskService.execute(state, project?.id, "0");
@@ -83,8 +82,8 @@ export class TasksComponent implements OnInit {
       }
 
       this.cardSettings = {
-        headerField: 'id',
-        contentField: 'title',
+        headerField: 'title',
+        contentField: 'description',
         selectionType: 'Multiple'
       };
 
@@ -107,9 +106,6 @@ export class TasksComponent implements OnInit {
     else if (state.requestType === 'cardChanged') {
 
       this.taskService.updateCard(state);
-      // @ts-ignore
-      let task = state.changedRecords[0];
-      console.log(task)
       // @ts-ignore
       state.endEdit() }
     else if (state.requestType === 'cardRemoved') {
@@ -194,8 +190,6 @@ export class TasksComponent implements OnInit {
     else
       this.taskService.execute(state, this.currentProject?.id, this.token.getId());
   }
-
-  public swimlaneSettings: SwimlaneSettingsModel = { keyField: 'userName' };
 
   dialogOpen(args: DialogEventArgs): void {
 

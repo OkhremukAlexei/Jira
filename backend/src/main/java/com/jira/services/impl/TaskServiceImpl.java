@@ -16,7 +16,10 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Service("TaskServiceImpl")
 public class TaskServiceImpl implements TaskService {
@@ -68,6 +71,8 @@ public class TaskServiceImpl implements TaskService {
 
         task.getUsers().removeAll(task.getUsers());
         taskRepo.save(task);
+
+        taskRepo.deleteById(id);
     }
 
     @Override
@@ -90,9 +95,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskDto startTask(int id) throws ParseException {
+    public TaskDto startTask(int id, TaskDto taskDto) throws ParseException {
         Task task = taskRepo.getById(id);
 
+        task.setSpentTime(new SimpleDateFormat("HH:mm").parse(taskDto.getSpentTime()));
         task.setDateTime(LocalDateTime.now());
         task.setStatus(Status.ASSIGNED);
 

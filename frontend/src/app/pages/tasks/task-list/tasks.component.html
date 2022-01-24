@@ -11,7 +11,7 @@
 
 
   <div class="container-fluid py-2">
-    <ejs-kanban #kanbanObj keyField='status' cssClass="kanban-overview" [dataSource]='cards | async' [cardSettings]='cardSettings'  (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)' [swimlaneSettings]='swimlaneSettings' >
+    <ejs-kanban #kanbanObj keyField='status' cssClass="kanban-overview" [dataSource]='cards | async' [cardSettings]='cardSettings'  (dataStateChange)= 'dataStateChange($event)'  (dataSourceChanged)='dataSourceChanged($event)' >
       <e-columns>
         <e-column *ngFor="let column of columns;" headerText={{column.headerText}} keyField='{{column.keyField}}' allowToggle='true'>
           <ng-template #template let-cards>
@@ -69,7 +69,7 @@
       </div>
       <div class="form-group">
         <p><strong>Выберите человека выполняющего задачу</strong></p>
-        <p><select name="user" [(ngModel)]="currentTask.user" #users="ngModel" required>
+        <p><select class="form-select" name="user" [(ngModel)]="currentTask.user" #users="ngModel" required>
           <option [ngValue]="null" disabled>Выберите исполнителя</option>
           <option *ngFor="let user of currentProject.users"
                   [ngValue]="user">{{user.account.name}} {{user.account.surname}}</option>

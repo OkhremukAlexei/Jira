@@ -52,7 +52,7 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
     return this.http.post(`${this.taskUrl}`, data)
   }
 
-  startTask(id: any, data: TasksInfo) {
+  startTask(id: any, data: any) {
     return this.http.put(`${this.taskUrl}/${id}/start`, data);
   }
 
@@ -78,10 +78,8 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
     return this.http.delete(url);
   }
 
-  updateCard(state: DataSourceChangedEventArgs): Observable<any> {
-    // @ts-ignore
-    this.updateUrl = this.taskUrl + "/" + state.changedRecords[0].id + "/start";
-    // @ts-ignore
-    return this.http.put(this.updateUrl);
+  updateCard(state: any): Observable<any> {
+    const id = state.changedRecords[0].id;
+    return this.http.put(`${this.taskUrl}/${id}/start`, state.changedRecords[0]);
   }
 }

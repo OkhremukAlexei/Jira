@@ -37,7 +37,7 @@ public class  Task implements Serializable {
     @JoinColumn(name="project_id", nullable=false)
     private Project project;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "task_user",
             joinColumns = @JoinColumn(name = "task_id"),
