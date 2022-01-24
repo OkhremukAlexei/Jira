@@ -8,6 +8,7 @@ import com.jira.pojo.dto.UserDto;
 import com.jira.pojo.util.RoleHelper;
 import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
+import com.jira.services.TeamService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,6 +27,9 @@ public class ProjectController {
     @Autowired
     @Qualifier("ProjectServiceImpl")
     private ProjectService projectService;
+
+    @Autowired
+    private TeamService teamService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -120,6 +124,13 @@ public class ProjectController {
     private Project convertToEntity(ProjectDto projectDto) {
         Project project = modelMapper.map(projectDto, Project.class);
 
+        project.setTeam(teamService.setTeam(projectDto.getId(), projectDto.getUsers()));
+
         return project;
     }
+
+    private User convertToEntity(UserDto userDto) {
+        return modelMapper.map(userDto, User.class);
+    }
+
 }

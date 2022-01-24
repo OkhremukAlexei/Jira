@@ -93,12 +93,6 @@ public class ProjectServiceImpl implements ProjectService {
     public void addPeopleToProject(Project projectRequest){
         Project projectFromDB = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
-/*
-        List<User> users = new ArrayList<>();
-        for (UserDto userDto: projectRequest.getUsers()) {
-            User user = userRepo.getById(userDto.getId());
-            users.add(user);
-        }*/
 
         projectFromDB.setTeam(teamService.setNewUsersInTeam(projectFromDB.getTeam().getId(), projectRequest.getTeam().getUsers()));
         projectFromDB.getTeam().setNumberOfPersons(teamService.countNumOfUsers(projectFromDB));

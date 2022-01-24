@@ -59,7 +59,10 @@ public class TaskController {
     @GetMapping("/user/{id}")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER') or hasRole('ROLE_ADMIN')")
     public ResponseEntity<?> getTasksByUserId(@PathVariable("id") Long id){
-        return ResponseEntity.ok(taskService.getAllUsersTasks(id));
+        List<Task> tasks = taskService.getAllUsersTasks(id);
+        return ResponseEntity.ok(tasks.stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/project/{projectId}/user/{userId}")

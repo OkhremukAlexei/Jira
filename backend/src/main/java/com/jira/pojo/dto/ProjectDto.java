@@ -1,5 +1,6 @@
 package com.jira.pojo.dto;
 
+import com.jira.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

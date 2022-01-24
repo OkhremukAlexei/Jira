@@ -21,6 +21,8 @@ public interface TaskService {
 
     List<Task> getUsersTasks(Long projectId, Long userId);
 
+    List<Task> getAllUsersTasks(Long userId);
+
     void completeTask(int id);
 
     void closeTask(int id);
