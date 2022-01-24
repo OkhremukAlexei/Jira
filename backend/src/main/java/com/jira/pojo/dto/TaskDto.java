@@ -1,20 +1,15 @@
 package com.jira.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jira.models.Status;
-import com.jira.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -99,7 +94,7 @@ public class TaskDto {
         this.status = status;
     }
 
-    /*
+/*
     public Date getDateTimeConverted() throws ParseException {
         return dateFormat.parse(this.dateTime);
     }
