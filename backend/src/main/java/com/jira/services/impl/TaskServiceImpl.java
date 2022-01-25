@@ -41,7 +41,6 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
         task.setStatus(taskRequest.getStatus());
-      //  task.setStatus(taskRequest.getStatusEnum(taskDto.getStatus()));
 
         taskRepo.save(task);
         return task;
@@ -59,13 +58,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTask(Task task) {
-     //   Task task = new Task();
-
-
-      //  Set<User> user = userRepo.getById(task.getUsers());
-
-    //    Project project = projectRepo.getById(task.getProject().getId());
-
         task.setTitle(task.getTitle());
         task.setDescription(task.getDescription());
         task.setStatus(Status.NEW);
@@ -81,7 +73,6 @@ public class TaskServiceImpl implements TaskService {
 
         task.setSpentTime(taskRequest.getSpentTime());
         task.setDateTime(Date.from(Instant.from(LocalDateTime.now())));
-    //    task.setDateTime(LocalDateTime.now());
         task.setStatus(Status.ASSIGNED);
 
         taskRepo.save(task);

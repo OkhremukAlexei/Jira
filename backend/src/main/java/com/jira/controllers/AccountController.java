@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountController {
 
     @Autowired
-    @Qualifier("AccountServiceImpl")
+
     private AccountService accountService;
 
     @GetMapping

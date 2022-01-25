@@ -80,9 +80,11 @@ public class TaskController {
         taskService.addTask(convertToEntity(taskDto));
         return ResponseEntity.ok(new MessageResponse("Task added"));
     }
+
     @PutMapping("{id}/start")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_MANAGER')")
     public ResponseEntity<?> startTask(@PathVariable("id") int id, @RequestBody TaskDto taskDto) throws ParseException {
+        System.out.println(id + '\n' +  taskDto.toString());
         return ResponseEntity.ok(taskService.startTask(id, convertToEntity(taskDto)));
     }
 
@@ -130,7 +132,7 @@ public class TaskController {
 //        task.setSpentTime(taskDto.getSpentTimeConverted());
 
         return task;
-    }//TODO check add task
+    }
 
     private ProjectDto convertToDto(Project project) {
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
