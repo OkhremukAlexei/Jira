@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, Subscription} from "rxjs";
 import {TasksInfo} from "../models/tasks-info";
 import {catchError, map, tap} from "rxjs/operators";
 import {DataSourceChangedEventArgs, DataStateChangeEventArgs} from "@syncfusion/ej2-angular-kanban";
@@ -81,10 +81,11 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
     return this.http.delete(url);
   }
 
-  updateCard(state: DataSourceChangedEventArgs): Observable<any> {
+  updateCard(state: DataSourceChangedEventArgs): Subscription {
+
     // @ts-ignore
     const id = state.changedRecords[0].id;
-    // @ts-ignore
-    return this.http.put(`${this.taskUrl}/${id}/start`, state.changedRecords[0]).subscribe(data=>console.log(data));
+
+    return this.http.put(`${this.taskUrl}/task/${id}`, state.changedRecords?.[0]).subscribe(data=>console.log(data));
   }
 }

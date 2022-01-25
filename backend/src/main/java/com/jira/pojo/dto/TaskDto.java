@@ -27,7 +27,7 @@ public class TaskDto {
     private String dateTime;
     private String spentTime;
     private ProjectDto project;
-    private List<UserDto> users;
+    private UserDto user;
     private Status status;
 
     public int getId() {
@@ -78,12 +78,12 @@ public class TaskDto {
         this.project = project;
     }
 
-    public List<UserDto> getUsers() {
-        return users;
+    public UserDto getUser() {
+        return user;
     }
 
-    public void setUsers(List<UserDto> users) {
-        this.users = users;
+    public void setUser(UserDto users) {
+        this.user = users;
     }
 
     public Status getStatus() {

@@ -10,8 +10,10 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 @Service("TaskServiceImpl")
 public class TaskServiceImpl implements TaskService {
@@ -43,6 +45,7 @@ public class TaskServiceImpl implements TaskService {
         task.setStatus(taskRequest.getStatus());
 
         taskRepo.save(task);
+
         return task;
     }
 
@@ -72,7 +75,7 @@ public class TaskServiceImpl implements TaskService {
         Task task = taskRepo.getById(id);
 
         task.setSpentTime(taskRequest.getSpentTime());
-        task.setDateTime(Date.from(Instant.from(LocalDateTime.now())));
+        task.setDateTime(Calendar.getInstance(TimeZone.getDefault()).getTime());
         task.setStatus(Status.ASSIGNED);
 
         taskRepo.save(task);

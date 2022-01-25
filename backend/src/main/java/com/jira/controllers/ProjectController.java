@@ -130,7 +130,8 @@ public class ProjectController {
     }
 
     private User convertToEntity(UserDto userDto) {
-        return modelMapper.map(userDto, User.class);
-    }
+        User user = modelMapper.map(userDto, User.class);
 
+        return user;
+    }
 }

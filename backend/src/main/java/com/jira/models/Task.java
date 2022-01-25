@@ -1,6 +1,8 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class  Task implements Serializable {
 
     @Id
@@ -33,6 +36,7 @@ public class  Task implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="project_id", nullable=false)
+    @JsonBackReference
     private Project project;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

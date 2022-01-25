@@ -117,21 +117,20 @@ public class TaskController {
     private TaskDto convertToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
 
+        if (!task.getUsers().isEmpty()) {
+            User user = task.getUsers().iterator().next();
+            taskDto.setUser(convertToDto(user));
+        }
         taskDto.setProject(convertToDto(task.getProject()));
-        taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
-  //      taskDto.setDateTime(task.getDateTime());
-  //      taskDto.setSpentTime(task.getSpentTime());
+
+   //     taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
 
         return taskDto;
     }
 
-    private  Task convertToEntity(TaskDto taskDto) throws ParseException {
-        Task task = modelMapper.map(taskDto, Task.class);
+    private  Task convertToEntity(TaskDto taskDto) {
 
-//        task.setDateTime(taskDto.getDateTimeConverted());
-//        task.setSpentTime(taskDto.getSpentTimeConverted());
-
-        return task;
+        return modelMapper.map(taskDto, Task.class);
     }
 
     private ProjectDto convertToDto(Project project) {

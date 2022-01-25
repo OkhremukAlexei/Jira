@@ -14,10 +14,16 @@ public abstract class RoleHelper {
                 managers.add(user);
             }
         }
+
         return managers;
     }
 
     public static User findManager(List<User> users){
-        return findManagersInList(users).get(0);
+        List<User> managers = findManagersInList(users);
+
+        if (managers.isEmpty()){
+            return null;
+        }
+        else return managers.get(0);
     }
 }
