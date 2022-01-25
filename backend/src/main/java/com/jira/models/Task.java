@@ -5,9 +5,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.sql.Time;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
@@ -37,7 +36,7 @@ public class  Task implements Serializable {
     @JoinColumn(name="project_id", nullable=false)
     private Project project;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "task_user",
             joinColumns = @JoinColumn(name = "task_id"),

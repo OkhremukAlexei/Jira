@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TokenStorageService} from "../../services/token-storage.service";
 import {ProjectsService} from "../../services/projects.service";
@@ -27,7 +27,7 @@ export class SidebarComponent implements OnInit {
   listProjects !: Projects[];
   isAuthorized: boolean = false;
   roles!: string[];
-  authority!: string;
+  @Input() authority!: string;
 
   closeResult: string;
   currentProject: any = {};
@@ -39,37 +39,13 @@ export class SidebarComponent implements OnInit {
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
     });
-    this.getAuthority();
     this.getProjects();
 
-  }
-
-  logout() {
-    this.token.signOut();
-    window.location.reload();
   }
 
   getProjects() : void {
     this.projectService.getProjectsFromUserId(this.token.getId()).
       subscribe(data => {this.listProjects = data});
-  }
-
-  getAuthority(): void {
-    if (this.token.getToken()) {
-      this.isAuthorized = true;
-      this.roles = this.token.getAuthorities();
-      this.roles.every(role => {
-        if (role === 'ROLE_ADMIN') {
-          this.authority = 'admin';
-          return false;
-        } else if (role === 'ROLE_MANAGER') {
-          this.authority = 'manager';
-          return false;
-        }
-        this.authority = 'user';
-        return true;
-      });
-    }
   }
 
   open(content: any) {
