@@ -33,7 +33,7 @@ export class TasksComponent implements OnInit {
     { headerText: 'To Do', keyField: 'NEW' },
     { headerText: 'In Progress', keyField: 'ASSIGNED' },
     { headerText: 'Testing', keyField: 'COMPLETED' },
-    { headerText: 'Close', keyField: 'CLOSE' }
+    { headerText: 'Close', keyField: 'CLOSED' }
   ];
 
   listTasks !: TasksInfo[];
@@ -75,11 +75,15 @@ export class TasksComponent implements OnInit {
       let state = { skip: 0, take: 10 };
 
       if (project != null) {
-        this.taskService.execute(state, project?.id);
+        if(this.authority == 'manager')
+          this.taskService.execute(state, project?.id, "0");
+        else
+          this.taskService.execute(state, project?.id, this.token.getId());
       }
+
       this.cardSettings = {
-        headerField: 'id',
-        contentField: 'title',
+        headerField: 'title',
+        contentField: 'description',
         selectionType: 'Multiple'
       };
 
@@ -91,19 +95,20 @@ export class TasksComponent implements OnInit {
       spentTime: ['']
     } );
 
-
   }
 
   public dataSourceChanged(state: DataSourceChangedEventArgs): void {
     if (state.requestType === 'cardCreated') {
 
-
       // @ts-ignore
       state.endEdit(); }
-    else if (state.requestType === 'cardChanged') { // @ts-ignore
+    else if (state.requestType === 'cardChanged') {
 
-
-      state.endEdit() }
+      this.taskService.updateCard(state);
+      // @ts-ignore
+      state.endEdit();
+      this.dataStateChange(this.state);
+    }
     else if (state.requestType === 'cardRemoved') {
       this.taskService.deleteCard(state).subscribe(() => {
         // @ts-ignore
@@ -181,10 +186,11 @@ export class TasksComponent implements OnInit {
   }
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
-    this.taskService.execute(state, this.currentProject.id);
+    if(this.authority == 'manager')
+      this.taskService.execute(state, this.currentProject?.id, "0");
+    else
+      this.taskService.execute(state, this.currentProject?.id, this.token.getId());
   }
-
-  public swimlaneSettings: SwimlaneSettingsModel = { keyField: 'userName' };
 
   dialogOpen(args: DialogEventArgs): void {
 

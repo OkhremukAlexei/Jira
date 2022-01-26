@@ -19,7 +19,7 @@ import java.util.List;
 public class AccountController {
 
     @Autowired
-    @Qualifier("AccountServiceImpl")
+
     private AccountService accountService;
 
     @Autowired

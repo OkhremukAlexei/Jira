@@ -3,6 +3,7 @@ package com.jira.services.impl;
 import com.jira.models.Project;
 import com.jira.models.Team;
 import com.jira.models.User;
+import com.jira.pojo.dto.UserDto;
 import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.TeamService;
@@ -70,6 +71,11 @@ public class TeamDetailsServiceImpl implements TeamService {
     }
 
     @Override
+    public Team findByProjectId(Long id) {
+        return teamRepo.findByProject_Id(id);
+    }
+
+    @Override
     public Iterable<Team> getAll() {
         return teamRepo.findAll();
     }
@@ -102,6 +108,16 @@ public class TeamDetailsServiceImpl implements TeamService {
         Team team = teamRepo.findById(teamId);
         team.getUsers().remove(user);
         teamRepo.save(team);
+    }
+
+    @Override
+    public Team setTeam(Long id, List<User> users) {
+
+        Team team = teamRepo.findByProject_Id(id);
+
+        team.setUsers(users);
+
+        return team;
     }
 
     public boolean existsById(long id){

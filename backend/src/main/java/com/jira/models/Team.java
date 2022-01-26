@@ -1,5 +1,6 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -18,12 +19,14 @@ public class Team implements Serializable {
     private int numberOfPersons;
 
     @ManyToMany(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinTable(name = "user_team",
             joinColumns = @JoinColumn(name = "team_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<User> users;
 
     @OneToOne(mappedBy = "team")
+    @JsonIgnore
     private Project project;
 
     public Team() {
