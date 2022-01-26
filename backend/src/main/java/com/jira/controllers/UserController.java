@@ -33,8 +33,9 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserDto> getOne(@PathVariable("id") User user) {
+    @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
+    public ResponseEntity<UserDto> getOne(@PathVariable("id") Long id) {
+        User user = userService.getOne(id);
         return user != null
                 ? new ResponseEntity<>(userService.convertToDto(user), HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);

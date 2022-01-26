@@ -39,7 +39,7 @@ public class ProjectController {
 
     @GetMapping("/usersProject/{id}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id) {
+    public ResponseEntity<List<ProjectDto>> getOneByUserId(@PathVariable("id") Long id) {
         List<Project> projects = projectService.getProjectsByUserId(id);
         return ResponseEntity.ok(projects.stream()
                 .map(projectService::convertToDto)
