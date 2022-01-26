@@ -4,6 +4,8 @@ import com.jira.services.impl.UserDetailsImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -19,8 +21,10 @@ public class JwtUtils {
     @Value("${app.jwtExpirationMs}")
     private int jwtExpirationMs;
 
-    public String generateJwtToken(Authentication authentication) {
+    private static final Logger LOGGER= LoggerFactory.getLogger(JwtUtils.class);
 
+    public String generateJwtToken(Authentication authentication) {
+        LOGGER.info("Creating new Jwt token: ");
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder().setSubject((userPrincipal.getUsername())).setIssuedAt(new Date())
@@ -29,13 +33,14 @@ public class JwtUtils {
     }
 
     public boolean validateJwtToken(String jwt) {
+        LOGGER.info("validating Jwt token: ");
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(jwt);
             return true;
         } catch (MalformedJwtException e) {
-            System.err.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
+            LOGGER.error(e.getMessage());
         }
 
         return false;

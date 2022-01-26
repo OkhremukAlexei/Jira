@@ -1,7 +1,6 @@
 package com.jira.services.impl;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.jira.validator.ValidatorLoginAndPassword;
 import com.jira.models.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@ValidatorLoginAndPassword
+
 public class UserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = 1L;

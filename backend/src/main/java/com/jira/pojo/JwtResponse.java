@@ -1,11 +1,16 @@
 package com.jira.pojo;
 
-import com.jira.validator.ValidatorLoginAndPassword;
+
+import com.jira.controllers.AuthController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-@ValidatorLoginAndPassword
+
 public class JwtResponse {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(AuthController.class);
 
     private String token;
     private String type = "Bearer";
@@ -18,6 +23,7 @@ public class JwtResponse {
         this.id = id;
         this.login = login;
         this.roles = roles;
+        LOGGER.info("Creating the Jwt Response: token ", token, " id",id," login ",login, " roles ",roles);
     }
 
     public String getToken() {

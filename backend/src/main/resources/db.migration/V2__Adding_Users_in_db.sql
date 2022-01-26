@@ -107,7 +107,3 @@ INSERT into task_user (task_id, user_id) VALUES (9,5);
 
 
 
-
-SELECT * from users;
-SELECT * from account;
-SELECT * from task;
