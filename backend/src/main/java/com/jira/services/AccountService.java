@@ -2,11 +2,12 @@ package com.jira.services;
 
 import com.jira.models.Account;
 
+import java.util.List;
 
 public interface AccountService {
 
-    Iterable<Account> getAll();
-    Account getOne(Account account);
+    List<Account> getAccountList();
+    Account getOne(Long id);
     Account put(Account account);
     void delete(Account account);
 }

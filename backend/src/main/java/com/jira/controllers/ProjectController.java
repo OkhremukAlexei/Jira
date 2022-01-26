@@ -32,7 +32,7 @@ public class ProjectController {
 
     @GetMapping("/projectList")
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<List<ProjectDto>> getAll() {
         List<Project> projects = projectService.getProjectsList();
         return ResponseEntity.ok(projects.stream()
                         .map(this::convertToDto)

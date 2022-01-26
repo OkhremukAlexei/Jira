@@ -52,7 +52,6 @@ public class AdminServiceImpl implements AdminService {
         for (User user: userList) {
             userDtoList.add(UserDto.build(user));
         }
-
         return userDtoList;
     }
 }

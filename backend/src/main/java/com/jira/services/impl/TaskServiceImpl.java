@@ -2,6 +2,7 @@ package com.jira.services.impl;
 
 import com.jira.models.Status;
 import com.jira.models.Task;
+import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
 import com.jira.repos.UserRepo;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -95,16 +97,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getAllUsersTasks(Long userId) {
-        List<Task> tasks = taskRepo.findAllActiveTasksByUserId(userId);
-
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+    public List<Task> getAllUsersTasks(Long userId) {
+        return taskRepo.findAllActiveTasksByUserId(userId);
 
     }
 

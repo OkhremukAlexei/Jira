@@ -21,17 +21,13 @@ public interface TaskService {
 
     List<Task> getUsersTasks(Long projectId, Long userId);
 
+    List<Task> getAllUsersTasks(Long userId);
+
     void completeTask(int id);
 
     void closeTask(int id);
 
-<<<<<<< HEAD
-    List<TaskDto> getAllUsersTasks (Long id);
-
-    List<TaskDto> getProjectTasks(Long id);
-=======
     List<Task> getProjectTasks(Long id);
->>>>>>> dev-alex
 
     int countProgress(Long id);
 }
