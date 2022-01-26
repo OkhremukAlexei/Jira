@@ -1,5 +1,6 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -25,6 +26,7 @@ public class Project implements Serializable {
     private Set<Task> tasks;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 

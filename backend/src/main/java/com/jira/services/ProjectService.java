@@ -17,4 +17,7 @@ public interface ProjectService {
 
     boolean existsById(long projectId);
     void deleteUsersInTeam(long projectId, long userId);
+
+    ProjectDto convertToDto(Project project);
+    Project convertToEntity(ProjectDto projectDto);
 }

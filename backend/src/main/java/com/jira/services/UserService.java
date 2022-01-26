@@ -14,4 +14,7 @@ public interface UserService {
     List<UserDto> getAllUsers();
     List<UserDto> getUsersOutsideTheProject(long id);
     List<User> getUsers();
+
+    User convertToEntity(UserDto userDto);
+    UserDto convertToDto(User user);
 }

@@ -24,5 +24,5 @@ public interface TeamService {
     Team setNewUsersInTeam(long id, List<User> users);
     void deleteUsersInTeam(long teamId, long userId);
 
-    Team setTeam(Long id, List<UserDto> users);
+    Team setTeam(Long id, List<User> users);
 }

@@ -111,12 +111,7 @@ public class TeamDetailsServiceImpl implements TeamService {
     }
 
     @Override
-    public Team setTeam(Long id, List<UserDto> usersDto) {
-        List<User> users = new ArrayList<>();
-
-        for (UserDto user: usersDto) {
-            users.add(userRepo.getById(user.getId()));
-        }
+    public Team setTeam(Long id, List<User> users) {
 
         Team team = teamRepo.findByProject_Id(id);
 

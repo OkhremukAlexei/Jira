@@ -1,5 +1,6 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
@@ -31,10 +32,12 @@ public class User implements Serializable {
     private Set<Role> roles = new HashSet<>();
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
     @PrimaryKeyJoinColumn
     private Account account;
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Team> teams;
 
     @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)

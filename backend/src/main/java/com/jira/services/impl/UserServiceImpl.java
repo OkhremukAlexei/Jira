@@ -8,6 +8,7 @@ import com.jira.pojo.dto.UserDto;
 import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private TeamRepo teamRepo;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     public List<User> getAll() {
@@ -74,5 +78,16 @@ public class UserServiceImpl implements UserService {
         return userDtoList;
     }
 
+    public User convertToEntity(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
 
+        return user;
+    }
+
+    public UserDto convertToDto(User user) {
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+
+        userDto.setRoles(user.getRole());
+        return userDto;
+    }
 }

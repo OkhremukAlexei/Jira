@@ -30,4 +30,8 @@ public interface TaskService {
     List<Task> getProjectTasks(Long id);
 
     int countProgress(Long id);
+
+    TaskDto convertToDto(Task task);
+
+    Task convertToEntity(TaskDto taskDto);
 }

@@ -2,16 +2,17 @@ package com.jira.services.impl;
 
 import com.jira.models.Status;
 import com.jira.models.Task;
+import com.jira.models.User;
+import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
-import com.jira.repos.UserRepo;
+import com.jira.services.ProjectService;
 import com.jira.services.TaskService;
+import com.jira.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -22,9 +23,18 @@ public class TaskServiceImpl implements TaskService {
 
     private final ProjectRepo projectRepo;
 
-    public TaskServiceImpl(TaskRepo taskRepo, ProjectRepo projectRepo) {
+    private final UserService userService;
+
+    private final ProjectService projectService;
+
+    private final ModelMapper modelMapper;
+
+    public TaskServiceImpl(TaskRepo taskRepo, ProjectRepo projectRepo, UserService userService, ProjectService projectService, ModelMapper modelMapper) {
         this.taskRepo = taskRepo;
         this.projectRepo = projectRepo;
+        this.userService = userService;
+        this.projectService = projectService;
+        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -128,5 +138,24 @@ public class TaskServiceImpl implements TaskService {
         else {
             return numClosedTasks * 100 / numAllTasks;
         }
+    }
+
+    public TaskDto convertToDto(Task task) {
+        TaskDto taskDto = modelMapper.map(task, TaskDto.class);
+
+        if (!task.getUsers().isEmpty()) {
+            User user = task.getUsers().iterator().next();
+            taskDto.setUser(userService.convertToDto(user));
+        }
+        taskDto.setProject(projectService.convertToDto(task.getProject()));
+
+        //     taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
+
+        return taskDto;
+    }
+
+    public Task convertToEntity(TaskDto taskDto) {
+
+        return modelMapper.map(taskDto, Task.class);
     }
 }
