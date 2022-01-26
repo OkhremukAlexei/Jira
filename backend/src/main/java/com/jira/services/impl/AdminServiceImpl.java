@@ -45,14 +45,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserDto> findAll(){
-        List<User> userList = userRepo.findAll();
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: userList) {
-            userDtoList.add(UserDto.build(user));
-        }
-
-        return userDtoList;
+    public List<User> findAll(){
+        return userRepo.findAll();
     }
 }

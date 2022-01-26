@@ -55,20 +55,8 @@ export class TasksService extends Subject<DataStateChangeEventArgs>{
     return this.http.post(`${this.taskUrl}`, data)
   }
 
-  startTask(id: any, data: any) {
-    return this.http.put(`${this.taskUrl}/${id}/start`, data);
-  }
-
   getProjectUserTasks(projectId: any, userId: any) : Observable<TasksInfo[]>{
     return this.http.get<TasksInfo[]>(`${this.taskUrl}/project/${projectId}/user/${userId}`, {responseType: "json"});
-  }
-
-  completeTask(id: number, data: TasksInfo) {
-    return this.http.put(`${this.taskUrl}/${id}/complete`, data);
-  }
-
-  closeTask(id: number, data: TasksInfo) {
-    return this.http.put(`${this.taskUrl}/${id}/close`, data);
   }
 
   getProjectTasks(id: any) {

@@ -146,7 +146,6 @@ public class ProjectServiceImpl implements ProjectService {
             project.setTeam(teamService.setTeam(projectDto.getId(), projectDto.getUsers()
                     .stream().map(uService::convertToEntity).collect(Collectors.toList())));
         }
-        // project.setTeam(teamService.setTeam(projectDto.getId(), projectDto.getUsers()));
 
         return project;
     }

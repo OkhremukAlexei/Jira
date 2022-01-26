@@ -168,7 +168,7 @@ export class TasksComponent implements OnInit {
     this.data.setTask(currentTask);
     this.data.currentTask.subscribe(task => this.currentTask = task);
   }
-
+/*
   startTask(): void {
     this.taskService.startTask(this.currentTask.id, this.startForm.value)
       .subscribe((results) => {
@@ -177,13 +177,7 @@ export class TasksComponent implements OnInit {
       });
   }
 
-  completeTask(currentTask: TasksInfo): void{
-    this.taskService.completeTask(currentTask.id, currentTask).subscribe((results)=>{this.ngOnInit()});
-  }
-
-  closeTask(currentTask: TasksInfo): void{
-    this.taskService.closeTask(currentTask.id, currentTask).subscribe((results)=>{this.ngOnInit()});
-  }
+*/
 
   public dataStateChange(state: DataStateChangeEventArgs): void {
     if(this.authority == 'manager')

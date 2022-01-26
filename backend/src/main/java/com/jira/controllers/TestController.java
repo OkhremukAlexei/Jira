@@ -15,12 +15,9 @@ public class TestController {
 
     @GetMapping("/all")
     public String allAccess() {
-        return "public API";  //???
+        return "public API";
     }
- /*   public ResponseEntity<String> allAccess() {
-        final String answer = "public API";
-        return ResponseEntity<>(answer, HttpStatus.OK);  //???
-    }*/
+
     @GetMapping("/user")
     @PreAuthorize("hasRole('ROLE_USER') or hasRole('MANAGER') or hasRole('ROLE_ADMIN')")
     public String userAccess() {
