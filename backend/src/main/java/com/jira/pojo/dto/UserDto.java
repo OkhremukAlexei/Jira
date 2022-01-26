@@ -10,39 +10,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDto {
     private Long id;
-
     private String login;
     private String password;
     private String roles;
     private AccountDto account;
-
-    public UserDto(Long id, String login, String password, String roles) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public UserDto(String login, String password, String roles) {
-        this.login = login;
-        this.password = password;
-        this.roles = roles;
-    }
-
-    public static UserDto build(User user){
-
-        return new UserDto(
-                user.getId(),
-                user.getLogin(),
-                user.getPassword(),
-                user.getRole(),
-                new AccountDto(
-                        user.getAccount().getId(),
-                        user.getAccount().getName(),
-                        user.getAccount().getSurname(),
-                        user.getAccount().getEmail())
-        );
-    }
 
     public Long getId() {
         return id;

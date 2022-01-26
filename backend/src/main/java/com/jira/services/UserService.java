@@ -11,8 +11,8 @@ public interface UserService {
     User getOne(User us);
     User put(User us);
     void delete(User us);
-    List<UserDto> getAllUsers();
-    List<UserDto> getUsersOutsideTheProject(long id);
+    List<User> getAllUsers();
+    List<User> getUsersOutsideTheProject(long id);
     List<User> getUsers();
 
     User convertToEntity(UserDto userDto);

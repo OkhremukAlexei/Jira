@@ -54,39 +54,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: userRepo.findBySpecificRoles(ERole.ROLE_USER)) {
-            userDtoList.add(UserDto.build(user));
-        }
-        return userDtoList;
+    public List<User> getAllUsers() {
+        return  userRepo.findBySpecificRoles(ERole.ROLE_USER);
     }
 
     @Override
-    public List<UserDto> getUsersOutsideTheProject(long id){
+    public List<User> getUsersOutsideTheProject(long id){
         List<User> allUsersList = userRepo.findBySpecificRoles(ERole.ROLE_USER);
         List<User> usersInTeamList = userRepo.findByTeams_Project_Id(id);
         allUsersList.removeAll(usersInTeamList);
-
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: allUsersList) {
-            userDtoList.add(UserDto.build(user));
-        }
-
-        return userDtoList;
+        return allUsersList;
     }
 
     public User convertToEntity(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
-
         return user;
     }
 
     public UserDto convertToDto(User user) {
         UserDto userDto = modelMapper.map(user, UserDto.class);
-
         userDto.setRoles(user.getRole());
         return userDto;
     }

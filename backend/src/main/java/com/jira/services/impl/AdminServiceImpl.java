@@ -1,11 +1,8 @@
 package com.jira.services.impl;
 
-import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.Role;
 import com.jira.models.User;
-import com.jira.pojo.dto.AccountDto;
-import com.jira.pojo.dto.UserDto;
 import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
 import com.jira.repos.UserRepo;
@@ -13,7 +10,6 @@ import com.jira.services.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -45,13 +41,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserDto> findAll(){
+    public List<User> findAll(){
         List<User> userList = userRepo.findAll();
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: userList) {
-            userDtoList.add(UserDto.build(user));
-        }
-        return userDtoList;
+        return userList;
     }
 }
