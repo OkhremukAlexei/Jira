@@ -9,6 +9,8 @@ import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.UserService;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,9 @@ import java.util.Optional;
 
 @Service("UsersServiceImpl")
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(UserServiceImpl.class);
+
 
     @Autowired
     private UserRepo userRepo;
@@ -55,11 +60,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getAllUsers() {
+        LOGGER.info("UserServiceImpl method getAllUsers ");
+
         return  userRepo.findBySpecificRoles(ERole.ROLE_USER);
     }
 
     @Override
     public List<User> getUsersOutsideTheProject(long id){
+        LOGGER.info("UserServiceImpl method getUsersOutsideTheProject "+id);
+
         List<User> allUsersList = userRepo.findBySpecificRoles(ERole.ROLE_USER);
         List<User> usersInTeamList = userRepo.findByTeams_Project_Id(id);
         allUsersList.removeAll(usersInTeamList);

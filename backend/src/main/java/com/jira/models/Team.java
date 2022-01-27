@@ -18,7 +18,7 @@ public class Team implements Serializable {
 
     private int numberOfPersons;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
     @JoinTable(name = "user_team",
             joinColumns = @JoinColumn(name = "team_id"),

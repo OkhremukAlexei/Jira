@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%d %p %C{1.} [%t] %style{%C{1.}}{dark,yellow}: %msg%n%throwable" />
+        </Console>
+
+        <RollingFile name="RollingFile"
+                     fileName="backend/target./logs/${date:yyyy-MM-dd HH`mm`ss}.log"
+                     filePattern="./logs/$${date:yyyy-MM HH`mm`ss}/%d{-dd-MMMM-yyyy HH`mm`ss}-%i.log.gz">
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy
+                        size="5 MB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>
+
+
+
+    </Appenders>
+
+
+
+    <Loggers>
+        <Root level="Info">
+            <AppenderRef ref="Console" />
+
+        </Root>
+
+        <Logger name="com.jira.services" level="info" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+        <Logger name="com.jira.repos" level="warn" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+
+        <Logger name="com.jira.models" level="errors" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+
+        <Logger name="com.jira.configs" level="trace" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+        <Logger name="com.jira.validator" level="info" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+
+        <Logger name="com.jira.services" level="warn" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+
+        <Logger name="com.jira.controllers" level="info" additivity="false">
+            <AppenderRef ref="RollingFile" />
+        </Logger>
+    </Loggers>
+</Configuration>

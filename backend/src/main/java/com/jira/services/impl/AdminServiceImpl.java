@@ -1,21 +1,31 @@
 package com.jira.services.impl;
 
+import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.Role;
 import com.jira.models.User;
+import com.jira.pojo.dto.AccountDto;
+import com.jira.pojo.dto.UserDto;
 import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.AdminService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service("AdminServiceImpl")
 public class AdminServiceImpl implements AdminService {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(AdminServiceImpl.class);
+
+
     @Autowired
     AccountRepo accountRepo;
 
@@ -25,8 +35,11 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     RoleRepo roleRepo;
 
+
+
     @Override
     public void setManager(Long id) {
+        LOGGER.info("AdminServiceImpl method setManager "+id);
         User user = userRepo.getById(id);
         Set<Role> roles = new HashSet<>();
 
@@ -43,6 +56,8 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public List<User> findAll(){
         List<User> userList = userRepo.findAll();
+        LOGGER.info("Show: "+ userList.toString());
+
         return userList;
     }
 }

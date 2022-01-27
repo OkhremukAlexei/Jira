@@ -13,13 +13,20 @@ import com.jira.repos.AccountRepo;
 import com.jira.repos.RoleRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.impl.UserDetailsImpl;
+import com.jira.validator.LoginRequestValidator;
+import com.jira.validator.SignUpRequestValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -31,6 +38,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AuthController {
+
+
+    @Autowired
+    LoginRequestValidator loginRequestValidator;
+
+    @Autowired
+    SignUpRequestValidator signUpRequestValidator;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -50,9 +64,18 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
-    public ResponseEntity<JwtResponse> authUser(@RequestBody LoginRequest loginRequest) {
+    private static final Logger LOGGER= LoggerFactory.getLogger(AuthController.class);
 
+
+    @PostMapping("/signin")
+    public ResponseEntity<JwtResponse> authUser(@RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+
+        LOGGER.info("Work of authUser: ");
+        loginRequestValidator.validate(loginRequest,bindingResult);
+        if(bindingResult.hasErrors()) {
+            LOGGER.info("Incorrect data in loginRequest ", loginRequest.getLogin(), " Password: ", loginRequest.getPassword());
+            return  ResponseEntity.badRequest().build();
+        }
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequest.getLogin(),
@@ -73,10 +96,19 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest) {
+    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
+            LOGGER.info("RegisterUser method ",  signupRequest.getLogin()," Password: ",signupRequest.getPassword()," name: ",signupRequest.getName()," surname: ",signupRequest.getSurname()," email: ",signupRequest.getEmail());
 
 
-        if (userRepo.existsByLogin(signupRequest.getLogin())) {
+            signUpRequestValidator.validate(signupRequest,bindingResult);
+            if(bindingResult.hasErrors()){
+                LOGGER.info("Incorrect data in SignupRequest ",  signupRequest.getLogin()," Password: ",signupRequest.getPassword()," name: ",signupRequest.getName()," surname: ",signupRequest.getSurname()," email: ",signupRequest.getEmail());
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Invalid data"));
+            }
+
+            if (userRepo.existsByLogin(signupRequest.getLogin())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));
