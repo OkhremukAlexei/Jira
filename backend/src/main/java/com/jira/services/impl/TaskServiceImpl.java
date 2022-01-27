@@ -61,7 +61,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task put(Integer id, Task taskRequest) {
-        LOGGER.info("TaskServiceImpl method put "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id "+id);
+        LOGGER.info("TaskServiceImpl method put "+taskRequest.getTitle()+" "+taskRequest.getTitle()+" "+taskRequest.getDescription()+" id "+id);
 
         Task task = taskRepo.getById(id);
         task.setTitle(taskRequest.getTitle());
@@ -88,7 +88,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void addTask(Task task) {
-        LOGGER.info("TaskServiceImpl method addTask "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id "+taskDto.getId());
+        LOGGER.info("TaskServiceImpl method addTask "+task.getTitle()+" "+task.getTitle()+" "+task.getDescription()+" id "+task.getId());
 
         task.setTitle(task.getTitle());
         task.setDescription(task.getDescription());
@@ -102,7 +102,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task startTask(int id, Task taskRequest) {
         Task task = taskRepo.getById(id);
-        LOGGER.info("TaskServiceImpl method addTask "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id ");
+        LOGGER.info("TaskServiceImpl method addTask "+taskRequest.getTitle()+" "+taskRequest.getTitle()+" "+taskRequest.getDescription()+" id "+id);
 
         task.setSpentTime(taskRequest.getSpentTime());
         task.setDateTime(Calendar.getInstance(TimeZone.getDefault()).getTime());

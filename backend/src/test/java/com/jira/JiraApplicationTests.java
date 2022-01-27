@@ -116,7 +116,7 @@ class JiraApplicationTests {
 	@Test
 	void TestProjectServiceImplMethodGetOne(){
 		LOGGER.info("Starting of the TestProjectServiceImplMethodGetOne ");
-		assertEquals(PROJECT_MEMBERS, projectService.getOne((long)PROJECT_ID).getUsers().size());
+		assertEquals(PROJECT_MEMBERS, projectService.getOne((long)PROJECT_ID).getTeam().getUsers().size());
 	}
 
 	@Autowired
@@ -132,7 +132,7 @@ class JiraApplicationTests {
 		Account account1=new Account();
 		account1.setId((long)ACCOUNT_ID);
 		account.setEmail(ACCOUNT_EMAIL);
-		assertEquals(account.getEmail(),accountService.getOne(account1).getEmail());
+		assertEquals(account.getEmail(),accountService.getOne(account1.getId()).getEmail());
 	}
 
 	@Autowired

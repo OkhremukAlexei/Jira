@@ -4,6 +4,7 @@ import com.jira.models.Project;
 import com.jira.models.User;
 import com.jira.pojo.dto.ProjectDto;
 import com.jira.pojo.dto.UserDto;
+import com.jira.pojo.util.RoleHelper;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
@@ -88,7 +89,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public Project addProject(Project project){
-        LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
+        LOGGER.info("ProjectServiceImpl method addProject "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
 
         project.setProgress(0);
 
@@ -102,7 +103,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public Project updateProject(Long id, Project project){
-        LOGGER.info("ProjectServiceImpl method updateProject project's id "+id+" "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
+        LOGGER.info("ProjectServiceImpl method updateProject project's id "+id+" "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
 
         Project projectFromDB = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
@@ -117,7 +118,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void addPeopleToProject(Project projectRequest){
-        LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
+        LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" progress"+projectRequest.getProgress());
 
         Project projectFromDB = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
@@ -145,12 +146,13 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void delete(Project project) {
-        LOGGER.info("ProjectServiceImpl method addProject "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
+        LOGGER.info("ProjectServiceImpl method addProject "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress "+project.getProgress());
         projectRepo.delete(project);
     }
 
     @Override
     public ProjectDto convertToDto(Project project) {
+        LOGGER.info("ProjectServiceImpl method convertToDto "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress "+project.getProgress());
         ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
 
         projectDto.setNumOfPersonsInTeam(project.getTeam().getNumberOfPersons());
@@ -162,6 +164,8 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public Project convertToEntity(ProjectDto projectDto) {
+        LOGGER.info("ProjectServiceImpl method convertToEntity "+projectDto.getLinkToGit()+" "+projectDto.getName()+" "+projectDto.getId()+" progress "+projectDto.getProgress());
+
         Project project = modelMapper.map(projectDto, Project.class);
 
         if (projectDto.getId() != null) {
