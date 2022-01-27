@@ -8,7 +8,6 @@ import {TasksService} from "../../services/tasks.service";
 import {UserService} from "../../services/user.service";
 import {Observable, of} from "rxjs";
 
-
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -25,12 +24,9 @@ export class ProfileComponent implements OnInit {
 
     }
 
-
     public constructor(private tokenStorageService:TokenStorageService, private userService:UserService) {
       this.id=this.tokenStorageService.getId();
       console.log(this.id);
-
-
 
       this.user$ = this.userService.getUser(this.id);
         this.user$.subscribe(user => {

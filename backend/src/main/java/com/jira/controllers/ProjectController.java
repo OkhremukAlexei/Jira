@@ -3,13 +3,15 @@ package com.jira.controllers;
 import com.jira.models.Project;
 import com.jira.pojo.MessageResponse;
 import com.jira.pojo.dto.ProjectDto;
-import com.jira.repos.ProjectRepo;
 import com.jira.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -22,25 +24,32 @@ public class ProjectController {
 
     @GetMapping("/projectList")
     @PreAuthorize("hasRole('MANAGER') or hasRole('ADMIN') or hasRole('USER')")
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(projectService.getProjectsList());
+    public ResponseEntity<List<ProjectDto>> getAll() {
+        List<Project> projects = projectService.getProjectsList();
+        return ResponseEntity.ok(projects.stream()
+                        .map(projectService::convertToDto)
+                        .collect(Collectors.toList()));
     }
 
     @GetMapping("{id}")
     @PreAuthorize("hasRole('USER') or hasRole('MANAGER') or hasRole('ADMIN')")
     public ResponseEntity<?> getOne(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(projectService.getOne(id));
+        return ResponseEntity.ok(projectService.convertToDto(projectService.getOne(id)));
     }
 
     @GetMapping("/usersProject/{id}")
     @PreAuthorize("hasRole('MANAGER') or hasRole('USER') or hasRole('ADMIN')")
-    public ResponseEntity<?> getOneByUserId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(projectService.getProjectsByUserId(id));
+    public ResponseEntity<List<ProjectDto>> getOneByUserId(@PathVariable("id") Long id) {
+        List<Project> projects = projectService.getProjectsByUserId(id);
+        return ResponseEntity.ok(projects.stream()
+                .map(projectService::convertToDto)
+                .collect(Collectors.toList()));
     }
 
     @PutMapping("{id}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
-    public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody ProjectDto project) {
+    public ResponseEntity<?> put(@PathVariable("id") Long id, @RequestBody ProjectDto projectDto) {
+        Project project = projectService.convertToEntity(projectDto);
         return ResponseEntity.ok(projectService.updateProject(id, project));
     }
 
@@ -52,13 +61,16 @@ public class ProjectController {
 
     @PostMapping
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> add(@RequestBody ProjectDto project) {
-        return ResponseEntity.ok(projectService.addProject(project));
+    public ResponseEntity<?> add(@RequestBody ProjectDto projectDto) {
+        Project project = projectService.convertToEntity(projectDto);
+        return ResponseEntity.ok(projectService.convertToDto(projectService.addProject(project)));
     }
 
     @PutMapping("/people")
     @PreAuthorize("hasRole('MANAGER')")
-    public ResponseEntity<?> addPeople(@RequestBody ProjectDto project) {
+    public ResponseEntity<?> addPeople(@RequestBody ProjectDto projectDto) {
+        Project project = projectService.convertToEntity(projectDto);
+
         if (projectService.existsById(project.getId())) {
             projectService.addPeopleToProject(project);
             return ResponseEntity.ok(new MessageResponse("User added"));
@@ -79,5 +91,6 @@ public class ProjectController {
             return ResponseEntity.badRequest().
                     body(new MessageResponse("Error: team with this id is not exist "));
     }
+
 
 }

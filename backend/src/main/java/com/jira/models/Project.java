@@ -1,11 +1,16 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Project implements Serializable {
 
     @Id
@@ -17,9 +22,11 @@ public class Project implements Serializable {
     private int progress;
 
     @OneToMany(mappedBy="project")
+    @JsonManagedReference
     private Set<Task> tasks;
 
     @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
     @JoinColumn(name = "team_id", referencedColumnName = "id")
     private Team team;
 

@@ -1,108 +1,77 @@
 package com.jira.pojo.dto;
 
-import com.jira.models.Project;
-import com.jira.models.Task;
-import com.jira.models.Team;
 import com.jira.models.User;
-import com.jira.pojo.util.RoleHelper;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProjectDto {
     private Long id;
     private String name;
     private String linkToGit;
     private int progress;
-    private Set<TaskDto> tasks;
     private int numOfPersonsInTeam;
     private List<UserDto> users;
     private UserDto manager;
 
-    public ProjectDto() {
-    }
-
-    public ProjectDto(String name, String linkToGit, int progress, int numOfPersonsInTeam, UserDto manager) {
-        this.name = name;
-        this.linkToGit = linkToGit;
-        this.progress = progress;
-        this.numOfPersonsInTeam = numOfPersonsInTeam;
-        this.manager = manager;
-    }
-
-    public ProjectDto(Long id, String name, String linkToGit, int progress, int numOfPersonsInTeam, List<UserDto> users, UserDto manager) {
-        this.id = id;
-        this.name = name;
-        this.linkToGit = linkToGit;
-        this.progress = progress;
-        this.numOfPersonsInTeam = numOfPersonsInTeam;
-        this.users = users;
-        this.manager = manager;
-    }
-
-
-    public static ProjectDto build(Project project){
-        User manager = RoleHelper.findManagerInList(project.getTeam().getUsers());
-        UserDto managerDto = null;
-
-        if (manager != null) {
-            managerDto = UserDto.build(manager);
-        }
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: project.getTeam().getUsers()) {
-            userDtoList.add(UserDto.build(user));
-        }
-
-        return new ProjectDto(
-                project.getId(),
-                project.getName(),
-                project.getLinkToGit(),
-                project.getProgress(),
-                project.getTeam().getNumberOfPersons(),
-                userDtoList,
-                managerDto
-        );
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLinkToGit() {
         return linkToGit;
+    }
+
+    public void setLinkToGit(String linkToGit) {
+        this.linkToGit = linkToGit;
     }
 
     public int getProgress() {
         return progress;
     }
 
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
     public int getNumOfPersonsInTeam() {
         return numOfPersonsInTeam;
+    }
+
+    public void setNumOfPersonsInTeam(int numOfPersonsInTeam) {
+        this.numOfPersonsInTeam = numOfPersonsInTeam;
     }
 
     public List<UserDto> getUsers() {
         return users;
     }
 
+    public void setUsers(List<UserDto> users) {
+        this.users = users;
+    }
+
     public UserDto getManager() {
         return manager;
     }
 
-    @Override
-    public String toString() {
-        return "ProjectDto{" +
-                "name='" + name + '\'' +
-                ", linkToGit='" + linkToGit + '\'' +
-                ", progress=" + progress +
-                ", numOfPersonsInTeam=" + numOfPersonsInTeam +
-                ", manager=" + manager +
-                '}';
+    public void setManager(UserDto manager) {
+        this.manager = manager;
     }
 }

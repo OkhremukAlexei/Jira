@@ -60,7 +60,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">{{tempUsers.account.name}} {{tempUsers.account.surname}}</h6>
                       </div>
                       <div class="col-xs-6 col-md-4 my-auto">
-                        <button type="submit" class="btn btn-primary btn-block" > Delete  </button>
+                        <button type="submit" class="btn btn-primary btn-block" *ngIf="tempUsers.roles!='ROLE_MANAGER'" > Delete   </button>
                       </div>
                     </div>
                   </div>

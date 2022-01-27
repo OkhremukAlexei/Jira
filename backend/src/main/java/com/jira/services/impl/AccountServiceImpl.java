@@ -1,11 +1,18 @@
 package com.jira.services.impl;
 
 import com.jira.models.Account;
+import com.jira.models.User;
+import com.jira.pojo.dto.AccountDto;
+import com.jira.pojo.dto.UserDto;
 import com.jira.repos.AccountRepo;
 import com.jira.services.AccountService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Service;
+import java.util.List;
+import java.awt.*;
+import java.util.ArrayList;
 
 @Service("AccountServiceImpl")
 public class AccountServiceImpl implements AccountService {
@@ -15,21 +22,22 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepo accountRepo;
 
-    public AccountServiceImpl(AccountRepo accountRepo)
-    {
+    public AccountServiceImpl(AccountRepo accountRepo) {
         this.accountRepo = accountRepo;
     }
 
     @Override
-    public Iterable<Account> getAll() {
+    public List<Account> getAccountList() {
         LOGGER.info("AccountService method getAll");
-        return accountRepo.findAll();
+        List <Account> accounts = accountRepo.findAll();
+        return accounts;
     }
     @Override
-    public Account getOne(Account account) {
-        LOGGER.info("AccountService method getOne "+account.getId()+" "+account.getName()+" "+account.getEmail()+" "+account.getSurname());
-
-        return accountRepo.findById(account.getId()).get();
+    public Account getOne(Long id) {
+        LOGGER.info("AccountService method getOne "+id);
+        Account account = accountRepo.findById(id)
+                .orElseThrow(() -> new ServiceException("Account Not Found with id: " + id));;
+        return account;
     }
     @Override
     public Account put(Account account) {

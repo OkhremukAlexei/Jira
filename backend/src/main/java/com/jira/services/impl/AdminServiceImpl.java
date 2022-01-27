@@ -1,5 +1,6 @@
 package com.jira.services.impl;
 
+import com.jira.models.Account;
 import com.jira.models.ERole;
 import com.jira.models.Role;
 import com.jira.models.User;
@@ -41,6 +42,7 @@ public class AdminServiceImpl implements AdminService {
         LOGGER.info("AdminServiceImpl method setManager "+id);
         User user = userRepo.getById(id);
         Set<Role> roles = new HashSet<>();
+
         Role userRole = roleRepo
                 .findByName(ERole.ROLE_MANAGER)
                 .orElseThrow(() -> new RuntimeException("Error, Role USER is not found"));
@@ -52,13 +54,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<UserDto> findAll(){
+    public List<User> findAll(){
         List<User> userList = userRepo.findAll();
-        List<UserDto> userDtoList = new ArrayList<>();
-        for (User user: userList) {
-            userDtoList.add(UserDto.build(user));
-        }
-        LOGGER.info("Show: "+ userDtoList.toString());
-        return userDtoList;
+        LOGGER.info("Show: "+ userList.toString());
+
+        return userList;
     }
 }

@@ -7,7 +7,6 @@ import {User} from "../models/users-info";
   providedIn: 'root'
 })
 export class UserService {
-
   private userTestUrl = 'http://localhost:8080/api/test/user';
   private managerUrl = 'http://localhost:8080/api/test/manager';
   private adminUrl = 'http://localhost:8080/api/test/admin';
@@ -36,7 +35,7 @@ export class UserService {
     return this.http.get<User[]>(`${this.userUrl}/project/${id}`, {responseType: "json"});
   }
 
-  getUser(id: string) :Observable<User>{
+  getUser(id: any) :Observable<User>{
     return this.http.get<User>( `${this.userUrl}/${id}`, {responseType: "json"})
   }
 

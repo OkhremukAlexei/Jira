@@ -7,21 +7,19 @@ import com.jira.models.User;
 import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
-import com.jira.repos.UserRepo;
+import com.jira.services.ProjectService;
 import com.jira.services.TaskService;
+import com.jira.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Calendar;
 import java.util.List;
-import java.util.Set;
+import java.util.TimeZone;
 
 @Service("TaskServiceImpl")
 public class TaskServiceImpl implements TaskService {
@@ -31,50 +29,49 @@ public class TaskServiceImpl implements TaskService {
 
     private final TaskRepo taskRepo;
 
-    public TaskServiceImpl(TaskRepo taskRepo) {
+    private final ProjectRepo projectRepo;
+
+    private final UserService userService;
+
+    private final ProjectService projectService;
+
+    private final ModelMapper modelMapper;
+
+    public TaskServiceImpl(TaskRepo taskRepo, ProjectRepo projectRepo, UserService userService, ProjectService projectService, ModelMapper modelMapper) {
         this.taskRepo = taskRepo;
+        this.projectRepo = projectRepo;
+        this.userService = userService;
+        this.projectService = projectService;
+        this.modelMapper = modelMapper;
     }
 
-    @Autowired
-    private ProjectRepo projectRepo;
-
-    @Autowired
-    private UserRepo userRepo;
-
     @Override
-    public List<TaskDto> getAll() {
+    public List<Task> getAll() {
         LOGGER.info("TaskServiceImpl method getAll");
-        List<Task> tasks = taskRepo.findAll();
-        List<TaskDto> taskDtoList = new ArrayList<>();
 
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+        return taskRepo.findAll();
     }
 
     @Override
-    public TaskDto getOne(Integer id) {
+    public Task getOne(Integer id) {
         LOGGER.info("TaskServiceImpl method getOne "+id);
-        Task task = taskRepo.findById(id).get();
-        return TaskDto.build(task);
+
+        return taskRepo.findById(id).get();
     }
 
-
-
-
-
-        @Override
-    public TaskDto put(Integer id, TaskDto taskDto) {
+    @Override
+    public Task put(Integer id, Task taskRequest) {
         LOGGER.info("TaskServiceImpl method put "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id "+id);
+
         Task task = taskRepo.getById(id);
-        task.setTitle(taskDto.getTitle());
-        task.setDescription(taskDto.getDescription());
-        task.setStatus(taskDto.getStatusEnum(taskDto.getStatus()));
+        task.setTitle(taskRequest.getTitle());
+        task.setDescription(taskRequest.getDescription());
+        task.setStatus(taskRequest.getStatus());
+      //  task.setStatus(taskRequest.getStatusEnum(taskDto.getStatus()));
 
         taskRepo.save(task);
-        return TaskDto.build(task);
+
+        return task;
     }
 
     @Override
@@ -90,62 +87,42 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void addTask(TaskDto taskDto) {
+    public void addTask(Task task) {
         LOGGER.info("TaskServiceImpl method addTask "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id "+taskDto.getId());
-        Task task = new Task();
-        Set<User> userSet = new HashSet<>();
-        User user = userRepo.getById(taskDto.getUser().getId());
-        userSet.add(user);
 
-        Project project = projectRepo.getById(taskDto.getProject().getId());
-
-        task.setTitle(taskDto.getTitle());
-        task.setDescription(taskDto.getDescription());
+        task.setTitle(task.getTitle());
+        task.setDescription(task.getDescription());
         task.setStatus(Status.NEW);
-        task.setProjects(project);
-        task.setUsers(userSet);
+        task.setProject(projectRepo.getById(task.getProject().getId()));
+        task.setUsers(task.getUsers());
 
         taskRepo.save(task);
     }
 
     @Override
-    public TaskDto startTask(int id, TaskDto taskDto) throws ParseException {
-        LOGGER.info("TaskServiceImpl method addTask "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id ");
+    public Task startTask(int id, Task taskRequest) {
         Task task = taskRepo.getById(id);
-        task.setSpentTime(new SimpleDateFormat("HH:mm").parse(taskDto.getSpentTime()));
-        task.setDateTime(LocalDateTime.now());
+        LOGGER.info("TaskServiceImpl method addTask "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id ");
+
+        task.setSpentTime(taskRequest.getSpentTime());
+        task.setDateTime(Calendar.getInstance(TimeZone.getDefault()).getTime());
         task.setStatus(Status.ASSIGNED);
 
         taskRepo.save(task);
 
-        return TaskDto.build(task);
+        return task;
     }
 
     @Override
-    public List<TaskDto> getUsersTasks(Long projectId, Long userId) {
+    public List<Task> getUsersTasks(Long projectId, Long userId) {
         LOGGER.info("TaskServiceImpl method getUsersTasks projectId "+projectId+" userId "+userId);
-        List<Task> tasks = taskRepo.findByProject_IdAndUsers_Id(projectId, userId);
 
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+        return taskRepo.findByProject_IdAndUsers_Id(projectId, userId);
     }
 
     @Override
-    public List<TaskDto> getAllUsersTasks(Long userId) {
-        List<Task> tasks = taskRepo.findAllActiveTasksByUserId(userId);
-
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+    public List<Task> getAllUsersTasks(Long userId) {
+        return taskRepo.findAllActiveTasksByUserId(userId);
 
     }
 
@@ -170,18 +147,10 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskDto> getProjectTasks(Long id) {
+    public List<Task> getProjectTasks(Long id) {
         LOGGER.info("TaskServiceImpl method getProjectTasks " + id);
 
-        List<Task> tasks = taskRepo.findByProject_Id(id);
-
-        List<TaskDto> taskDtoList = new ArrayList<>();
-
-        for (Task task: tasks) {
-            taskDtoList.add(TaskDto.build(task));
-        }
-
-        return taskDtoList;
+        return taskRepo.findByProject_Id(id);
     }
 
     @Override
@@ -196,5 +165,24 @@ public class TaskServiceImpl implements TaskService {
         else {
             return numClosedTasks * 100 / numAllTasks;
         }
+    }
+
+    public TaskDto convertToDto(Task task) {
+        TaskDto taskDto = modelMapper.map(task, TaskDto.class);
+
+        if (!task.getUsers().isEmpty()) {
+            User user = task.getUsers().iterator().next();
+            taskDto.setUser(userService.convertToDto(user));
+        }
+        taskDto.setProject(projectService.convertToDto(task.getProject()));
+
+        //     taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
+
+        return taskDto;
+    }
+
+    public Task convertToEntity(TaskDto taskDto) {
+
+        return modelMapper.map(taskDto, Task.class);
     }
 }

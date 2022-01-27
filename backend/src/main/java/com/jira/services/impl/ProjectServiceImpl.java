@@ -7,7 +7,11 @@ import com.jira.pojo.dto.UserDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
+import com.jira.services.TaskService;
+import com.jira.services.TeamService;
+import com.jira.services.UserService;
 import org.hibernate.service.spi.ServiceException;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("ProjectServiceImpl")
 public class ProjectServiceImpl implements ProjectService {
@@ -27,109 +32,101 @@ public class ProjectServiceImpl implements ProjectService {
     private ProjectRepo projectRepo ;
 
     @Autowired
-    private TeamDetailsServiceImpl teamService;
+    private TeamService teamService;
 
     @Autowired
     private UserDetailsServiceImpl userService;
 
     @Autowired
-    private TaskServiceImpl taskService;
+    private TaskService taskService;
 
     @Autowired
-    private UserRepo userRepo;
+    private UserService uService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsList(){
+    public List<Project> getProjectsList(){
         LOGGER.info("ProjectServiceImpl method getProjectsList");
         List<Project> projects = projectRepo.findAll();
-        teamService.countNumOfUsers(projects);
-
-        List<ProjectDto> projectDtoList = new ArrayList<>();
 
         for (Project project: projects) {
             project.setProgress(taskService.countProgress(project.getId()));
-            projectDtoList.add(ProjectDto.build(project));
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
         }
 
-        return projectDtoList;
+        return projects;
     }
 
     @Override
     @Transactional
-    public List<ProjectDto> getProjectsByUserId(Long userId){
-        LOGGER.info("ProjectServiceImpl method getProjectsByUserId "+userId);
+    public List<Project> getProjectsByUserId(Long userId){
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
-        teamService.countNumOfUsers(projects);
+        LOGGER.info("ProjectServiceImpl method getProjectsByUserId "+userId);
 
-        List<ProjectDto> projectDtoList = new ArrayList<>();
-
-        for(Project project: projects){
-            projectDtoList.add(ProjectDto.build(project));
+        for (Project project: projects) {
+            project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
         }
 
-        return projectDtoList;
+        return projects;
     }
 
     @Override
     @Transactional
-    public ProjectDto getOne(Long id){
+    public Project getOne(Long id){
         LOGGER.info("ProjectServiceImpl method getOne "+id);
+
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
-        teamService.countNumOfUsers(project);
+        project.getTeam().setNumberOfPersons(teamService.countNumOfUsers(project));
 
-        return ProjectDto.build(project);
+        return project;
     }
 
     @Override
     @Transactional
-    public ProjectDto addProject(ProjectDto projectRequest){
+    public Project addProject(Project project){
         LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
-        Project project = new Project();
-        project.setName(projectRequest.getName());
-        project.setLinkToGit(projectRequest.getLinkToGit());
+
         project.setProgress(0);
 
         project.setTeam(teamService.getNewTeam(userService.getCurrentUser()));
 
         projectRepo.save(project);
 
-        return ProjectDto.build(project);
+        return project;
     }
 
     @Override
     @Transactional
-    public ProjectDto updateProject(Long id, ProjectDto projectRequest){
+    public Project updateProject(Long id, Project project){
         LOGGER.info("ProjectServiceImpl method updateProject project's id "+id+" "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
-        Project project = projectRepo.findById(id)
+
+        Project projectFromDB = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
-        project.setName(projectRequest.getName());
-        project.setLinkToGit(projectRequest.getLinkToGit());
+        projectFromDB.setName(project.getName());
+        projectFromDB.setLinkToGit(project.getLinkToGit());
 
-        projectRepo.save(project);
+        projectRepo.save(projectFromDB);
 
-        return ProjectDto.build(project);
+        return projectFromDB;
     }
 
     @Override
     @Transactional
-    public void addPeopleToProject(ProjectDto projectRequest){
+    public void addPeopleToProject(Project projectRequest){
         LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
-        Project project = projectRepo.findById(projectRequest.getId())
+
+        Project projectFromDB = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
 
-        List<User> users = new ArrayList<>();
-        for (UserDto userDto: projectRequest.getUsers()) {
-            User user = userRepo.getById(userDto.getId());
-            users.add(user);
-        }
+        projectFromDB.setTeam(teamService.setNewUsersInTeam(projectFromDB.getTeam().getId(), projectRequest.getTeam().getUsers()));
+        projectFromDB.getTeam().setNumberOfPersons(teamService.countNumOfUsers(projectFromDB));
 
-        project.setTeam(teamService.setNewUsersInTeam(project.getTeam().getId(), users));
+        projectRepo.save(projectFromDB);
 
-        projectRepo.save(project);
-
-        ProjectDto.build(project);
     }
 
     @Override
@@ -150,6 +147,30 @@ public class ProjectServiceImpl implements ProjectService {
     public void delete(Project project) {
         LOGGER.info("ProjectServiceImpl method addProject "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
         projectRepo.delete(project);
+    }
+
+    @Override
+    public ProjectDto convertToDto(Project project) {
+        ProjectDto projectDto = modelMapper.map(project, ProjectDto.class);
+
+        projectDto.setNumOfPersonsInTeam(project.getTeam().getNumberOfPersons());
+        projectDto.setUsers(project.getTeam().getUsers().stream().map(uService::convertToDto).collect(Collectors.toList()));
+        projectDto.setManager(uService.convertToDto(RoleHelper.findManager(project.getTeam().getUsers())));
+
+        return projectDto;
+    }
+
+    @Override
+    public Project convertToEntity(ProjectDto projectDto) {
+        Project project = modelMapper.map(projectDto, Project.class);
+
+        if (projectDto.getId() != null) {
+            project.setTeam(teamService.setTeam(projectDto.getId(), projectDto.getUsers()
+                    .stream().map(uService::convertToEntity).collect(Collectors.toList())));
+        }
+        // project.setTeam(teamService.setTeam(projectDto.getId(), projectDto.getUsers()));
+
+        return project;
     }
 
 }

@@ -1,17 +1,26 @@
 package com.jira.pojo.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jira.models.Status;
-import com.jira.models.Task;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.sql.Date;
-import java.sql.Time;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.List;
 
-
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskDto {
+    private static final SimpleDateFormat dateFormat
+            = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    private static final SimpleDateFormat spentTimeFormat
+            = new SimpleDateFormat("HH:mm");
+
     private int id;
     private String title;
     private String description;
@@ -19,65 +28,14 @@ public class TaskDto {
     private String spentTime;
     private ProjectDto project;
     private UserDto user;
-    private String status;
-
-    public TaskDto() {
-    }
-
-    public TaskDto(int id, String title, String description, UserDto user) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.user = user;
-    }
-
-    public TaskDto(int id, String title, String description, String dateTime, String spentTime, UserDto user) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.dateTime = dateTime;
-        this.spentTime = spentTime;
-        this.user = user;
-    }
-
-    public TaskDto(int id, String title, String description, String dateTime, String spentTime, UserDto user, String status) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.dateTime = dateTime;
-        this.spentTime = spentTime;
-        this.user = user;
-        this.status = status;
-    }
-
-    public TaskDto(String title, String description) {
-        this.title = title;
-        this.description = description;
-    }
-
-    public static TaskDto build(Task task){
-        String dateTime = null;
-        String spentTime = null;
-        try {
-            dateTime = task.getDateTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
-            spentTime = new SimpleDateFormat("HH:mm").format(task.getSpentTime());
-        } catch (NullPointerException e){
-            System.err.println("Null pointer exception");
-        }
-
-        return new TaskDto(
-                task.getId(),
-                task.getTitle(),
-                task.getDescription(),
-                dateTime,
-                spentTime,
-                UserDto.build(task.getUsers().stream().findAny().get()),
-                task.getStatus().toString()
-        );
-    }
+    private Status status;
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -96,8 +54,12 @@ public class TaskDto {
         this.description = description;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
     }
 
     public String getSpentTime() {
@@ -106,14 +68,6 @@ public class TaskDto {
 
     public void setSpentTime(String spentTime) {
         this.spentTime = spentTime;
-    }
-
-    public String getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
     }
 
     public ProjectDto getProject() {
@@ -128,43 +82,39 @@ public class TaskDto {
         return user;
     }
 
-    public void setUser(UserDto user) {
-        this.user = user;
+    public void setUser(UserDto users) {
+        this.user = users;
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public Status getStatusEnum(String status){
-        switch (status){
-            case "NEW": {
-                return Status.NEW;
-            }
-            case "ASSIGNED": {
-                return Status.ASSIGNED;
-            }
-            case "DISCUSSION": {
-                return Status.DISCUSSION;
-            }
-            case "CANCELED": {
-                return Status.CANCELED;
-            }
-            case "POSTPONED": {
-                return Status.POSTPONED;
-            }
-            case "COMPLETED": {
-                return Status.COMPLETED;
-            }
-            case "CLOSED": {
-                return Status.CLOSED;
-            }
-        }
-
-        return null;
-    }
-
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
+
+/*
+    public Date getDateTimeConverted() throws ParseException {
+        return dateFormat.parse(this.dateTime);
+    }
+
+    public void setDateTime(Date date) {
+        if (date != null) {
+            this.dateTime = dateFormat.format(date);
+        }
+    }
+
+    public Date getSpentTimeConverted() throws ParseException {
+        return spentTimeFormat.parse(this.spentTime);
+    }
+
+    public void setSpentTime(Date date) {
+        if (date != null) {
+            this.spentTime = spentTimeFormat.format(date);
+        }
+
+    }
+*/
+
 }

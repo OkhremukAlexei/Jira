@@ -23,7 +23,7 @@ export class TasksInfo {
     this.user = user;
     this.project = project;
     this.status = status;
-    this.userName = this.user.login
+    this.userName = this.user.account.name
   }
 }
 

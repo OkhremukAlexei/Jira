@@ -7,27 +7,31 @@ import java.text.ParseException;
 import java.util.List;
 
 public interface TaskService {
-    List<TaskDto> getAll();
+    List<Task> getAll();
 
-    TaskDto getOne(Integer id);
+    Task getOne(Integer id);
 
-    TaskDto put(Integer id, TaskDto task);
+    Task put(Integer id, Task task);
 
     void delete(Integer id);
 
-    void addTask(TaskDto taskDto);
+    void addTask(Task task);
 
-    TaskDto startTask(int id, TaskDto taskDto) throws ParseException;
+    Task startTask(int id, Task task) throws ParseException;
 
-    List<TaskDto> getUsersTasks(Long projectId, Long userId);
+    List<Task> getUsersTasks(Long projectId, Long userId);
+
+    List<Task> getAllUsersTasks(Long userId);
 
     void completeTask(int id);
 
     void closeTask(int id);
 
-    List<TaskDto> getAllUsersTasks (Long id);
-
-    List<TaskDto> getProjectTasks(Long id);
+    List<Task> getProjectTasks(Long id);
 
     int countProgress(Long id);
+
+    TaskDto convertToDto(Task task);
+
+    Task convertToEntity(TaskDto taskDto);
 }

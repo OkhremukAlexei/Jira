@@ -8,6 +8,7 @@ import com.jira.pojo.dto.UserDto;
 import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.UserService;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +30,17 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private TeamRepo teamRepo;
 
+    @Autowired
+    private ModelMapper modelMapper;
+
     @Override
     public List<User> getAll() {
         return userRepo.findAll();
     }
 
     @Override
-    public User getOne(User us) {
-        return userRepo.findById(us.getId()).get();
+    public User getOne(Long id) {
+        return userRepo.findById(id).get();
     }
 
     @Override
@@ -55,32 +59,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDto> getAllUsers() {
+    public List<User> getAllUsers() {
         LOGGER.info("UserServiceImpl method getAllUsers ");
-        List<UserDto> userDtoList = new ArrayList<>();
 
-        for (User user: userRepo.findBySpecificRoles(ERole.ROLE_USER)) {
-            userDtoList.add(UserDto.build(user));
-        }
-        return userDtoList;
+        return  userRepo.findBySpecificRoles(ERole.ROLE_USER);
     }
 
     @Override
-    public List<UserDto> getUsersOutsideTheProject(long id){
+    public List<User> getUsersOutsideTheProject(long id){
         LOGGER.info("UserServiceImpl method getUsersOutsideTheProject "+id);
 
         List<User> allUsersList = userRepo.findBySpecificRoles(ERole.ROLE_USER);
         List<User> usersInTeamList = userRepo.findByTeams_Project_Id(id);
         allUsersList.removeAll(usersInTeamList);
-
-        List<UserDto> userDtoList = new ArrayList<>();
-
-        for (User user: allUsersList) {
-            userDtoList.add(UserDto.build(user));
-        }
-
-        return userDtoList;
+        return allUsersList;
     }
 
+    public User convertToEntity(UserDto userDto) {
+        User user = modelMapper.map(userDto, User.class);
+        return user;
+    }
 
+    public UserDto convertToDto(User user) {
+        UserDto userDto = modelMapper.map(user, UserDto.class);
+        userDto.setRoles(user.getRole());
+        return userDto;
+    }
 }

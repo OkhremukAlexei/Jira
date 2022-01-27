@@ -3,6 +3,7 @@ package com.jira.services.impl;
 import com.jira.models.Project;
 import com.jira.models.Team;
 import com.jira.models.User;
+import com.jira.pojo.dto.UserDto;
 import com.jira.repos.TeamRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.TeamService;
@@ -60,26 +61,18 @@ public class TeamDetailsServiceImpl implements TeamService {
         return teamRepo.findFirstByOrderByIdDesc();
     }
 
-    @Override
-    public void countNumOfUsers(){
-        LOGGER.info("TeamDetailsServiceImpl method countNumOfUsers ");
-
-        Iterable<Team> teamList = teamRepo.findAll();
-        for (Team team: teamList) {
-            int numOfUsers = teamRepo.countByTeam_Id(team.getId());
-            team.setNumberOfPersons(numOfUsers);
-            teamRepo.save(team);
-        }
-    }
 
     @Override
-    public void countNumOfUsers(Project project){
+    public int countNumOfUsers(Project project){
         LOGGER.info("TeamDetailsServiceImpl method countNumOfUsers "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
+
         long teamId = project.getTeam().getId();
         int numOfUsers = teamRepo.countByTeam_Id(teamId);
         Team team = teamRepo.findById(teamId);
         team.setNumberOfPersons(numOfUsers);
         teamRepo.save(team);
+
+        return numOfUsers;
     }
 
     @Override
@@ -89,6 +82,11 @@ public class TeamDetailsServiceImpl implements TeamService {
         for (Project project: projects) {
             countNumOfUsers(project);
         }
+    }
+
+    @Override
+    public Team findByProjectId(Long id) {
+        return teamRepo.findByProject_Id(id);
     }
 
     @Override
@@ -135,6 +133,16 @@ public class TeamDetailsServiceImpl implements TeamService {
         Team team = teamRepo.findById(teamId);
         team.getUsers().remove(user);
         teamRepo.save(team);
+    }
+
+    @Override
+    public Team setTeam(Long id, List<User> users) {
+
+        Team team = teamRepo.findByProject_Id(id);
+
+        team.setUsers(users);
+
+        return team;
     }
 
     public boolean existsById(long id){

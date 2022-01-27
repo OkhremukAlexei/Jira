@@ -8,10 +8,13 @@ import java.util.List;
 
 public interface UserService {
     List<User> getAll();
-    User getOne(User us);
+    User getOne(Long id);
     User put(User us);
     void delete(User us);
-    List<UserDto> getAllUsers();
-    List<UserDto> getUsersOutsideTheProject(long id);
+    List<User> getAllUsers();
+    List<User> getUsersOutsideTheProject(long id);
     List<User> getUsers();
+
+    User convertToEntity(UserDto userDto);
+    UserDto convertToDto(User user);
 }

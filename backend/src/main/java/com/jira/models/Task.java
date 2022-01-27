@@ -1,16 +1,18 @@
 package com.jira.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class  Task implements Serializable {
 
     @Id
@@ -23,7 +25,7 @@ public class  Task implements Serializable {
     private String description;
     @Column(name="dateTime")
     @DateTimeFormat
-    private LocalDateTime dateTime;
+    private Date dateTime;
     @Column(name="spentTime")
     @JsonFormat(pattern = "HH:mm")
     @DateTimeFormat
@@ -34,6 +36,7 @@ public class  Task implements Serializable {
 
     @ManyToOne
     @JoinColumn(name="project_id", nullable=false)
+    @JsonBackReference
     private Project project;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -48,7 +51,7 @@ public class  Task implements Serializable {
     public Task() {
     }
 
-    public Task(int id, String title, String description, LocalDateTime dateTime, Date spentTime) {
+    public Task(int id, String title, String description, Date dateTime, Date spentTime) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -80,11 +83,11 @@ public class  Task implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getDateTime() {
+    public Date getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(Date dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -109,14 +112,6 @@ public class  Task implements Serializable {
     }
 
     public void setProject(Project project) {
-        this.project = project;
-    }
-
-    public Project getProjects() {
-        return project;
-    }
-
-    public void setProjects(Project project) {
         this.project = project;
     }
 

@@ -1,10 +1,14 @@
 package com.jira.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Account implements Serializable {
 
     @Id
@@ -17,6 +21,7 @@ public class Account implements Serializable {
 
     @OneToOne
     @MapsId
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User user;
 
