@@ -8,6 +8,8 @@ import com.jira.repos.ProjectRepo;
 import com.jira.repos.UserRepo;
 import com.jira.services.ProjectService;
 import org.hibernate.service.spi.ServiceException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +19,10 @@ import java.util.List;
 
 @Service("ProjectServiceImpl")
 public class ProjectServiceImpl implements ProjectService {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(ProjectServiceImpl.class);
+
+
     @Autowired
     private ProjectRepo projectRepo ;
 
@@ -35,6 +41,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public List<ProjectDto> getProjectsList(){
+        LOGGER.info("ProjectServiceImpl method getProjectsList");
         List<Project> projects = projectRepo.findAll();
         teamService.countNumOfUsers(projects);
 
@@ -51,6 +58,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public List<ProjectDto> getProjectsByUserId(Long userId){
+        LOGGER.info("ProjectServiceImpl method getProjectsByUserId "+userId);
         List<Project> projects = projectRepo.findProjectsByTeam_Users_IdIs(userId);
         teamService.countNumOfUsers(projects);
 
@@ -66,6 +74,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectDto getOne(Long id){
+        LOGGER.info("ProjectServiceImpl method getOne "+id);
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
         teamService.countNumOfUsers(project);
@@ -76,6 +85,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectDto addProject(ProjectDto projectRequest){
+        LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
         Project project = new Project();
         project.setName(projectRequest.getName());
         project.setLinkToGit(projectRequest.getLinkToGit());
@@ -91,6 +101,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public ProjectDto updateProject(Long id, ProjectDto projectRequest){
+        LOGGER.info("ProjectServiceImpl method updateProject project's id "+id+" "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
         Project project = projectRepo.findById(id)
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + id));
         project.setName(projectRequest.getName());
@@ -104,6 +115,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void addPeopleToProject(ProjectDto projectRequest){
+        LOGGER.info("ProjectServiceImpl method addProject "+projectRequest.getLinkToGit()+" "+projectRequest.getName()+" "+projectRequest.getId()+" Manager's id "+projectRequest.getManager().getId()+" members "+projectRequest.getUsers().size()+" progress"+projectRequest.getProgress());
         Project project = projectRepo.findById(projectRequest.getId())
                 .orElseThrow(() -> new ServiceException("Project Not Found with id: " + projectRequest.getId()));
 
@@ -122,11 +134,13 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public boolean existsById(long projectId) {
+        LOGGER.info("ProjectServiceImpl method existsById "+ projectId);
         return projectRepo.existsById(projectId);
     }
 
     @Override
     public void deleteUsersInTeam(long projectId, long userId) {
+        LOGGER.info("ProjectServiceImpl method existsById "+ projectId+" userId "+userId);
         long teamId = projectRepo.findById(projectId).get().getTeam().getId();
         teamService.deleteUsersInTeam(teamId, userId);
     }
@@ -134,6 +148,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     @Transactional
     public void delete(Project project) {
+        LOGGER.info("ProjectServiceImpl method addProject "+project.getLinkToGit()+" "+project.getName()+" "+project.getId()+" progress"+project.getProgress());
         projectRepo.delete(project);
     }
 

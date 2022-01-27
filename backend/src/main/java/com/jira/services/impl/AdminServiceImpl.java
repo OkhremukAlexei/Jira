@@ -21,6 +21,10 @@ import java.util.Set;
 
 @Service("AdminServiceImpl")
 public class AdminServiceImpl implements AdminService {
+
+    private static final Logger LOGGER= LoggerFactory.getLogger(AdminServiceImpl.class);
+
+
     @Autowired
     AccountRepo accountRepo;
 
@@ -30,12 +34,11 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     RoleRepo roleRepo;
 
-    private static final Logger LOGGER= LoggerFactory.getLogger(AdminServiceImpl.class);
 
 
     @Override
     public void setManager(Long id) {
-        LOGGER.info("Setting Manager");
+        LOGGER.info("AdminServiceImpl method setManager "+id);
         User user = userRepo.getById(id);
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepo

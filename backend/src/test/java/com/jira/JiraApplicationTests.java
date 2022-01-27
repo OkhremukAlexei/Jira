@@ -37,6 +37,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @Component
 class JiraApplicationTests {
 
+	private static final Logger LOGGER= LoggerFactory.getLogger(JiraApplicationTests.class);
+
 
 	@Autowired
 	LoginRequestValidator loginRequestValidator;
@@ -50,7 +52,6 @@ class JiraApplicationTests {
 	private static final String NAME_REGEX="Timofey";
 	private static final String SURNAME_REGEX="Kononovich";
 	private static final boolean flag=false;
-	private static final Logger LOGGER= LoggerFactory.getLogger(JiraApplicationTests.class);
 
 	@Test
 	void TestOfLoginRequestValidator(){
