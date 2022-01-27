@@ -36,12 +36,12 @@
             <AppenderRef ref="RollingFile" />
         </Logger>
 
-        <Logger name="com.jira.repos" level="warn" additivity="false">
+        <Logger name="com.jira.repos" level="info" additivity="false">
             <AppenderRef ref="RollingFile" />
         </Logger>
 
 
-        <Logger name="com.jira.models" level="errors" additivity="false">
+        <Logger name="com.jira.models" level="info" additivity="false">
             <AppenderRef ref="RollingFile" />
         </Logger>
 
@@ -55,7 +55,7 @@
         </Logger>
 
 
-        <Logger name="com.jira.services" level="warn" additivity="false">
+        <Logger name="com.jira.services" level="info" additivity="false">
             <AppenderRef ref="RollingFile" />
         </Logger>
 
