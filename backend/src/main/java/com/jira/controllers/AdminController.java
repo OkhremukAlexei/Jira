@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +42,21 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUsers() {
         LOGGER.info("AdminController method getAllUsers");
-        return ResponseEntity.ok(adminService.findAll());
+        List users = adminService.findAll();
+        return users != null &&  !users.isEmpty()
+                ? new ResponseEntity<>(users, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @PostMapping("/userinfo/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getUser(@PathVariable("id") Long id) {
+
         LOGGER.info("AdminController method getUser "+id);
         if (userRepo.existsById(id)) {
+
+
             return ResponseEntity.ok(userRepo.findById(id));
         }
         else{

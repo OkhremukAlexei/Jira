@@ -36,4 +36,8 @@ export class UserService {
     return this.http.get<User[]>(`${this.userUrl}/project/${id}`, {responseType: "json"});
   }
 
+  getUser(id: string) :Observable<User>{
+    return this.http.get<User>( `${this.userUrl}/${id}`, {responseType: "json"})
+  }
+
 }

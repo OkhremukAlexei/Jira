@@ -68,16 +68,14 @@ public class AuthController {
 
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authUser(@RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+    public ResponseEntity<JwtResponse> authUser(@RequestBody LoginRequest loginRequest, BindingResult bindingResult) {
+
         LOGGER.info("Work of authUser: ");
         loginRequestValidator.validate(loginRequest,bindingResult);
-        if(bindingResult.hasErrors()){
-            LOGGER.info("Incorrect data in loginRequest ", loginRequest.getLogin()," Password: ",loginRequest.getPassword());
-            return new ResponseEntity<String>("Invalid data",HttpStatus.BAD_REQUEST);
+        if(bindingResult.hasErrors()) {
+            LOGGER.info("Incorrect data in loginRequest ", loginRequest.getLogin(), " Password: ", loginRequest.getPassword());
+            return  ResponseEntity.badRequest().build();
         }
-
-
-
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(
                         loginRequest.getLogin(),
@@ -98,15 +96,19 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
+    public ResponseEntity<MessageResponse> registerUser(@RequestBody SignupRequest signupRequest, BindingResult bindingResult) {
+            LOGGER.info("RegisterUser method ",  signupRequest.getLogin()," Password: ",signupRequest.getPassword()," name: ",signupRequest.getName()," surname: ",signupRequest.getSurname()," email: ",signupRequest.getEmail());
 
-        signUpRequestValidator.validate(signupRequest,bindingResult);
-        if(bindingResult.hasErrors()){
-            LOGGER.info("Incorrect data in SignupRequest ",  signupRequest.getLogin()," Password: ",signupRequest.getPassword()," name: ",signupRequest.getName()," surname: ",signupRequest.getSurname()," email: ",signupRequest.getEmail());
-            return new ResponseEntity<String>("Invalid data",HttpStatus.BAD_REQUEST);
-        }
 
-        if (userRepo.existsByLogin(signupRequest.getLogin())) {
+            signUpRequestValidator.validate(signupRequest,bindingResult);
+            if(bindingResult.hasErrors()){
+                LOGGER.info("Incorrect data in SignupRequest ",  signupRequest.getLogin()," Password: ",signupRequest.getPassword()," name: ",signupRequest.getName()," surname: ",signupRequest.getSurname()," email: ",signupRequest.getEmail());
+                return ResponseEntity
+                        .badRequest()
+                        .body(new MessageResponse("Error: Invalid data"));
+            }
+
+            if (userRepo.existsByLogin(signupRequest.getLogin())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is exist"));

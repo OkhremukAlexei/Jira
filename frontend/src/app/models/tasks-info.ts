@@ -9,6 +9,7 @@ export class TasksInfo {
   dateTime: string;
   spentTime: Time;
   user: User;
+  userName: string;
   project: Projects;
   status: string
 
@@ -21,7 +22,8 @@ export class TasksInfo {
     this.spentTime = spentTime;
     this.user = user;
     this.project = project;
-    this.status = status
+    this.status = status;
+    this.userName = this.user.login
   }
 }
 

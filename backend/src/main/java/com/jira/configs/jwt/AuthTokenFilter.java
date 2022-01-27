@@ -1,6 +1,5 @@
 package com.jira.configs.jwt;
 
-import com.jira.controllers.AuthController;
 import com.jira.services.impl.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -11,6 +11,7 @@ import com.jira.repos.UserRepo;
 import com.jira.services.TaskService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,16 +61,32 @@ public class TaskServiceImpl implements TaskService {
         return TaskDto.build(task);
     }
 
-    @Override
-    public Task put(Task task) {
-        LOGGER.info("TaskServiceImpl method put "+task.getTitle()+" "+task.getTitle()+" "+task.getDescription()+" id "+task.getId());
-        return taskRepo.save(task);
+
+
+
+
+        @Override
+    public TaskDto put(Integer id, TaskDto taskDto) {
+        LOGGER.info("TaskServiceImpl method put "+taskDto.getTitle()+" "+taskDto.getTitle()+" "+taskDto.getDescription()+" id "+id);
+        Task task = taskRepo.getById(id);
+        task.setTitle(taskDto.getTitle());
+        task.setDescription(taskDto.getDescription());
+        task.setStatus(taskDto.getStatusEnum(taskDto.getStatus()));
+
+        taskRepo.save(task);
+        return TaskDto.build(task);
     }
 
     @Override
-    public void delete(Task task) {
-        LOGGER.info("TaskServiceImpl method delete "+task.getTitle()+" "+task.getTitle()+" "+task.getDescription()+" id "+task.getId());
-        taskRepo.delete(task);
+    public void delete(Integer id) {
+            LOGGER.info("TaskServiceImpl method delete "+id);
+
+        Task task = taskRepo.findById(id).get();
+
+        task.getUsers().removeAll(task.getUsers());
+        taskRepo.save(task);
+
+        taskRepo.deleteById(id);
     }
 
     @Override
@@ -116,6 +133,20 @@ public class TaskServiceImpl implements TaskService {
         }
 
         return taskDtoList;
+    }
+
+    @Override
+    public List<TaskDto> getAllUsersTasks(Long userId) {
+        List<Task> tasks = taskRepo.findAllActiveTasksByUserId(userId);
+
+        List<TaskDto> taskDtoList = new ArrayList<>();
+
+        for (Task task: tasks) {
+            taskDtoList.add(TaskDto.build(task));
+        }
+
+        return taskDtoList;
+
     }
 
     @Override

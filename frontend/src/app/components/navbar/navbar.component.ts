@@ -39,4 +39,9 @@ export class NavbarComponent implements OnInit {
     return 'Dashboard';
   }
 
+  logout() {
+    this.token.signOut();
+    window.location.reload();
+  }
+
 }

@@ -11,9 +11,9 @@ public interface TaskService {
 
     TaskDto getOne(Integer id);
 
-    Task put(Task task);
+    TaskDto put(Integer id, TaskDto task);
 
-    void delete(Task task);
+    void delete(Integer id);
 
     void addTask(TaskDto taskDto);
 
@@ -24,6 +24,8 @@ public interface TaskService {
     void completeTask(int id);
 
     void closeTask(int id);
+
+    List<TaskDto> getAllUsersTasks (Long id);
 
     List<TaskDto> getProjectTasks(Long id);
 
