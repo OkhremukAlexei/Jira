@@ -1,5 +1,6 @@
 package com.jira.services;
 
+import com.jira.models.User;
 import com.jira.pojo.dto.AccountDto;
 import com.jira.pojo.dto.UserDto;
 import com.jira.models.User;

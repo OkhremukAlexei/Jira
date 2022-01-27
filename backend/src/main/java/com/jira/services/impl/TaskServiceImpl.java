@@ -150,8 +150,6 @@ public class TaskServiceImpl implements TaskService {
         }
         taskDto.setProject(projectService.convertToDto(task.getProject()));
 
-        //     taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
-
         return taskDto;
     }
 
