@@ -5,36 +5,40 @@
     </div>
   </div>
 </div>
-<div class="container p-8">
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0" align="center" style="color:Black">  User's information</h3>
+        </div>
 
-<h1>
-  Profile
-</h1>
+           <table class="table table-bordered p-4">
+            <tr>
+               <td align="center">Login: </td>
+               <td>{{user.login}}</td>
+            </tr>
+             <tr>
+               <td align="center">Role:</td>
+               <td>{{user.roles}}</td>
+             </tr>
+              <tr>
+                 <td align="center">Name:</td>
+                 <td>{{user.account.name}}</td>
+              </tr>
+              <tr>
+                  <td align="center" >Surname:</td>
+                <td>{{user.account.surname}}</td>
+              </tr>
+              <tr>
+               <td align="center">Email:</td>
+               <td>{{user.account.email}}</td>
+              </tr>
+            </table>
 
-  <h2>
-    User's info:
-  </h2>
-    <table>
-     <tr>
-       <td>Login: </td>
-       <td>{{user.login}}</td>
-     </tr>
-     <tr>
-       <td>Role:</td>
-       <td>{{user.roles}}</td>
-     </tr>
-     <tr>
-        <td>Name:</td>
-        <td>{{user.account.name}}</td>
-     </tr>
-     <tr>
-        <td>Surname:</td>
-        <td>{{user.account.surname}}</td>
-     </tr>
-     <tr>
-        <td>Email:</td>
-        <td>{{user.account.email}}</td>
-     </tr>
-    </table>
-  <br>
-</div>
+        <br>
+        </div>
+      </div>
+    </div>
+  </div>
+
