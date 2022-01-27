@@ -35,7 +35,7 @@ public class LoginRequestValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "Field password is empty or has whitespaces");
         if(value.getLogin().length()>15 | value.getPassword().length()>10 | Pattern.matches(REGEX,value.getPassword())| Pattern.matches(REGEX,value.getLogin())){
             try {
-                throw new ValidationUserException();
+                throw new ValidationUserException("Incorrect data");
             } catch (ValidationUserException e) {
                 LOGGER.error(IMPORTANT,"Problems with data, incorrect data ",e);
                 value.setPassword(" ");
