@@ -187,6 +187,6 @@ export class TasksComponent implements OnInit {
   }
 
   dialogOpen(args: DialogEventArgs): void {
-
+    args.cancel = true;
   }
 }
