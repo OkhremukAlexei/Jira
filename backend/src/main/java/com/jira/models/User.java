@@ -40,8 +40,10 @@ public class User implements Serializable {
     @JsonIgnore
     private List<Team> teams;
 
-    @ManyToMany(mappedBy = "users", cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @PrimaryKeyJoinColumn
+    private Task task;
 
     public User() {}
 
@@ -109,12 +111,12 @@ public class User implements Serializable {
         this.teams = teams;
     }
 
-    public List<Task> getTasks() {
-        return tasks;
+    public Task getTask() {
+        return task;
     }
 
-    public void setTasks(List<Task> tasks) {
-        this.tasks = tasks;
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.jira.models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -13,6 +14,10 @@ import java.util.Set;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Table(name = "task",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "title"),
+        })
 public class  Task implements Serializable {
 
     @Id
@@ -39,13 +44,11 @@ public class  Task implements Serializable {
     @JsonBackReference
     private Project project;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "task_user",
-            joinColumns = @JoinColumn(name = "task_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users;
+    @OneToOne
+    @MapsId
+    @JsonIgnore
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     public Task() {
@@ -115,12 +118,12 @@ public class  Task implements Serializable {
         this.project = project;
     }
 
-    public Set<User> getUsers() {
-        return users;
+    public User getUser() {
+        return user;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

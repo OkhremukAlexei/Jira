@@ -1,9 +1,7 @@
 package com.jira.services.impl;
 
-import com.jira.models.Project;
 import com.jira.models.Status;
 import com.jira.models.Task;
-import com.jira.models.User;
 import com.jira.pojo.dto.TaskDto;
 import com.jira.repos.ProjectRepo;
 import com.jira.repos.TaskRepo;
@@ -13,8 +11,6 @@ import com.jira.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Calendar;
@@ -67,7 +63,6 @@ public class TaskServiceImpl implements TaskService {
         task.setTitle(taskRequest.getTitle());
         task.setDescription(taskRequest.getDescription());
         task.setStatus(taskRequest.getStatus());
-      //  task.setStatus(taskRequest.getStatusEnum(taskDto.getStatus()));
 
         taskRepo.save(task);
 
@@ -80,8 +75,9 @@ public class TaskServiceImpl implements TaskService {
 
         Task task = taskRepo.findById(id).get();
 
+        /*
         task.getUsers().removeAll(task.getUsers());
-        taskRepo.save(task);
+        taskRepo.save(task);*/
 
         taskRepo.deleteById(id);
     }
@@ -94,7 +90,7 @@ public class TaskServiceImpl implements TaskService {
         task.setDescription(task.getDescription());
         task.setStatus(Status.NEW);
         task.setProject(projectRepo.getById(task.getProject().getId()));
-        task.setUsers(task.getUsers());
+        task.setUser(task.getUser());
 
         taskRepo.save(task);
     }
@@ -170,13 +166,9 @@ public class TaskServiceImpl implements TaskService {
     public TaskDto convertToDto(Task task) {
         TaskDto taskDto = modelMapper.map(task, TaskDto.class);
 
-        if (!task.getUsers().isEmpty()) {
-            User user = task.getUsers().iterator().next();
-            taskDto.setUser(userService.convertToDto(user));
-        }
-        taskDto.setProject(projectService.convertToDto(task.getProject()));
+        taskDto.setUser(userService.convertToDto(task.getUser()));
 
-        //     taskDto.setUsers(task.getUsers().stream().map(this::convertToDto).collect(Collectors.toList()));
+        taskDto.setProject(projectService.convertToDto(task.getProject()));
 
         return taskDto;
     }

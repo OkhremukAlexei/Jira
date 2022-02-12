@@ -1,6 +1,5 @@
 drop table if exists account;
 drop table if exists comment;
-drop table if exists task_user;
 drop table if exists task;
 drop table if exists project;
 drop table if exists user_roles;
@@ -67,17 +66,9 @@ create table if not exists task
     status varchar(255),
     title varchar(255),
     project_id bigint not null,
+    user_id bigint not null,
     primary key (id)
 );
-
-create table if not exists task_user
-(
-    task_id integer not null,
-    user_id bigint not null,
-    primary key (task_id, user_id)
-);
-
-
 
 create table if not exists user_roles
 (
@@ -104,11 +95,8 @@ alter table project
 alter table task
     add constraint FKk8qrwowg31kx7hp93sru1pdqa foreign key (project_id) references project (id);
 
-alter table task_user
+alter table task
     add constraint FK32eeu8p13crqmo7dfdtn6hncm foreign key (user_id) references users (id);
-
-alter table task_user
-    add constraint FKd1fn28rqhh1ku21jx7hcksvh9 foreign key (task_id) references task (id);
 
 alter table user_roles
     add constraint FKh8ciramu9cc9q3qcqiv4ue8a6 foreign key (role_id) references roles (id);
