@@ -94,27 +94,4 @@ public class TaskDto {
         this.status = status;
     }
 
-/*
-    public Date getDateTimeConverted() throws ParseException {
-        return dateFormat.parse(this.dateTime);
-    }
-
-    public void setDateTime(Date date) {
-        if (date != null) {
-            this.dateTime = dateFormat.format(date);
-        }
-    }
-
-    public Date getSpentTimeConverted() throws ParseException {
-        return spentTimeFormat.parse(this.spentTime);
-    }
-
-    public void setSpentTime(Date date) {
-        if (date != null) {
-            this.spentTime = spentTimeFormat.format(date);
-        }
-
-    }
-*/
-
 }
